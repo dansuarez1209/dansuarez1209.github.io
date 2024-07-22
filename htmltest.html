@@ -173,7 +173,10 @@ if wordlist[1] in irregularpast:
         wordlist[1] = "written" 
 if wordlist[-2] in determiners:
     wordlist[-1] = wordlist[-2] + " " + wordlist[-1]
-    wordlist.remove(wordlist[-2])
+    wordlist.remove("the")
+    if wordlist[2] in determiners:
+        wordlist.remove("the")
+        wordlist.insert(0, "the")
 if wordlist[0] in determiners:
     wordlist[0] = wordlist[0] + " " + wordlist[1]
     wordlist.remove(wordlist[1])
@@ -588,7 +591,10 @@ if tense == "presentperfectcontinuous":
         wordlist.insert(4, "being")
     else:
         wordlist.insert(3, "being")
-wordlist.insert(-1, "by")
+if wordlist[-2] in determiners:
+    wordlist.insert(-2, "by")
+else:
+    wordlist.insert(-1, "by")
 if existingadverb == True:
     possibleadverb = ''.join(possibleadverb)
     wordlist.append(possibleadverb)
