@@ -16,7 +16,7 @@ possibleadverb = [*wordlist[-1]]
 irregular = ["am", "is", "are", "was", "will", "were", "can", "could", "may", "might", "must", "shall", "will", "should", "would", "beat", "become", "begin", "bend", "bet", "bite", "bleed", "blow", "break", "breed", "bring", "build", "burn", "buy", "catch", "choose", "come", "cost", "cut", "do", "don't", "didn't", "doesn't", "dig", "draw", "dream", "drink", "drive", "eat", "fall", "feed", "feel", "fight", "find", "fly", "forget", "forgive", "freeze", "get", "give", "go", "grow", "have", "has", "had", "hear", "hide", "hit", "hold", "hurt", "keep", "know", "lay", "lead", "lean", "leave", "lend", "let", "lose", "make", "mean", "meet", "pay", "put", "quit", "read", "ride", "ring", "rise", "run", "say", "see", "sell", "send", "set", "shake", "shine", "shoe", "shoot", "show", "shrink", "shut", "sing", "sink", "sit", "sleep", "speak", "spend", "spill", "spread", "speed", "stand", "steal", "stick", "sting", "stink", "swear", "sweep", "swim", "swing", "take", "teach", "tear", "tell", "think", "throw", "understand", "wake", "wear", "win", "write"]
 irregularpast = ["beat", "became", "began", "bent", "bet", "bit", "bled", "blew", "broke", "bred", "brought", "built", "burnt", "bought", "caught", "chose", "came", "cost", "cut", "did", "dug", "drew", "dreamt", "drank", "drove", "ate", "fell", "fed", "felt", "fought", "found", "flew", "forgot", "forgave", "froze", "gave", "got", "went", "grew", "had", "heard", "hid", "hit", "held", "hurt", "kept", "knew", "laid", "led", "leant", "left", "lent", "let", "lost", "made", "meant", "met", "paid", "put", "quit", "read", "rode", "rang", "rose", "ran", "said", "saw", "sold", "sent", "set", "shook", "shone", "shod", "shot", "shrank", "shut", "sang", "sank", "sat", "slept", "spoke", "spent", "spilt", "spread", "sped", "stood", "stole", "stank", "stung", "swore", "swept", "swam", "swung", "took", "taught", "tore", "told", "thought", "threw", "understood", "woke", "wore", "won", "wrote"] 
 eirregular = ["becom", "bit", "choos", "driv", "forgiv", "freez", "giv", "hav", "hid", "leav", "los", "mak", "rid", "ris", "shak", "shin", "tak", "wak", "writ"]
-determiners = ["a", "an", "the", "this", "that", "these", "those", "my", "your", "his", "her", "its", "our", "their", "whose", "some", "any", "many", "few", "several", "all", "much", "little", "enough", "each", "every", "either", "neither", "no", "neither", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "A", "An", "The", "This", "That", "These", "Those", "My", "Your", "His", "Her", "Its", "Our", "Their", "Whose", "Some", "Any", "Many", "Few", "Several", "All", "Much", "Little", "Enough", "Each", "Every", "Either", "Neither", "No", "Neither", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
+determiners = ["a", "an", "the", "this", "that", "these", "those", "my", "your", "his", "her", "its", "our", "their", "whose", "some", "any", "many", "few", "several", "all", "much", "little", "enough", "each", "every", "either", "neither", "no", "neither", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
 adverbs = ["afterwards", "now", "once", "previously", "then", "today", "tomorrow", "tonight", "usually", "yesterday", "already", "away", "back", "soon"]
 if verb[-1] == "d" and verb[-2] == "e" and wordlist[1] not in irregular:
     tense = "pastsimple" 
@@ -83,6 +83,23 @@ if wordlist[0] == "You" or wordlist[0] == "you":
         wordlist.remove(wordlist[1])
         wordlist[0] = "you guys"
         verb = [*wordlist[1]]
+if wordlist[-2] == "You" or wordlist[-2] == "you":
+    if wordlist[-1] == "all":
+        wordlist.remove(wordlist[-1])
+        wordlist[-1] = "you all"
+    if wordlist[-1] == "guys":
+        wordlist.remove(wordlist[-1])
+        wordlist[-2] = "you guys"
+for i in range(len(wordlist)):
+    if wordlist[i] == "won't":
+        wordlist[i] = "will"
+        wordlist.insert(i+1, "not")
+    if wordlist[i] == "isn't":
+        wordlist[i] = "is"
+        wordlist.insert(i+1, "not")
+    if wordlist[i] == "aren't":
+        wordlist[i] = "are"
+        wordlist.insert(i+1, "not")
 if wordlist[1] in irregularpast:
     tense = "pastsimple"
     if wordlist[1] == "beat":
@@ -172,11 +189,12 @@ if wordlist[1] in irregularpast:
     if wordlist[1] == "wrote":
         wordlist[1] = "written" 
 if wordlist[-2] in determiners:
+    dtrmnr = wordlist[-2]
     wordlist[-1] = wordlist[-2] + " " + wordlist[-1]
-    wordlist.remove("the")
-    if wordlist[2] in determiners:
-        wordlist.remove("the")
-        wordlist.insert(0, "the")
+    wordlist.remove(wordlist[-2])
+    if wordlist[0] in determiners:
+        wordlist.remove(wordlist[-2])
+        wordlist.insert(0, dtrmnr)
 if wordlist[0] in determiners:
     wordlist[0] = wordlist[0] + " " + wordlist[1]
     wordlist.remove(wordlist[1])
@@ -518,17 +536,30 @@ if wordlist[1] == "can" or wordlist[1] == "could" or wordlist[1] == "may" or wor
     else:
         wordlist.insert(2, "be")
     verb = [*wordlist[3]]
-    if wordlist[3] == "have":
+    if wordlist[3] == "have" and wordlist[2] != "not":
         wordlist[2], wordlist[3] = wordlist[3], wordlist[2]
         wordlist[3] = "been"
-    if wordlist[3] not in irregular and verb[-1] != "e":
+    if wordlist[3] not in irregular and verb[-1] != "e" and wordlist[2] != "not":
         wordlist[3] = wordlist[3] + "ed"
-    if wordlist[3] not in irregular and verb[-1] == "e" and wordlist[3] != "been":
+    if wordlist[3] not in irregular and verb[-1] == "e" and wordlist[3] != "been" and wordlist[2] != "not":
         wordlist[3] = wordlist[3] + "d"
-    if wordlist[3] in irregular:
+    if wordlist[3] in irregular and wordlist[2] != "not":
         wordlist[1], wordlist[3] = wordlist[3], wordlist[1]
         participle()
         wordlist[1], wordlist[3] = wordlist[3], wordlist[1]
+    if wordlist[2] == "not":
+        verb = [*wordlist[4]]
+        if wordlist[4] == "have":
+            wordlist[4], wordlist[5] = wordlist[5], wordlist[4]
+            wordlist[4] = "been"
+        if wordlist[4] not in irregular and verb[-1] != "e":
+            wordlist[4] = wordlist[4] + "ed"
+        if wordlist[4] not in irregular and verb[-1] == "e" and wordlist[3] != "been":
+            wordlist[4] = wordlist[4] + "d"
+        if wordlist[4] in irregular:
+            wordlist[1], wordlist[4] = wordlist[4], wordlist[1]
+            participle()
+            wordlist[1], wordlist[4] = wordlist[4], wordlist[1]
 if wordlist[0] == "I" or wordlist[0] == "i":
     wordlist[0] = "me"
 if wordlist[0] == "You":
@@ -562,9 +593,9 @@ wordlist[0], wordlist[-1] = wordlist[-1], wordlist[0]
 if tense == "presentsimple" or tense == "presentcontinuous":
     if wordlist[0] == "I":
         wordlist.insert(1, "am")
-    if noun[-1] == "s" or wordlist[0] == "You" or wordlist[0] == "We" or wordlist[0] == "They":
+    if noun[-1] == "s" or wordlist[0] == "You" or wordlist[0] == "We" or wordlist[0] == "They" or wordlist[0] == "you all":
         wordlist.insert(1, "are")
-    if wordlist[0] != "I" and wordlist[0] != "You" and wordlist[0] != "We" and wordlist[0] != "They" and noun[-1] != "s":
+    if wordlist[0] != "I" and wordlist[0] != "You" and wordlist[0] != "We" and wordlist[0] != "They" and wordlist[0] != "you all" and noun[-1] != "s":
         wordlist.insert(1, "is")
 if tense == "pastsimple" or tense == "pastcontinuous":
     if wordlist[0] != "You" and wordlist[0] != "We" and wordlist[0] != "They":
