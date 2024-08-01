@@ -211,12 +211,16 @@ for i in range(len(wordlist) - 1):
             wordlist.remove(wordlist[i])
             existingadverb = True
             verb = [*wordlist[1]]
+            if verb[-1] == "d" and verb[-2] == "e" and wordlist[1] not in irregular:
+                tense = "pastsimple" 
         else:
             existingadverb = False
 if wordlist[0] in determiners:
     wordlist[0] = wordlist[0] + " " + wordlist[1]
     wordlist.remove(wordlist[1])
     verb = [*wordlist[1]]
+    if verb[-1] == "d" and verb[-2] == "e" and wordlist[1] not in irregular:
+        tense = "pastsimple" 
 if verb[-1] == "s" and wordlist[0] != "I" and wordlist[0] != "i" and wordlist[0] != "You" and wordlist[0] != "you" and wordlist[0] != "We" and wordlist[0] != "we" and wordlist[0] != "They" and wordlist[0] != "they" and wordlist[1] not in irregular and wordlist[1] not in irregularpast:
     verb.pop()
     wordlist[1] = ''.join(verb)
