@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel "stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+</head>
+<body>
+<py-script>
+print("Direct speech to Reported speech translator v.1.0.0")
+sentence = input("enter sentence: ")
+wordlist = sentence.split()
+firstword = [*wordlist[0]]
+lastword = [*wordlist[-3]]
+verb = [*wordlist[1]]
+wordlist.insert(0, "They")
+wordlist.insert(1, "said")
+tense = "present"
+irregular = ["am", "is", "are", "was", "were", "beat", "become", "begin", "bend", "bet", "bite", "bleed", "blow", "break", "breed", "bring", "build", "burn", "buy", "catch", "choose", "come", "cost", "cut", "do", "don't", "didn't", "doesn't", "dig", "draw", "dream", "drink", "drive", "eat", "fall", "feed", "feel", "fight", "find", "fly", "forget", "forgive", "freeze", "get", "give", "go", "grow", "have", "has", "had", "hear", "hide", "hit", "hold", "hurt", "keep", "know", "lay", "lead", "lean", "leave", "lend", "let", "lose", "make", "mean", "meet", "pay", "put", "quit", "read", "ride", "ring", "rise", "run", "say", "see", "sell", "send", "set", "shake", "shine", "shoe", "shoot", "shrink", "shut", "sing", "sink", "sit", "sleep", "speak", "spend", "spill", "spread", "speed", "stand", "steal", "stick", "sting", "stink", "swear", "sweep", "swim", "swing", "take", "teach", "tear", "tell", "think", "throw", "understand", "wake", "wear", "win", "write"]
+irregularpast = ["beat", "became", "began", "bent", "bet", "bit", "bled", "blew", "broke", "bred", "brought", "built", "burnt", "bought", "caught", "chose", "came", "cost", "cut", "did", "dug", "drew", "dreamt", "drank", "drove", "ate", "fell", "fed", "felt", "fought", "found", "flew", "forgot", "forgave", "froze", "gave", "got", "went", "grew", "had", "heard", "hid", "hit", "held", "hurt", "kept", "knew", "laid", "led", "leant", "left", "lent", "let", "lost", "made", "meant", "met", "paid", "put", "quit", "read", "rode", "rang", "rose", "ran", "said", "saw", "sold", "sent", "set", "shook", "shone", "shod", "shot", "shrank", "shut", "sang", "sank", "sat", "show", "slept", "spoke", "spent", "spilt", "spread", "sped", "stood", "stole", "stank", "stung", "swore", "swept", "swam", "swung", "took", "taught", "tore", "told", "thought", "threw", "understood", "woke", "wore", "won", "wrote"]
+determiners = ["a", "an", "the", "this", "that", "these", "those", "my", "your", "his", "her", "its", "our", "their", "whose", "some", "any", "many", "few", "several", "all", "much", "little", "enough", "each", "every", "either", "neither", "no", "neither", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "A", "An", "The", "This", "That", "These", "Those", "My", "Your", "His", "Her", "Its", "Our", "Their", "Whose", "Some", "Any", "Many", "Few", "Several", "All", "Much", "Little", "Enough", "Each", "Every", "Either", "Neither", "No", "Neither", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
+if len(verb) > 3:
+    if verb[-3] == "i" and verb[-2] == "n" and verb[-1] == "g":
+        tense = "continuous"
+if verb[-2] == "e" and verb[-1] == "d" or wordlist[3] in irregularpast:
+    tense = "past"
+    participles = {
+        "beat": "beaten",
+        "became": "become",
+        "began": "begun",
+        "bit": "bitten",
+        "blew": "blown",
+        "broke": "broken",
+        "chose": "chosen",
+        "came": "come",
+        "did": "done",
+        "drew": "drawn",
+        "drank": "drunk",
+        "drove": "driven",
+        "ate": "eaten",
+        "fell": "fallen",
+        "flew": "flown",
+        "forgot": "forgotten",
+        "forgave": "forgiven",
+        "froze": "frozen",
+        "gave": "given",
+        "went": "gone",
+        "grew": "grown",
+        "hid": "hidden",
+        "knew": "known",
+        "rode": "ridden",
+        "rang": "rung",
+        "rose": "risen",
+        "ran": "run",
+        "saw": "seen",
+        "shook": "shaken",
+        "showed": "shown",
+        "shrank": "shrunk",
+        "sang": "sung",
+        "sank": "sunk",
+        "spoke": "spoken",
+        "stole": "stolen",
+        "stank": "stunk",
+        "swore": "sworn",
+        "swam": "swum",
+        "took": "taken",
+        "tore": "torn",
+        "threw": "thrown",
+        "woke": "waken",
+        "wore": "worn",
+        "wrote": "written",
+    }
+    if wordlist[3] in participles:
+        wordlist[3] = participles[wordlist[3]]
+    if wordlist[3] == "hadn't":
+        if wordlist[4] in participles:
+            wordlist[4] = participles[wordlist[4]]
+for i in range(len(wordlist) - 1):
+    if wordlist[i] == "was" or wordlist[i] == "were":
+        tense = "pastcontinuous"
+        if wordlist[i + 1] == "not":
+            wordlist[i] = "was not" if wordlist[i] == "was" else "were not"
+            del wordlist[i + 1]
+    if wordlist[i] == "won't":
+        wordlist[i] = "will"
+        wordlist.insert(i + 1, "not")
+    if wordlist[i] == "can't":
+        wordlist[i] = "can"
+        wordlist.insert(i + 1, "not")
+    if wordlist[i] == "couldn't":
+        wordlist[i] = "could"
+        wordlist.insert(i + 1, "not")
+    if wordlist[i] == "haven't":
+        wordlist[i] = "have"
+        wordlist.insert(i + 1, "not")
+    if wordlist[i] == "wasn't":
+        wordlist[i] = "was not"
+        tense = "pastcontinuous"
+    if wordlist[i] == "weren't":
+        wordlist[i] = "were not"
+        tense = "pastcontinuous"
+    if wordlist[i] == "isn't":
+        wordlist[i] = "is"
+        wordlist.insert(i + 1, "not")
+    if wordlist[i] == "aren't":
+        wordlist[i] = "are"
+        wordlist.insert(i + 1, "not")
+    if wordlist[i] == "mustn't":
+        wordlist[i] = "must"
+        wordlist.insert(i + 1, "not")
+    if wordlist[i] == "I'm":
+        wordlist[i] = "I"
+        wordlist.insert(i + 1, "am")
+    if wordlist[i] == "You're":
+        wordlist[i] = "You"
+        wordlist.insert(i + 1, "are")
+    if wordlist[i] == "He's":
+        wordlist[i] = "He"
+        wordlist.insert(i + 1, "is")
+    if wordlist[i] == "She's":
+        wordlist[i] = "She"
+        wordlist.insert(i + 1, "is")
+    if wordlist[i] == "It's":
+        wordlist[i] = "It"
+        wordlist.insert(i + 1, "is")
+    if wordlist[i] == "We're":
+        wordlist[i] = "We"
+        wordlist.insert(i + 1, "are")
+    if wordlist[i] == "They're":
+        wordlist[i] = "They"
+        wordlist.insert(i + 1, "are")
+    if wordlist[i] == "my" or wordlist[i] == "My" or wordlist[i] == "our" or wordlist[i] == "Our":
+        wordlist[i] = "their"
+    if wordlist[i] == "your" or wordlist[i] == "Your":
+        wordlist[i] = "my"
+if "had" in wordlist:
+    wordlist.remove("had")
+if "will" in wordlist:
+    tense = "future"
+if "can" in wordlist or "could" in wordlist or "may" in wordlist or "might" in wordlist or "must" in wordlist or "had to" in wordlist or "would" in wordlist:
+    tense = "modals"
+for i in range(len(wordlist) - 1):
+    if wordlist[i] in determiners:
+        wordlist[i] = wordlist[i] + ' ' + wordlist[i + 1]
+        wordlist.remove(wordlist[i + 1])
+        lastword = [*wordlist[-3]]
+    if wordlist[i] == "didn't" or wordlist[i] == "did" and wordlist[i + 1] == "not":
+        wordlist[i] = "hadn't"
+        verb = [*wordlist[4]]
+if firstword[0] == "'":
+    firstword.remove(firstword[0])
+    wordlist[2] = ''.join(firstword)
+    subject = wordlist[-2]
+if lastword[-1] == ",":
+    lastword.remove(lastword[-1])
+    lastword.remove(lastword[-1])
+    wordlist[-3] = ''.join(lastword)
+    wordlist.remove(wordlist[-2])
+    count = 0
+    for i in range(len(wordlist)):
+        if wordlist[i] == "said":
+            count += 1
+            if count == 2:
+                del wordlist[i]
+                break
+    wordlist[0] = subject
+if wordlist[2] == "You" or wordlist[2] == "you":
+    if wordlist[3] == "all":
+        wordlist[2] = "You all"
+        wordlist.remove(wordlist[3])
+if wordlist[-2] == "You" or wordlist[-2] == "you" and wordlist[-1] == "all":
+    wordlist[-2] = "you all"
+    wordlist.remove(wordlist[-1])
+if wordlist[2] == "I" or wordlist[2] == "i" or wordlist[2] == "They" or wordlist[2] =="they" or wordlist[2] == "We" or wordlist[2] == "we":
+    wordlist[2] = "they"
+    if wordlist[0] == "my sister" or wordlist[0] == "your sister" or wordlist[0] == "his sister" or wordlist[0] == "her sister" or wordlist[0] == "its sister" or wordlist[0] == "our sister" or wordlist[0] == "their sister" or wordlist[0] == "Mum" or wordlist[0] == "Mom" or wordlist[0] == "mum" or wordlist[0] == "mom":
+        wordlist[2] = "she"
+    if wordlist[0] == "my brother" or wordlist[0] == "your brother" or wordlist[0] == "his brother" or wordlist[0] == "her brother" or wordlist[0] == "its brother" or wordlist[0] == "our brother" or wordlist[0] == "their brother" or wordlist[0] == "Dad" or wordlist[0] == "dad":
+        wordlist[2] = "he"    
+    if wordlist[3] == "am" or wordlist[3] == "are":
+        wordlist[3] = "were"
+if wordlist[2] == "You" or wordlist[2] == "you":
+    wordlist[2] = "I"
+    if wordlist[3] == "are":
+        wordlist[3] = "was"
+if wordlist[2] == "You all":
+    wordlist[2] = "we"
+    if wordlist[2] == "are":
+        wordlist[2] = "were"
+if wordlist[2] != "I" and wordlist[2] and "i" and wordlist[2] != "You" and wordlist[2] != "you" and wordlist[2] != "We" and wordlist[2] != "we" and wordlist[2] != "You all" and wordlist[2] != "They" and wordlist[2] != "they":
+    if wordlist[3] == "is":
+        wordlist[3] = "was"
+if wordlist[3] != "hadn't":
+    if wordlist[3] not in irregular and wordlist[3] not in irregularpast and tense == "present":
+        if verb[-1] == "s" and wordlist[2] != "I" and wordlist[2] != "i" and wordlist[2] != "You" and wordlist[2] != "you" and wordlist[2] != "We" and wordlist[2] != "we" and wordlist[2] != "They" and wordlist[2] != "they" and wordlist[2] != "you all":
+            verb.pop()
+            wordlist[3] = ''.join(verb)
+        if verb[-1] != "e":
+            wordlist[3] = wordlist[3] + "ed"
+        else:
+            wordlist[3] = wordlist[3] + "d"
+else:
+    if wordlist[4] not in irregular and wordlist[4] not in irregularpast and tense == "present":
+        if verb[-1] != "e":
+            wordlist[4] = wordlist[4] + "ed"
+        else:
+            wordlist[4] = wordlist[4] + "d"
+if wordlist[-1] == "me" or wordlist[-1] == "we":
+    wordlist[-1] = "them"
+if wordlist[-1] == "you":
+    wordlist[-1] = "me"
+if wordlist[-1] == "you all":
+    wordlist[-1] = "us"
+if wordlist[3] == "were":
+    if wordlist[2] == "he" or wordlist[2] == "she":
+        wordlist[3] = "was"
+irregular_past = {
+    "become": "became",
+    "begin": "began",
+    "bend": "bent",
+    "bite": "bit",
+    "bleed": "bled",
+    "blow": "blew",
+    "break": "broke",
+    "breed": "bred",
+    "bring": "brought",
+    "build": "built",
+    "burn": "burnt",
+    "buy": "bought",
+    "catch": "caught",
+    "choose": "chose",
+    "come": "came",
+    "do": "did",
+    "dig": "dug",
+    "draw": "drew",
+    "dream": "dreamt",
+    "drink": "drank",
+    "drive": "drove",
+    "eat": "ate",
+    "fall": "fell",
+    "feed": "fed",
+    "feel": "felt",
+    "fight": "fought",
+    "find": "found",
+    "fly": "flew",
+    "forget": "forgot",
+    "forgive": "forgave",
+    "freeze": "froze",
+    "get": "got",
+    "give": "gave",
+    "go": "went",
+    "grow": "grew",
+    "have": "had",
+    "hear": "heard",
+    "hide": "hid",
+    "hold": "held",
+    "keep": "kept",
+    "know": "knew",
+    "lay": "laid",
+    "lead": "led",
+    "lean": "leant",
+    "leave": "left",
+    "lend": "lent",
+    "lose": "lost",
+    "make": "made",
+    "mean": "meant",
+    "meet": "met",
+    "pay": "paid",
+    "ride": "rode",
+    "ring": "rang",
+    "rise": "rose",
+    "run": "ran",
+    "say": "said",
+    "see": "saw",
+    "sell": "sold",
+    "send": "sent",
+    "shake": "shook",
+    "shine": "shone",
+    "shoe": "shod",
+    "shoot": "shot",
+    "shrink": "shrank",
+    "sing": "sang",
+    "sink": "sank",
+    "sit": "sat",
+    "sleep": "slept",
+    "speak": "spoke",
+    "spend": "spent",
+    "spill": "spilt",
+    "speed": "sped",
+    "stand": "stood",
+    "steal": "stole",
+    "stick": "stuck",
+    "sting": "stung",
+    "stink": "stank",
+    "swear": "swore",
+    "sweep": "swept",
+    "swim": "swam",
+    "swing": "swung",
+    "take": "took",
+    "teach": "taught",
+    "tear": "tore",
+    "tell": "told",
+    "think": "thought",
+    "throw": "threw",
+    "understand": "understood",
+    "wake": "woke",
+    "wear": "wore",
+    "win": "won",
+    "write": "wrote"
+}
+if wordlist[3] in irregular_past:
+    wordlist[3] = irregular_past[wordlist[3]]
+if wordlist[3] == "hadn´t":
+    if wordlist[4] in irregular_past:
+        wordlist[4] = irregular_past[wordlist[4]]
+for i in range(len(wordlist)):
+    if wordlist[i] == "you":
+        wordlist[i] = "me"
+    if wordlist[i] == "this":
+        wordlist[i] = "that"
+    if wordlist[i] == "these":
+        wordlist[i] = "those"
+    if wordlist[i] == "here":
+        wordlist[i] = "there"
+    if wordlist[i] == "today":
+        wordlist[i] = "that day"
+    if wordlist[i] == "now":
+        wordlist[i] = "at the moment"
+    if wordlist[i] == "yesterday":
+        wordlist[i] = "the day before"
+    if wordlist[i] == "ago":
+        wordlist[i] = "then"
+    if wordlist[i] == "tomorrow":
+        wordlist[i] = "the next day"
+    if wordlist[i] == "tonight":
+        wordlist[i] = "that night"
+    if wordlist[i] == "next":
+        wordlist[i] = "the following"
+    if wordlist[i] == "last":
+        wordlist[i] = "the"
+        wordlist.append("before")
+    if wordlist[i] == "will":
+        wordlist[i] = "would"
+    if wordlist[i] == "can":
+        wordlist[i] = "could"
+    if wordlist[i] == "may":
+        wordlist[i] = "might"
+    if wordlist[i] == "must":
+        wordlist[i] = "had to"
+    if wordlist[i] == "don't" or wordlist[i] == "doesn't" or wordlist[i] == "do" and wordlist[i+1] == "not" :
+        wordlist[i] = "didn't"
+    if tense == "pastcontinuous":
+        if wordlist[i] == "was" or wordlist[i] == "were":
+            wordlist[i] = "had been"
+        if wordlist[i] == "was not" or wordlist[i] == "were not":
+            wordlist[i] = "had not been"
+    if wordlist[i] == "have" and tense != "modals" and tense != "future":
+        wordlist[i] = "had"
+if tense == "past":
+    wordlist.insert(3, "had")
+print("Reported Speech translation: " + ' '.join(wordlist))
+</py-script>
+</body>
+
+</html>
