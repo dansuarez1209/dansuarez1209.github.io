@@ -14,7 +14,7 @@
     </head>
     <body>
         <script type="mpy" terminal>
-print("Direct questions to reported questions translator v.1.0.5")
+print("Direct questions to reported questions translator v.1.0.6")
 sentence = input("Enter the sentence: ")
 wordlist = sentence.split()
 wordlist.insert(0, "They")
@@ -245,28 +245,55 @@ for i in range(len(wordlist)):
         if wordlist[i] == "I" or wordlist[i] == "we":
             if wordlist[0] != "You":
                 wordlist[i] = "they"
-            else:
+            elif wordlist[i] == "I":
                 wordlist[i] = "you"
+            elif wordlist[i] == "we":
+                wordlist[i] = "you all"
         if wordlist[i] == "me" or wordlist[i] == "us":
             if wordlist[0] != "You":
                 wordlist[i] = "them"
             else:
                 wordlist[i] = "you"
+        if wordlist[i] == "you" and wordlist[i-2] not in whwords:
+            if wordlist[i] == wordlist[3]:
+                wordlist[i] = "I"
+            elif wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                wordlist[i] = "I"
+        elif wordlist[i] == "you" and wordlist[i-2] in whwords:
+            if wordlist[i] == wordlist[4]:
+                wordlist[i] = "I"
+            elif wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                wordlist[i] = "I"
+        if wordlist[i] == "you" and wordlist[i-1] not in whwords and wordlist[0] != "you":
+            wordlist[i] = "me"
+        elif wordlist[i] == "you" and wordlist[i-1] in whwords:
+            wordlist[i] = "I"
         if wordlist[i] == "this":
             wordlist[i] = "that"
         if wordlist[i] == "these":
             wordlist[i] = "those"
-        if wordlist[i] == "you" and wordlist[0] != "You" and i<3:
-            wordlist[i] = "me"
-        if wordlist[i] == "you" and wordlist[0] != "You":
-            if i>3 or i==3:
-                wordlist[i] = "I"
         if wordlist[i] == "my":
             wordlist[i] = "their"
+        if wordlist[i] == "myself":
+            wordlist[i] = "themselves"
         if wordlist[i] == "your":
             wordlist[i] = "my"
+        if wordlist[i] == "yourself":
+            wordlist[i] = "myself"
         if wordlist[i] == "we":
             wordlist[i] = "they"
+        if wordlist[i] == "ourselves":
+            wordlist[i] = "themselves"
+        if wordlist[i] == "yourselves":
+            wordlist[i] = "ourselves"
+        if wordlist[i] == "Are" or wordlist[i] == "are" or wordlist[i] == "Is" or wordlist[i] == "is" or wordlist[i] == "Do" or wordlist[i] == "do" or wordlist[i] == "Does" or wordlist[i] == "does" or wordlist[i] == "Did" or wordlist[i] == "did" or wordlist[i] in modals:
+            if wordlist[i+1] == "not":
+                del wordlist[i+1]
+                wordlist[i] = wordlist[i] + "n't"
+                if wordlist[i] == "shalln't" or wordlist[i] == "Shalln't":
+                    wordlist[i] = "shan't"
+                if wordlist[i] == "willn't" or wordlist[i] == "Willn't":
+                    wordlist[i] = "won't"
         if wordlist[i] == "me" and wordlist[i+1] == "all" and i<3:
             wordlist[i] = "us"
             wordlist.remove(wordlist[i+1])
@@ -287,22 +314,44 @@ if wordlist[2] in whwords:
     if wordlist[3] == "Do" or wordlist[3] == "do" or wordlist[3] == "Does" or wordlist[3] == "does":
         wordlist.remove(wordlist[3])
         verb = list(wordlist[4])
+    if wordlist[3] == "Doesn't" or wordlist[3] == "doesn't":
+        if wordlist[4] != "he" and wordlist[4] != "she" and wordlist[4] != "it":
+            tense = "present_who"
+        else:
+            pass
     if wordlist[3] == "Did" or wordlist[3] == "did":
         wordlist.remove(wordlist[3])
         wordlist.insert(4, "had")
         tense = "past"
     if wordlist[3] == "Didn't" or wordlist[3] == "didn't":
-        wordlist.remove(wordlist[3])
-        wordlist.insert(4, "hadn't")
-        tense = "past"
+        if wordlist[2] != "who":
+            wordlist.remove(wordlist[3])
+            wordlist.insert(4, "hadn't")
+            tense = "past"
+        else:
+            verb = [*wordlist[4]]
+            wordlist.remove(wordlist[3])
+            tense = "negative_past_who"
+            if wordlist[3] in participles:
+                wordlist[3] = participles[wordlist[3]]
+            elif verb[-1] != "e":
+                wordlist[3] = wordlist[3] + "ed"
+            else:
+                wordlist[3] = wordlist[3] + "d"
+            wordlist[3] = "hadn't " + wordlist[3]
     if wordlist[3] == "was" or wordlist[3] == "were":
         del wordlist[3]
         tense = "pastcontinuous"
-    if wordlist[3].endswith("ed"):
+    if wordlist[3].endswith("ed") and tense != "negative_past_who":
         wordlist[3] = "had " + wordlist[3]
         tense = "past_who"
-    if wordlist[3] == "has":
+    if wordlist[2] == "who" and wordlist[3] == "had" or wordlist[2] == "who" and wordlist[3] == "hadn't" :
+        tense = "past_perfect_who"
+    if wordlist[2] == "who" and wordlist[3] == "has":
         wordlist[3] = "had"
+        tense = "perfect_who"
+    if wordlist[2] == "who" and wordlist[3] == "hasn't":
+        wordlist[3] = "hadn't"
         tense = "perfect_who"
     if verb == list(wordlist[3]) and verb[-1] == "s" and verb[-2] != "s" and wordlist[3] not in irregular:
         can_Add_participle_termination = False
@@ -417,7 +466,7 @@ if wordlist[2] == "Have" or wordlist[2] == "have" or wordlist[2] == "Has" or wor
     wordlist.insert(4, "had")
 if wordlist[2] in modals:
     tense = "modal"
-if wordlist[3] in modals and questiontype == "wh":
+if wordlist[3] in modals and questiontype == "wh" and tense != "past_perfect_who" and tense != "perfect_who":
     tense = "modal"
     if wordlist[4] not in determiners:
         wordlist[3], wordlist[4] = wordlist[4], wordlist[3]
@@ -433,7 +482,10 @@ if wordlist[2] == "Did" or wordlist[2] == "did":
         else:
             wordlist[5] = wordlist[5] + "d"
     else:
-        wordlist[5] = participles[wordlist[5]]
+        try:
+            wordlist[5] = participles[wordlist[5]]
+        except KeyError:
+            pass
 if wordlist[2] == "Didn't" or wordlist[2] == "didn't":
     tense = "pastsimple"
     wordlist.insert(4, "hadn't")
@@ -443,7 +495,10 @@ if wordlist[2] == "Didn't" or wordlist[2] == "didn't":
         else:
             wordlist[5] = wordlist[5] + "d"
     else:
-        wordlist[5] = participles[wordlist[5]]
+        try:
+            wordlist[5] = participles[wordlist[5]]
+        except KeyError:
+            pass
 if wordlist[2] == "Had" or wordlist[2] == "had":
     tense = "pastperfect"
 try:
@@ -466,7 +521,7 @@ if questiontype == "yes-no" or questiontype == "mixed":
         wordlist.remove(wordlist[3])
     else:
         wordlist[3], wordlist[4] = wordlist[4], wordlist[3]
-elif tense != "perfect_who":
+elif tense != "perfect_who" and tense != "past_perfect_who":
     if wordlist[3] == "had":
         wordlist[3], wordlist[4] = wordlist[4], wordlist[3]
     if wordlist[3] == "have":
