@@ -220,7 +220,7 @@ irregular_past = {
 }
 if lastword[-1] != "?" and wordlist[-1] != "asked":
     print("Invalid sentence.")
-    exit()
+    raise SystemExit
 elif wordlist[-1] != "asked":
     lastword.remove(lastword[-1])
     wordlist[-1] = ''.join(lastword)
