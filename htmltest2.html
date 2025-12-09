@@ -329,7 +329,7 @@ if wordlist[2] in whwords:
             wordlist.insert(4, "hadn't")
             tense = "past"
         else:
-            verb = [*wordlist[4]]
+            verb = list(wordlist[4])
             wordlist.remove(wordlist[3])
             tense = "negative_past_who"
             if wordlist[3] in participles:
