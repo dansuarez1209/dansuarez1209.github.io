@@ -549,7 +549,10 @@ for i in range(len(wordlist)):
     if wordlist[i] == "must" or wordlist[i] == "Must":
         wordlist[i] = "had to"
     if wordlist[i] == "mustn't" or wordlist[i] == "Mustn't":
-        wordlist[i] = "wasn't allowed to"
+        if wordlist[i-1] == "we" or wordlist[i-1] == "they":
+            wordlist[i] = "weren't allowed to"
+        else:
+            wordlist[i] = "wasn't allowed to"
     if wordlist[i] == "haven't" or wordlist[i] == "Haven't" or wordlist[i] == "hasn't" or wordlist[i] == "Hasn't":
         wordlist[i] = "hadn't"
     if wordlist[i] == "don't" or wordlist[i] == "Don't" or wordlist[i] == "doesn't" or wordlist[i] == "Doesn't":
