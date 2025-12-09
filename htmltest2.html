@@ -14,7 +14,7 @@
     </head>
     <body>
         <script type="mpy" terminal>
-print("Direct questions to reported questions translator v.1.0.4")
+print("Direct questions to reported questions translator v.1.0.5")
 sentence = input("Enter the sentence: ")
 wordlist = sentence.split()
 wordlist.insert(0, "They")
@@ -22,10 +22,10 @@ wordlist.insert(1, "asked")
 tense = "present"
 questiontype = "yes-no"
 try:
-    verb = [*wordlist[4]]
+    verb = list(wordlist[4])
 except IndexError:
     pass
-lastword = [*wordlist[-1]]
+lastword = list(wordlist[-1])
 irregular = ["am", "is", "are", "was", "were", "beat", "become", "begin", "bend", "bet", "bite", "bleed", "blow", "break", "breed", "bring", "build", "burn", "buy", "catch", "choose", "come", "cost", "cut", "do", "don't", "didn't", "doesn't", "dig", "draw", "dream", "drink", "drive", "eat", "fall", "feed", "feel", "fight", "find", "fly", "forget", "forgive", "freeze", "get", "give", "go", "grow", "have", "has", "had", "hear", "hide", "hit", "hold", "hurt", "keep", "know", "lay", "lead", "lean", "leave", "lend", "let", "lose", "make", "mean", "meet", "pay", "put", "quit", "read", "ride", "ring", "rise", "run", "say", "see", "sell", "send", "set", "shake", "shine", "shoe", "shoot", "shrink", "shut", "sing", "sink", "sit", "sleep", "speak", "spend", "spill", "spread", "speed", "stand", "steal", "stick", "sting", "stink", "swear", "sweep", "swim", "swing", "take", "teach", "tear", "tell", "think", "throw", "understand", "wake", "wear", "win", "write"]
 whwords = ["what", "What", "which", "Which", "How", "how", "When", "when", "Who", "who", "Why", "why", "Where", "where", "Whose", "whose", "Whom", "whom" ]
 determiners = ["a", "an", "the", "this", "that", "these", "those", "my", "your", "his", "her", "its", "our", "their", "whose", "some", "any", "many", "few", "several", "all", "much", "little", "enough", "each", "every", "either", "neither", "no", "neither", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "A", "An", "The", "This", "That", "These", "Those", "My", "Your", "His", "Her", "Its", "Our", "Their", "Whose", "Some", "Any", "Many", "Few", "Several", "All", "Much", "Little", "Enough", "Each", "Every", "Either", "Neither", "No", "Neither", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
@@ -225,7 +225,8 @@ elif wordlist[-1] != "asked":
     lastword.remove(lastword[-1])
     wordlist[-1] = ''.join(lastword)
 if wordlist[-1] == "asked":
-    wordlist[0] = wordlist[-2].capitalize()
+    w = str(wordlist[-2])
+    wordlist[0] = w[:1].upper() + w[1:]
     wordlist.pop()
     wordlist.pop()
     temp_word = wordlist[2]
@@ -237,7 +238,7 @@ if wordlist[-1] == "asked":
     temp_word = wordlist[-1]
     wordlist[-1] = temp_word[:-1]
 if len(wordlist) == 3 and wordlist[2] in whwords:
-    wordlist.append("")
+    wordlist.append(" ")
     single_wh_word = True
 for i in range(len(wordlist)):
     try:
@@ -282,10 +283,10 @@ for i in range(len(wordlist) - 1):
 if wordlist[2] in whwords:
     questiontype = "wh"
     wordlist[2] = wordlist[2].lower()
-    verb = [*wordlist[3]]
+    verb = list(wordlist[3])
     if wordlist[3] == "Do" or wordlist[3] == "do" or wordlist[3] == "Does" or wordlist[3] == "does":
         wordlist.remove(wordlist[3])
-        verb = [*wordlist[4]]
+        verb = list(wordlist[4])
     if wordlist[3] == "Did" or wordlist[3] == "did":
         wordlist.remove(wordlist[3])
         wordlist.insert(4, "had")
@@ -303,7 +304,7 @@ if wordlist[2] in whwords:
     if wordlist[3] == "has":
         wordlist[3] = "had"
         tense = "perfect_who"
-    if verb == [*wordlist[3]] and verb[-1] == "s" and verb[-2] != "s" and wordlist[3] not in irregular:
+    if verb == list(wordlist[3]) and verb[-1] == "s" and verb[-2] != "s" and wordlist[3] not in irregular:
         can_Add_participle_termination = False
         tense = "present_who"
         del verb[-1]
@@ -330,7 +331,7 @@ if wordlist[2] in whwords:
         else:
             wordlist.append(wordlist[3])
             wordlist.remove(wordlist[3])
-            noun = [*wordlist[4]]
+            noun = list(wordlist[4])
             can_Add_participle_termination = False
             try:
                 if noun[-1] == "s":
@@ -349,7 +350,7 @@ if wordlist[2] in whwords:
         else:
             wordlist.append(wordlist[3])
             wordlist.remove(wordlist[3])
-            noun = [*wordlist[4]]
+            noun = list(wordlist[4])
             can_Add_participle_termination = False
             try:
                 if noun[-1] == "s":
@@ -362,7 +363,7 @@ for i in range(len(wordlist)):
     if wordlist[i] in whwords and questiontype == "yes-no":
         questiontype = "mixed"
         verb = wordlist[i+2]
-        temp_term = [*verb]
+        temp_term = list(verb)
         if wordlist[i+1] in modals:
             tense = "modal_who_mixed"
         if wordlist[i+2] in modals:
@@ -428,17 +429,21 @@ if wordlist[2] == "Did" or wordlist[2] == "did":
     wordlist.insert(4, "had")
     if wordlist[5] not in irregular:
         if verb[-1] != "e":
-            wordlist[-2] = wordlist[-2] + "ed"
+            wordlist[5] = wordlist[5] + "ed"
         else:
-            wordlist[-2] = wordlist[-2] + "d"
+            wordlist[5] = wordlist[5] + "d"
+    else:
+        wordlist[5] = participles[wordlist[5]]
 if wordlist[2] == "Didn't" or wordlist[2] == "didn't":
     tense = "pastsimple"
     wordlist.insert(4, "hadn't")
     if wordlist[5] not in irregular:
         if verb[-1] != "e":
-            wordlist[-2] = wordlist[-2] + "ed"
+            wordlist[5] = wordlist[5] + "ed"
         else:
-            wordlist[-2] = wordlist[-2] + "d"
+            wordlist[5] = wordlist[5] + "d"
+    else:
+        wordlist[5] = participles[wordlist[5]]
 if wordlist[2] == "Had" or wordlist[2] == "had":
     tense = "pastperfect"
 try:
