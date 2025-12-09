@@ -286,7 +286,7 @@ for i in range(len(wordlist)):
             wordlist[i] = "themselves"
         if wordlist[i] == "yourselves":
             wordlist[i] = "ourselves"
-        if wordlist[i] == "Are" or wordlist[i] == "are" or wordlist[i] == "Is" or wordlist[i] == "is" or wordlist[i] == "Do" or wordlist[i] == "do" or wordlist[i] == "Does" or wordlist[i] == "does" or wordlist[i] == "Did" or wordlist[i] == "did" or wordlist[i] in modals:
+        if wordlist[i] == "Are" or wordlist[i] == "are" or wordlist[i] == "Is" or wordlist[i] == "is" or wordlist[i] == "Do" or wordlist[i] == "do" or wordlist[i] == "Does" or wordlist[i] == "does" or wordlist[i] == "Did" or wordlist[i] == "did" or wordlist[i] == "Have" or wordlist[i] == "have" or wordlist[i] == "Has" or wordlist[i] == "has" or wordlist[i] == "Had" or wordlist[i] == "had" or wordlist[i] in modals:
             if wordlist[i+1] == "not":
                 del wordlist[i+1]
                 wordlist[i] = wordlist[i] + "n't"
