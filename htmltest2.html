@@ -224,6 +224,11 @@ if lastword[-1] != "?" and wordlist[-1] != "asked":
 elif wordlist[-1] != "asked":
     lastword.remove(lastword[-1])
     wordlist[-1] = ''.join(lastword)
+    try:
+        if wordlist[-1] == wordlist[4]:
+            verb = list(wordlist[4])
+    except IndexError:
+        pass
 if wordlist[-1] == "asked":
     w = str(wordlist[-2])
     wordlist[0] = w[:1].upper() + w[1:]
@@ -237,6 +242,11 @@ if wordlist[-1] == "asked":
     wordlist[-1] = temp_word[:-1]
     temp_word = wordlist[-1]
     wordlist[-1] = temp_word[:-1]
+    try:
+        if wordlist[-1] == wordlist[4]:
+            verb = list(wordlist[4])
+    except IndexError:
+        pass
 if len(wordlist) == 3 and wordlist[2] in whwords:
     wordlist.append(" ")
     single_wh_word = True
@@ -312,11 +322,14 @@ if wordlist[2] in whwords:
     wordlist[2] = wordlist[2].lower()
     verb = list(wordlist[3])
     if wordlist[3] not in modals:
-        if wordlist[3] != "Am" and wordlist[3] != "am" and wordlist[3] != "Are" and wordlist[3] != "are" and wordlist[3] != "Is" and wordlist[3] != "is" and wordlist[3] != "Aren't" and wordlist[3] != "aren't" and wordlist[3] != "Isn't" and wordlist[3] != "isn't" and wordlist[3] != "Do" and wordlist[3] != "do" and wordlist[3] != "Does" and wordlist[3] != "does" and wordlist[3] != "Did" and wordlist[3] != "did" and wordlist[3] != "Have" and wordlist[3] != "have" and wordlist[3] != "Has" and wordlist[3] != "has" and wordlist[3] != "Had" and wordlist[3] != "had":
+        if wordlist[3] != "Am" and wordlist[3] != "am" and wordlist[3] != "Are" and wordlist[3] != "are" and wordlist[3] != "Is" and wordlist[3] != "is" and wordlist[3] != "Aren't" and wordlist[3] != "aren't" and wordlist[3] != "Isn't" and wordlist[3] != "isn't" and wordlist[3] != "Do" and wordlist[3] != "do" and wordlist[3] != "Does" and wordlist[3] != "does" and wordlist[3] != "Did" and wordlist[3] != "did" and wordlist[3] != "Have" and wordlist[3] != "have" and wordlist[3] != "Has" and wordlist[3] != "has" and wordlist[3] != "Had" and wordlist[3] != "had" and wordlist[3] != " ":
             wordlist[2] = wordlist[2] + " " + wordlist[3]
             del wordlist[3]
-            if wordlist[4] == "me":
-                wordlist[4] = "I"
+            try:
+                if wordlist[4] == "me":
+                    wordlist[4] = "I"
+            except IndexError:
+                pass
     if wordlist[3] == "Do" or wordlist[3] == "do" or wordlist[3] == "Does" or wordlist[3] == "does":
         wordlist.remove(wordlist[3])
         verb = list(wordlist[4])
