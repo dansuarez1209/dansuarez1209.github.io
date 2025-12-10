@@ -218,6 +218,22 @@ irregular_past = {
     "win": "won",
     "write": "wrote"
 }
+result = []
+i = 0
+while i < len(wordlist):
+    charlist = list(wordlist[i])
+    if charlist[-1] == ",":
+        phrase = [wordlist[i+1]]
+        result.append(wordlist[i])
+        i += 2
+        while i < len(wordlist) and wordlist[i] != "asked":
+            phrase.append(wordlist[i])
+            i += 1
+        result.append(" ".join(phrase))
+    else:
+        result.append(wordlist[i])
+        i += 1
+wordlist = result
 if lastword[-1] != "?" and wordlist[-1] != "asked":
     print("Invalid sentence.")
     raise SystemExit
