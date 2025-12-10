@@ -304,13 +304,26 @@ for i in range(len(wordlist)):
                     wordlist[i] = "shan't"
                 if wordlist[i] == "willn't" or wordlist[i] == "Willn't":
                     wordlist[i] = "won't"
-        if wordlist[i] == "me" and wordlist[i+1] == "all" and i<3:
-            wordlist[i] = "us"
-            wordlist.remove(wordlist[i+1])
-        if wordlist[i] == "I" and wordlist[i+1] == "all":
-            if i>3 or i==3:
+        if wordlist[i] == "I" and wordlist[i+1] == "all" and wordlist[i-2] not in whwords:
+            if wordlist[i] == wordlist[3]:
                 wordlist[i] = "we"
-                wordlist.remove(wordlist[i+1])
+                del wordlist[i+1]
+            elif wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                wordlist[i] = "we"
+                del wordlist[i+1]
+        elif wordlist[i] == "I" and wordlist[i+1] == "all" and wordlist[i-2] in whwords:
+            if wordlist[i] == wordlist[4]:
+                wordlist[i] = "we"
+                del wordlist[i+1]
+            elif wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                wordlist[i] = "we"
+                del wordlist[i+1]
+        if wordlist[i] == "me" and wordlist[i-1] not in whwords and wordlist[0] != "you" and wordlist[i+1] == "all":
+            wordlist[i] = "us"
+            del wordlist[i+1]
+        elif wordlist[i] == "I" and wordlist[i+1] == "all" and wordlist[i-1] in whwords:
+            wordlist[i] = "we"
+            del wordlist[i+1]
     except IndexError:
         pass
 for i in range(len(wordlist) - 1):
