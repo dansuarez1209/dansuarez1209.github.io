@@ -14,7 +14,7 @@
     </head>
     <body>
         <script type="mpy" terminal>
-print("Direct questions to reported questions translator v.1.0.6")
+print("Direct questions to reported questions translator v.1.0.7")
 sentence = input("Enter the sentence: ")
 wordlist = sentence.split()
 wordlist.insert(0, "They")
@@ -243,9 +243,9 @@ if len(wordlist) == 3 and wordlist[2] in whwords:
 for i in range(len(wordlist)):
     try:
         if wordlist[i] == "I" or wordlist[i] == "we":
-            if wordlist[0] != "You":
+            if wordlist[i] != wordlist[0] and wordlist[0] != "You":
                 wordlist[i] = "they"
-            elif wordlist[i] == "I":
+            elif wordlist[i] == "I" and wordlist[i] != wordlist[0]:
                 wordlist[i] = "you"
             elif wordlist[i] == "we":
                 wordlist[i] = "you all"
@@ -311,6 +311,12 @@ if wordlist[2] in whwords:
     questiontype = "wh"
     wordlist[2] = wordlist[2].lower()
     verb = list(wordlist[3])
+    if wordlist[3] not in modals:
+        if wordlist[3] != "Am" and wordlist[3] != "am" and wordlist[3] != "Are" and wordlist[3] != "are" and wordlist[3] != "Is" and wordlist[3] != "is" and wordlist[3] != "Aren't" and wordlist[3] != "aren't" and wordlist[3] != "Isn't" and wordlist[3] != "isn't" and wordlist[3] != "Do" and wordlist[3] != "do" and wordlist[3] != "Does" and wordlist[3] != "does" and wordlist[3] != "Did" and wordlist[3] != "did" and wordlist[3] != "Have" and wordlist[3] != "have" and wordlist[3] != "Has" and wordlist[3] != "has" and wordlist[3] != "Had" and wordlist[3] != "had":
+            wordlist[2] = wordlist[2] + " " + wordlist[3]
+            del wordlist[3]
+            if wordlist[4] == "me":
+                wordlist[4] = "I"
     if wordlist[3] == "Do" or wordlist[3] == "do" or wordlist[3] == "Does" or wordlist[3] == "does":
         wordlist.remove(wordlist[3])
         verb = list(wordlist[4])
@@ -466,7 +472,7 @@ if wordlist[2] == "Have" or wordlist[2] == "have" or wordlist[2] == "Has" or wor
     wordlist.insert(4, "had")
 if wordlist[2] in modals:
     tense = "modal"
-if wordlist[3] in modals and questiontype == "wh" and tense != "past_perfect_who" and tense != "perfect_who":
+if wordlist[3] in modals and questiontype == "wh" and tense != "present_who" and tense != "past_perfect_who" and tense != "perfect_who":
     tense = "modal"
     if wordlist[4] not in determiners:
         wordlist[3], wordlist[4] = wordlist[4], wordlist[3]
@@ -538,11 +544,19 @@ if wordlist[3] != "I" and wordlist[3] != "i" and wordlist[3] != "You" and wordli
     if wordlist[4] == "is":
         wordlist[4] = "was"
 try:
-   if wordlist[4] not in irregular and tense == "present" and can_Add_participle_termination == True:
-       if verb[-1] != "e":
-           wordlist[4] = wordlist[4] + "ed"
-       else:
-           wordlist[4] = wordlist[4] + "d"
+    if wordlist[4] not in irregular and wordlist[3] not in determiners and tense == "present" and can_Add_participle_termination == True:
+        if verb[-1] != "e":
+            wordlist[4] = wordlist[4] + "ed"
+        else:
+            wordlist[4] = wordlist[4] + "d"
+    elif wordlist[5] not in irregular and wordlist[3] in determiners and tense == "present" and can_Add_participle_termination == True:
+        verb = list(wordlist[5])
+        if verb[-1] != "e":
+            wordlist[5] = wordlist[5] + "ed"
+        else:
+            wordlist[5] = wordlist[5] + "d"
+    elif wordlist[5] in irregular_past and wordlist[3] in determiners and tense == "present" and can_Add_participle_termination == True:
+        wordlist[5] = irregular_past[wordlist[5]]
 except IndexError:
     pass
 if wordlist[3] == "were":
@@ -556,12 +570,12 @@ except IndexError:
 if tense == "continuous":
     if wordlist[3] == "I" or wordlist[3] == "i" or wordlist[3] == "he" or wordlist[3] == "she" or wordlist[3] == "it":
         wordlist.insert(4, "was")
-    if wordlist[3] == "you" or wordlist[3] == "we" or wordlist[3] == "they":
+    if wordlist[3] == "you" or wordlist[3] == "we" or wordlist[3] == "they" or wordlist[3] == "you all":
         wordlist.insert(4, "were")
 if tense == "negativecontinuous":
     if wordlist[3] == "I" or wordlist[3] == "i" or wordlist[3] == "he" or wordlist[3] == "she" or wordlist[3] == "it":
         wordlist.insert(4, "wasn't")
-    if wordlist[3] == "you" or wordlist[3] == "we" or wordlist[3] == "they":
+    if wordlist[3] == "you" or wordlist[3] == "we" or wordlist[3] == "they" or wordlist[3] == "you all":
         wordlist.insert(4, "weren't")     
 if tense == "pastcontinuous":
     wordlist.insert(4, "had been")
