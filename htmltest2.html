@@ -1123,6 +1123,8 @@ if wordlist[2] == "Have" or wordlist[2] == "have" or wordlist[2] == "Has" or wor
 if wordlist[2] in modals:
     tense = "modal"
 if wordlist[3] in modals and questiontype == "wh" and tense != "present_who" and tense != "past_perfect_who" and tense != "perfect_who" and tense != "negative_continuous_wh" and tense != "modal_what":
+    tense = "modal"
+    if wordlist[4] not in determiners and not wordlist[4].endswith("ing"):
         wordlist[3], wordlist[4] = wordlist[4], wordlist[3]
     else:
         wordlist.insert(-1, wordlist[3])
