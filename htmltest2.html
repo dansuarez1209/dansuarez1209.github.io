@@ -1056,7 +1056,7 @@ for i in range(len(wordlist)):
             tense = "modal_who_mixed"
         if wordlist[i] != wordlist[-2]:
             if wordlist[i+2] in modals:
-            tense = "modal_mixed"
+               tense = "modal_mixed"
         if temp_term[-1] != "d" and temp_term[-2] != "e" and verb not in irregular_past.values():
             if temp_term[-1] == "s" and temp_term[-2] != "s" and verb not in irregular:
                 del temp_term[-1]
