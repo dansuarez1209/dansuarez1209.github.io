@@ -1,5 +1,4 @@
-This project will include six translators made on Python, from active to passive voice and vice versa, 
-from reported speech to direct speech and vice versa and reported questions to direct questions and vice versa
+This project will include three translators made on Python, respectively active to passive voice, reported speech to direct speech and reported questions to direct questions.
 
 [Active to passive voice](htmltest.html)
 
