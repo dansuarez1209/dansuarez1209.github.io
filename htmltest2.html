@@ -30,6 +30,7 @@ irregular = ["am", "is", "are", "was", "were", "beat", "become", "begin", "bend"
 whwords = ["what", "What", "which", "Which", "How", "how", "When", "when", "Who", "who", "Why", "why", "Where", "where", "Whose", "whose", "Whom", "whom" ]
 determiners = ["a", "an", "the", "this", "that", "these", "those", "my", "your", "his", "her", "its", "our", "their", "whose", "some", "any", "many", "few", "several", "all", "much", "little", "enough", "each", "every", "either", "neither", "no", "neither", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "A", "An", "The", "This", "That", "These", "Those", "My", "Your", "His", "Her", "Its", "Our", "Their", "Whose", "Some", "Any", "Many", "Few", "Several", "All", "Much", "Little", "Enough", "Each", "Every", "Either", "Neither", "No", "Neither", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
 modals = ["Will", "will", "Would", "would", "May", "may", "Might", "might", "Must", "must", "Shall", "shall", "Should", "should", "Can", "can", "Could", "could", "Won't", "won't", "Wouldn't", "wouldn't", "Mayn't", "mayn't", "Mightn't", "mightn't", "Mustn't", "mustn't", "Shan't", "shan't", "Shouldn't", "shouldn't", "Can't", "can't", "Couldn't", "couldn't", "Haven't", "haven't", "Hadn't", "Hasn't", "hasn't", "hadn't", "Don't", "don't", "Doesn't", "doesn't", "Didn't", "didn't", "Weren't", "weren't", "Wasn't", "wasn't"]
+adverbs = ["always", "often", "sometimes", "seldom", "never", "almost", "rather", "just", "even", "ever"]
 can_Add_participle_termination = True
 single_wh_word = False
 plural_noun = False
@@ -276,8 +277,8 @@ if wordlist[-1] == "asked":
 if len(wordlist) == 3 and wordlist[2] in whwords:
     wordlist.append(" ")
     single_wh_word = True
-for i in range(len(wordlist)):
-    try:
+try:
+    for i in range(len(wordlist)):
         if wordlist[i] == "this":
             wordlist[i] = "that"
         if wordlist[i] == "these":
@@ -892,8 +893,8 @@ for i in range(len(wordlist)):
                     wordlist[i] = "shan't"
                 if wordlist[i] == "willn't" or wordlist[i] == "Willn't":
                     wordlist[i] = "won't"
-    except IndexError:
-        pass
+except IndexError:
+    pass
 try:
     for i in range(len(wordlist)):
         if wordlist[i] == "and":
