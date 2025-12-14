@@ -14,7 +14,7 @@
     </head>
     <body>
         <script type="mpy" terminal>
-print("Direct questions to reported questions translator v.1.0.8")
+print("Direct questions to reported questions translator v.1.0.9")
 sentence = input("Enter the sentence: ")
 wordlist = sentence.split()
 wordlist.insert(0, "They")
@@ -34,6 +34,7 @@ adverbs = ["always", "often", "sometimes", "seldom", "never", "almost", "rather"
 can_Add_participle_termination = True
 single_wh_word = False
 plural_noun = False
+adverb = False
 participles = {
     "beat": "beaten",
     "begin": "begun",
@@ -283,24 +284,55 @@ try:
             wordlist[i] = "that"
         if wordlist[i] == "these":
             wordlist[i] = "those"
-        if wordlist[i] == "you" and wordlist[i+1] == "all":
-            wordlist[i] = "you all"
-            del wordlist[i+1]
+        if wordlist[i] == "you" and wordlist[i] != wordlist[-1]:
+            if wordlist[i+1] == "all":
+                wordlist[i] = "you all"
+                del wordlist[i+1]
+        if wordlist[i] in adverbs or wordlist[i].endswith("ly"):
+            verb = list(wordlist[i+1])
+            adverb = True
         if wordlist[0] == "I" or wordlist[0] == "We":
             if wordlist[1] == "asked him":
                 if wordlist[i] == "you":
-                    wordlist[i] = "he"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "he"
+                    else:
+                        wordlist[i] = "him"
                 if wordlist[i] == "your" or wordlist[i] == "yours":
                     wordlist[i] = "his"
                 if wordlist[i] == "yourself":
                     wordlist[i] = "himself"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "they"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
                 if wordlist[i] == "yourselves":
                     wordlist[i] = "themselves"
             elif wordlist[1] == "asked her":
                 if wordlist[i] == "you":
-                    wordlist[i] = "she"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "she"
+                    else:
+                        wordlist[i] = "her"
                 if wordlist[i] == "your":
                     wordlist[i] = "her"
                 if wordlist[i] == "yours":
@@ -308,12 +340,30 @@ try:
                 if wordlist[i] == "yourself":
                     wordlist[i] = "herself"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "they"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
                 if wordlist[i] == "yourselves":
                     wordlist[i] = "themselves"
             elif wordlist[1] != "asked you" and wordlist[1] != "asked you all":
                 if wordlist[i] == "you" or wordlist[i] == "you all":
-                    wordlist[i] = "they"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
                 if wordlist[i] == "your":
                     wordlist[i] = "their"
                 if wordlist[i] == "yours":
@@ -331,7 +381,16 @@ try:
                 if wordlist[i] == "myself":
                     wordlist[i] == "temp_myself"
                 if wordlist[i] == "you":
-                    wordlist[i] = "temp_you"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "temp_you_subject"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "temp_you_subject"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "temp_you_subject"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "temp_you_subject"
+                    else:
+                        wordlist[i] = "temp_you_object"
                 if wordlist[i] == "your":
                     wordlist[i] = "temp_your"
                 if wordlist[i] == "yours":
@@ -343,12 +402,30 @@ try:
                 if wordlist[i] == "ourselves":
                     wordlist[i] = "temp_ourselves"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "temp_you_all"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "temp_you_all_subject"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "temp_you_all_subject"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "temp_you_all_subject"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "temp_you_all_subject"
+                    else:
+                        wordlist[i] = "temp_you_all_object"
                 if wordlist[i] == "yourselves":
                     wordlist[i] = "temp_yourselves"
             elif wordlist[1] == "asked him":
                 if wordlist[i] == "you":
-                    wordlist[i] = "he"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "he"
+                    else:
+                        wordlist[i] = "him"
                 if wordlist[i] == "your" or wordlist[i] == "yours":
                     wordlist[i] = "his"
                 if wordlist[i] == "yourself":
@@ -362,7 +439,16 @@ try:
                 if wordlist[i] == "myself":
                     wordlist[i] == "yourself"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "they"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
                 if wordlist[i] == "yourselves":
                     wordlist[i] = "themselves"
                 if wordlist[i] == "we" or wordlist[i] == "us":
@@ -371,7 +457,16 @@ try:
                     wordlist[i] = "yourselves"
             elif wordlist[1] == "asked her":
                 if wordlist[i] == "you":
-                    wordlist[i] = "she"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "she"
+                    else:
+                        wordlist[i] = "her"
                 if wordlist[i] == "your":
                     wordlist[i] = "her"
                 if wordlist[i] == "yours":
@@ -387,7 +482,16 @@ try:
                 if wordlist[i] == "myself":
                     wordlist[i] == "yourself"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "they"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
                 if wordlist[i] == "yourselves":
                     wordlist[i] = "themselves"
                 if wordlist[i] == "we" or wordlist[i] == "us":
@@ -404,7 +508,16 @@ try:
                 if wordlist[i] == "myself":
                     wordlist[i] == "temp_myself"
                 if wordlist[i] == "you":
-                    wordlist[i] = "temp_you"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "temp_you_subject"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "temp_you_subject"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "temp_you_subject"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "temp_you_subject"
+                    else:
+                        wordlist[i] = "temp_you_object"
                 if wordlist[i] == "your":
                     wordlist[i] = "temp_your_plural"
                 if wordlist[i] == "yours":
@@ -416,12 +529,30 @@ try:
                 if wordlist[i] == "ourselves":
                     wordlist[i] = "temp_ourselves"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "temp_you_all"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "temp_you_all_subject"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "temp_you_all_subject"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "temp_you_all_subject"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "temp_you_all_subject"
+                    else:
+                        wordlist[i] = "temp_you_all_object"
                 if wordlist[i] == "yourselves":
                     wordlist[i] = "temp_yourselves"
             else:
                 if wordlist[i] == "you" or wordlist[i] == "you all":
-                    wordlist[i] = "they"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
                 if wordlist[i] == "your":
                     wordlist[i] = "their"
                 if wordlist[i] == "yours":
@@ -451,7 +582,16 @@ try:
                 if wordlist[i] == "myself":
                     wordlist[i] = "himself"
                 if wordlist[i] == "you":
-                    wordlist[i] = "I"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "I"
+                    else:
+                        wordlist[i] = "me"
                 if wordlist[i] == "your":
                     wordlist[i] = "my"
                 if wordlist[i] == "yours":
@@ -469,7 +609,16 @@ try:
                 if wordlist[i] == "ourselves":
                     wordlist[i] = "themselves"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "we"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "we"
+                    else:
+                        wordlist[i] = "us"
                 if wordlist[i] == "yourselves":
                     wordlist[i] = "ourselves"
             elif wordlist[1] == "asked you" or wordlist[1] == "asked you all":
@@ -501,7 +650,16 @@ try:
                 if wordlist[i] == "myself" or wordlist[i] == "yourself":
                     wordlist[i] = "himself"
                 if wordlist[i] == "you":
-                    wordlist[i] = "he"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "he"
+                    else:
+                        wordlist[i] = "him"
                 if wordlist[i] == "we":
                     wordlist[i] = "they"
                 if wordlist[i] == "us":
@@ -513,7 +671,16 @@ try:
                 if wordlist[i] == "ourselves" or wordlist[i] == "yourselves":
                     wordlist[i] = "themselves"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "they"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
             elif wordlist[1] == "asked her":
                 if wordlist[i] == "I":
                     wordlist[i] = "he"
@@ -524,7 +691,16 @@ try:
                 if wordlist[i] == "myself":
                     wordlist[i] = "himself"
                 if wordlist[i] == "you":
-                    wordlist[i] = "she"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "she"
+                    else:
+                        wordlist[i] = "her"
                 if wordlist[i] == "your":
                     wordlist[i] = "her"
                 if wordlist[i] == "yours":
@@ -542,7 +718,16 @@ try:
                 if wordlist[i] == "ourselves" or wordlist[i] == "yourselves":
                     wordlist[i] = "themselves"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "they"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
             elif wordlist[1] == "asked us":
                 if wordlist[i] == "I":
                     wordlist[i] = "he"
@@ -553,7 +738,16 @@ try:
                 if wordlist[i] == "myself":
                     wordlist[i] = "himself"
                 if wordlist[i] == "you":
-                    wordlist[i] = "I"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "I"
+                    else:
+                        wordlist[i] = "me"
                 if wordlist[i] == "your":
                     wordlist[i] = "our"
                 if wordlist[i] == "yours":
@@ -571,7 +765,16 @@ try:
                 if wordlist[i] == "ourselves":
                     wordlist[i] = "themselves"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "we"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "we"
+                    else:
+                        wordlist[i] = "us"
                 if wordlist[i] == "yourselves":
                     wordlist[i] = "ourselves"
             else:
@@ -583,8 +786,17 @@ try:
                     wordlist[i] = "his"
                 if wordlist[i] == "myself":
                     wordlist[i] = "himself"
-                if wordlist[i] == "you":
-                    wordlist[i] = "they"
+                if wordlist[i] == "you" or wordlist[i] == "you all":
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
                 if wordlist[i] == "your" or wordlist[i] == "our":
                     wordlist[i] = "their"
                 if wordlist[i] == "yours" or wordlist[i] == "ours":
@@ -595,8 +807,6 @@ try:
                     wordlist[i] = "they"
                 if wordlist[i] == "us":
                     wordlist[i] = "them"
-                if wordlist[i] == "you all":
-                    wordlist[i] = "they"
         elif wordlist[0] == "She":
             if wordlist[1] == "asked" or wordlist[1] == "asked me":
                 if wordlist[i] == "I":
@@ -608,7 +818,16 @@ try:
                 if wordlist[i] == "myself":
                     wordlist[i] = "herself"
                 if wordlist[i] == "you":
-                    wordlist[i] = "I"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "I"
+                    else:
+                        wordlist[i] = "me"
                 if wordlist[i] == "your":
                     wordlist[i] = "my"
                 if wordlist[i] == "yours":
@@ -626,7 +845,16 @@ try:
                 if wordlist[i] == "ourselves":
                     wordlist[i] = "themselves"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "we"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "we"
+                    else:
+                        wordlist[i] = "us"
                 if wordlist[i] == "yourselves":
                     wordlist[i] = "ourselves"
             elif wordlist[1] == "asked you" or wordlist[1] == "asked you all":
@@ -658,7 +886,16 @@ try:
                 if wordlist[i] == "myself":
                     wordlist[i] = "herself"
                 if wordlist[i] == "you":
-                    wordlist[i] = "he"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "he"
+                    else:
+                        wordlist[i] = "him"
                 if wordlist[i] == "your" or wordlist[i] == "yours":
                     wordlist[i] = "his"
                 if wordlist[i] == "yourself":
@@ -674,7 +911,16 @@ try:
                 if wordlist[i] == "ourselves" or wordlist[i] == "yourselves":
                     wordlist[i] = "themselves"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "they"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
             elif wordlist[1] == "asked her":
                 if wordlist[i] == "I":
                     wordlist[i] = "she"
@@ -685,7 +931,16 @@ try:
                 if wordlist[i] == "myself" or wordlist[i] == "yourself":
                     wordlist[i] = "herself"
                 if wordlist[i] == "you":
-                    wordlist[i] = "she"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "she"
+                    else:
+                        wordlist[i] = "her"
                 if wordlist[i] == "we":
                     wordlist[i] = "they"
                 if wordlist[i] == "us":
@@ -697,7 +952,16 @@ try:
                 if wordlist[i] == "ourselves" or wordlist[i] == "yourselves":
                     wordlist[i] = "themselves"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "they"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
             elif wordlist[1] == "asked us":
                 if wordlist[i] == "I":
                     wordlist[i] = "she"
@@ -708,7 +972,16 @@ try:
                 if wordlist[i] == "myself":
                     wordlist[i] = "herself"
                 if wordlist[i] == "you":
-                    wordlist[i] = "I"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "I"
+                    else:
+                        wordlist[i] = "me"
                 if wordlist[i] == "your":
                     wordlist[i] = "our"
                 if wordlist[i] == "yours":
@@ -726,7 +999,16 @@ try:
                 if wordlist[i] == "ourselves":
                     wordlist[i] = "themselves"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "we"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "we"
+                    else:
+                        wordlist[i] = "us"
                 if wordlist[i] == "yourselves":
                     wordlist[i] = "ourselves"
             else:
@@ -738,8 +1020,17 @@ try:
                     wordlist[i] = "hers"
                 if wordlist[i] == "myself":
                     wordlist[i] = "herself"
-                if wordlist[i] == "you":
-                    wordlist[i] = "they"
+                if wordlist[i] == "you" or wordlist[i] == "you all":
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
                 if wordlist[i] == "your" or wordlist[i] == "our":
                     wordlist[i] = "their"
                 if wordlist[i] == "yours" or wordlist[i] == "ours":
@@ -750,8 +1041,6 @@ try:
                     wordlist[i] = "they"
                 if wordlist[i] == "us":
                     wordlist[i] = "them"
-                if wordlist[i] == "you all":
-                    wordlist[i] = "they"
         else:
             if wordlist[1] == "asked" or wordlist[1] == "asked me":
                 if wordlist[i] == "I" or wordlist[i] == "we":
@@ -765,7 +1054,16 @@ try:
                 if wordlist[i] == "myself" or wordlist[i] == "ourselves":
                     wordlist[i] = "themselves"
                 if wordlist[i] == "you":
-                    wordlist[i] = "I"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "I"
+                    else:
+                        wordlist[i] = "me"
                 if wordlist[i] == "your":
                     wordlist[i] = "my"
                 if wordlist[i] == "yours":
@@ -773,7 +1071,16 @@ try:
                 if wordlist[i] == "yourself":
                     wordlist[i] = "myself"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "we"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "we"
+                    else:
+                        wordlist[i] = "us"
                 if wordlist[i] == "yourselves":
                     wordlist[i] = "ourselves"
             elif wordlist[1] == "asked you" or wordlist[1] == "asked you all":
@@ -788,7 +1095,7 @@ try:
                 if wordlist[i] == "myself" or wordlist[i] == "ourselves":
                     wordlist[i] = "themselves"
             elif wordlist[1] == "asked him":
-                if wordlist[i] == "I" or wordlist[i] == "we" or wordlist[i] == "you all":
+                if wordlist[i] == "I" or wordlist[i] == "we":
                     wordlist[i] = "they"
                 if wordlist[i] == "me" or wordlist[i] == "us":
                     wordlist[i] = "them"
@@ -799,13 +1106,33 @@ try:
                 if wordlist[i] == "myself" or wordlist[i] == "ourselves" or wordlist[i] == "yourselves":
                     wordlist[i] = "themselves"
                 if wordlist[i] == "you":
-                    wordlist[i] = "he"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "he"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "he"
+                    else:
+                        wordlist[i] = "him"
                 if wordlist[i] == "your" or wordlist[i] == "yours":
                     wordlist[i] = "his"
                 if wordlist[i] == "yourself":
                     wordlist[i] = "himself"
+                if wordlist[i] == "you all":
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
             elif wordlist[1] == "asked her":
-                if wordlist[i] == "I" or wordlist[i] == "we" or wordlist[i] == "you all":
+                if wordlist[i] == "I" or wordlist[i] == "we":
                     wordlist[i] = "they"
                 if wordlist[i] == "me" or wordlist[i] == "us":
                     wordlist[i] = "them"
@@ -816,13 +1143,33 @@ try:
                 if wordlist[i] == "myself" or wordlist[i] == "ourselves" or wordlist[i] == "yourselves":
                     wordlist[i] = "themselves"
                 if wordlist[i] == "you":
-                    wordlist[i] = "she"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "she"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "she"
+                    else:
+                        wordlist[i] = "her"
                 if wordlist[i] == "your":
                     wordlist[i] = "her"
                 if wordlist[i] == "yours":
                     wordlist[i] = "hers"
                 if wordlist[i] == "yourself":
                     wordlist[i] = "herself"
+                if wordlist[i] == "you all":
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
             elif wordlist[1] == "asked us":
                 if wordlist[i] == "I" or wordlist[i] == "we":
                     wordlist[i] = "they"
@@ -835,7 +1182,16 @@ try:
                 if wordlist[i] == "myself" or wordlist[i] == "ourselves":
                     wordlist[i] = "themselves"
                 if wordlist[i] == "you":
-                    wordlist[i] = "I"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "I"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "I"
+                    else:
+                        wordlist[i] = "me"
                 if wordlist[i] == "your":
                     wordlist[i] = "our"
                 if wordlist[i] == "yours":
@@ -843,11 +1199,20 @@ try:
                 if wordlist[i] == "yourself":
                     wordlist[i] = "myself"
                 if wordlist[i] == "you all":
-                    wordlist[i] = "we"
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "we"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "we"
+                    else:
+                        wordlist[i] = "us"
                 if wordlist[i] == "yourselves":
                     wordlist[i] = "ourselves"
             else:
-                if wordlist[i] == "I" or wordlist[i] == "you" or wordlist[i] == "we" or wordlist[i] == "you all":
+                if wordlist[i] == "I" or wordlist[i] == "we":
                     wordlist[i] = "they"
                 if wordlist[i] == "me" or wordlist[i] == "us":
                     wordlist[i] = "them"
@@ -857,6 +1222,17 @@ try:
                     wordlist[i] = "theirs"
                 if wordlist[i] == "myself" or wordlist[i] == "yourself" or wordlist[i] == "ourselves" or wordlist[i] == "yourselves":
                     wordlist[i] = "themselves"
+                if wordlist[i] == "you" or wordlist[i] == "you all":
+                    if wordlist[i-2] not in whwords and wordlist[i] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] not in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[3]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-2] in whwords and wordlist[i] == wordlist[4]:
+                        wordlist[i] = "they"
+                    elif wordlist[i-3] in whwords and wordlist[i-1] == "not" and wordlist[i-1] == wordlist[4]:
+                        wordlist[i] = "they"
+                    else:
+                        wordlist[i] = "them"
         if wordlist[i] == "temp_I":
             wordlist[i] = "you"
         if wordlist[i] == "temp_my":
@@ -865,8 +1241,10 @@ try:
             wordlist[i] = "yours"
         if wordlist[i] == "temp_myself":
             wordlist[i] = "yourself"
-        if wordlist[i] == "temp_you":
+        if wordlist[i] == "temp_you_subject":
             wordlist[i] = "I"
+        if wordlist[i] == "temp_you_object":
+            wordlist[i] = "me"
         if wordlist[i] == "temp_your":
             wordlist[i] = "my"
         if wordlist[i] == "temp_your_plural":
@@ -881,8 +1259,10 @@ try:
             wordlist[i] = "you all"
         if wordlist[i] == "temp_ourselves":
             wordlist[i] = "yourselves"
-        if wordlist[i] == "temp_you_all":
+        if wordlist[i] == "temp_you_all_subject":
             wordlist[i] = "we"
+        if wordlist[i] == "temp_you_all_object":
+            wordlist[i] = "us"
         if wordlist[i] == "temp_yourselves":
             wordlist[i] = "ourselves"
         if wordlist[i] == "Are" or wordlist[i] == "are" or wordlist[i] == "Is" or wordlist[i] == "is" or wordlist[i] == "Do" or wordlist[i] == "do" or wordlist[i] == "Does" or wordlist[i] == "does" or wordlist[i] == "Did" or wordlist[i] == "did" or wordlist[i] == "Have" or wordlist[i] == "have" or wordlist[i] == "Has" or wordlist[i] == "has" or wordlist[i] == "Had" or wordlist[i] == "had" or wordlist[i] in modals:
@@ -1132,34 +1512,60 @@ if wordlist[3] in modals and questiontype == "wh" and tense != "present_who" and
         wordlist.remove(wordlist[3])
 if wordlist[2] == "Did" or wordlist[2] == "did":
     tense = "pastsimple"
+    if wordlist[3] in determiners:
+        wordlist[3] = wordlist[3] + " " + wordlist[4]
+        del wordlist[4]
     wordlist.insert(4, "had")
-    if wordlist[5] not in irregular:
+    if wordlist[5] not in irregular and adverb == False:
         if verb[-1] != "e":
             wordlist[5] = wordlist[5] + "ed"
         else:
             wordlist[5] = wordlist[5] + "d"
-    else:
+    elif wordlist[5] in irregular and adverb == False:
         try:
             wordlist[5] = participles[wordlist[5]]
         except KeyError:
             pass
+    elif wordlist[6] not in irregular and adverb == True:
+        if verb[-1] != "e":
+            wordlist[6] = wordlist[6] + "ed"
+        else:
+            wordlist[6] = wordlist[6] + "d"
+    elif adverb == True:
+        try:
+            wordlist[6] = participles[wordlist[6]]
+        except KeyError:
+            pass
 if wordlist[2] == "Didn't" or wordlist[2] == "didn't":
     tense = "pastsimple"
+    if wordlist[3] in determiners:
+        wordlist[3] = wordlist[3] + " " + wordlist[4]
+        del wordlist[4]
     wordlist.insert(4, "hadn't")
-    if wordlist[5] not in irregular:
+    if wordlist[5] not in irregular and adverb == False:
         if verb[-1] != "e":
             wordlist[5] = wordlist[5] + "ed"
         else:
             wordlist[5] = wordlist[5] + "d"
-    else:
+    elif wordlist[5] in irregular and adverb == False:
         try:
             wordlist[5] = participles[wordlist[5]]
+        except KeyError:
+            pass
+    elif wordlist[6] not in irregular and adverb == True:
+        if verb[-1] != "e":
+            wordlist[6] = wordlist[6] + "ed"
+        else:
+            wordlist[6] = wordlist[6] + "d"
+    elif adverb == True:
+        try:
+            wordlist[6] = participles[wordlist[6]]
         except KeyError:
             pass
 if wordlist[2] == "Had" or wordlist[2] == "had":
     tense = "pastperfect"
 try:
-    if tense == "past" and questiontype == "wh":
+    if tense == "past" and questiontype == "wh" and adverb == False:
         temp_word = wordlist[5]
         if temp_word in participles:
             wordlist[5] = participles[temp_word]
@@ -1170,6 +1576,17 @@ try:
                 wordlist[5] = temp_word + "d"
             else:
                 wordlist[5] = temp_word + "ed"
+    elif tense == "past" and questiontype == "wh" and adverb == True:
+        temp_word = wordlist[6]
+        if temp_word in participles:
+            wordlist[6] = participles[temp_word]
+        elif temp_word in participles.values():
+            pass
+        elif temp_word != "come":
+            if temp_word.endswith("e"):
+                wordlist[6] = temp_word + "d"
+            else:
+                wordlist[6] = temp_word + "ed"
 except IndexError:
     pass
 if questiontype == "yes-no" or questiontype == "mixed":
@@ -1191,19 +1608,38 @@ if wordlist[3] != "I" and wordlist[3] != "i" and wordlist[3] != "You" and wordli
     if wordlist[4] == "is":
         wordlist[4] = "was"
 try:
-    if wordlist[4] not in irregular and wordlist[3] not in determiners and tense == "present" and can_Add_participle_termination == True:
-        if verb[-1] != "e":
-            wordlist[4] = wordlist[4] + "ed"
-        else:
-            wordlist[4] = wordlist[4] + "d"
-    elif wordlist[5] not in irregular and wordlist[3] in determiners and tense == "present" and can_Add_participle_termination == True:
-        verb = list(wordlist[5])
-        if verb[-1] != "e":
-            wordlist[5] = wordlist[5] + "ed"
-        else:
-            wordlist[5] = wordlist[5] + "d"
-    elif wordlist[5] in irregular_past and wordlist[3] in determiners and tense == "present" and can_Add_participle_termination == True:
-        wordlist[5] = irregular_past[wordlist[5]]
+    if adverb == False:
+        if wordlist[4] not in irregular and wordlist[3] not in determiners and tense == "present" and can_Add_participle_termination == True:
+            if verb[-1] != "e":
+                wordlist[4] = wordlist[4] + "ed"
+            else:
+                wordlist[4] = wordlist[4] + "d"
+        elif wordlist[5] not in irregular and wordlist[3] in determiners and tense == "present" and can_Add_participle_termination == True:
+            verb = list(wordlist[5])
+            if verb[-1] != "e":
+                wordlist[5] = wordlist[5] + "ed"
+            else:
+                wordlist[5] = wordlist[5] + "d"
+        elif wordlist[4] in irregular_past and wordlist[3] not in determiners and tense == "present" and can_Add_participle_termination == True:
+            wordlist[4] = irregular_past[wordlist[4]]
+        elif wordlist[5] in irregular_past and wordlist[3] in determiners and tense == "present" and can_Add_participle_termination == True:
+            wordlist[5] = irregular_past[wordlist[5]]
+    else:
+        if wordlist[5] not in irregular and wordlist[3] not in determiners and tense == "present" and can_Add_participle_termination == True:
+            if verb[-1] != "e":
+                wordlist[5] = wordlist[5] + "ed"
+            else:
+                wordlist[5] = wordlist[5] + "d"
+        elif wordlist[6] not in irregular and wordlist[3] in determiners and tense == "present" and can_Add_participle_termination == True:
+            verb = list(wordlist[6])
+            if verb[-1] != "e":
+                wordlist[6] = wordlist[6] + "ed"
+            else:
+                wordlist[6] = wordlist[6] + "d"
+        elif wordlist[5] in irregular_past and wordlist[3] not in determiners and tense == "present" and can_Add_participle_termination == True:
+            wordlist[5] = irregular_past[wordlist[5]]
+        elif wordlist[6] in irregular_past and wordlist[3] in determiners and tense == "present" and can_Add_participle_termination == True:
+            wordlist[6] = irregular_past[wordlist[6]]
 except IndexError:
     pass
 if wordlist[3] == "were":
