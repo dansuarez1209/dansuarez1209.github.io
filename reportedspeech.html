@@ -1,13 +1,20 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-<link rel "stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
-<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-</head>
-<body>
-<py-script>
-print("Direct speech to Reported speech translator v.1.0.0")
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link
+            rel="stylesheet"
+            href="https://pyscript.net/releases/2025.11.2/core.css"
+        />
+        <script
+            type="module"
+            src="https://pyscript.net/releases/2025.11.2/core.js"
+        ></script>
+    </head>
+    <body>
+        <script type="mpy" terminal>
+print("Direct speech to Reported speech translator v.1.0.1")
 sentence = input("enter sentence: ")
 wordlist = sentence.split()
 firstword = [*wordlist[0]]
@@ -359,7 +366,6 @@ for i in range(len(wordlist)):
 if tense == "past":
     wordlist.insert(3, "had")
 print("Reported Speech translation: " + ' '.join(wordlist))
-</py-script>
-</body>
-
+        </script>
+    </body>
 </html>
