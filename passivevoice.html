@@ -1,13 +1,20 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-<link rel "stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
-<script defer src="https://pyscript.net/alpha/pyscript.js"></script>
-</head>
-<body>
-<py-script>
-print("Active to Passive Voice Translator v.1.0.7")
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link
+            rel="stylesheet"
+            href="https://pyscript.net/releases/2025.11.2/core.css"
+        />
+        <script
+            type="module"
+            src="https://pyscript.net/releases/2025.11.2/core.js"
+        ></script>
+    </head>
+    <body>
+        <script type="mpy" terminal>
+print("Active to Passive Voice Translator v.1.0.8")
 sentence = input("Enter the sentence: ")
 wordlist = sentence.split()
 verb = [*wordlist[1]]
@@ -658,7 +665,6 @@ if existingadverb == True:
     possibleadverb = ''.join(possibleadverb)
     wordlist.append(possibleadverb)
 print("Passive voice translation: " + ' '.join(wordlist))
-</py-script>
-</body>
-
+        </script>
+    </body>
 </html>
