@@ -14,657 +14,1454 @@
     </head>
     <body>
         <script type="mpy" terminal>
-print("Active to Passive Voice Translator v.1.0.8")
+print("Active to Passive Voice Translator v.1.1.4")
 sentence = input("Enter the sentence: ")
-wordlist = sentence.split()
-verb = [*wordlist[1]]
-tense = "presentsimple"
-irregular = [irregular = ["am", "is", "are", "was", "were", "can", "can't", "could", "couldn't", "may", "mayn't", "might", "mightn't", "must", "mustn't", "shall", "shan't", "will", "won't", "should", "shouldn't", "would", "wouldn't", "beat", "become", "begin", "bend", "bet", "bite", "bleed", "blow", "break", "breed", "bring", "build", "burn", "buy", "catch", "choose", "come", "cost", "cut", "do", "don't", "didn't", "doesn't", "dig", "draw", "dream", "drink", "drive", "eat", "fall", "feed", "feel", "fight", "find", "fly", "forget", "forgive", "freeze", "get", "give", "go", "grow", "have", "has", "had", "hear", "hide", "hit", "hold", "hurt", "keep", "know", "lay", "lead", "lean", "leave", "lend", "let", "lose", "make", "mean", "meet", "pay", "put", "quit", "read", "ride", "ring", "rise", "run", "say", "see", "sell", "send", "set", "shake", "shine", "shoe", "shoot", "show", "shrink", "shut", "sing", "sink", "sit", "sleep", "speak", "spend", "spill", "spread", "speed", "stand", "steal", "stick", "sting", "stink", "swear", "sweep", "swim", "swing", "take", "teach", "tear", "tell", "think", "throw", "understand", "wake", "wear", "win", "write"]
-irregularpast = ["beat", "became", "began", "bent", "bet", "bit", "bled", "blew", "broke", "bred", "brought", "built", "burnt", "bought", "caught", "chose", "came", "cost", "cut", "did", "dug", "drew", "dreamt", "drank", "drove", "ate", "fell", "fed", "felt", "fought", "found", "flew", "forgot", "forgave", "froze", "gave", "got", "went", "grew", "had", "heard", "hid", "hit", "held", "hurt", "kept", "knew", "laid", "led", "leant", "left", "lent", "let", "lost", "made", "meant", "met", "paid", "put", "quit", "read", "rode", "rang", "rose", "ran", "said", "saw", "sold", "sent", "set", "shook", "shone", "shod", "shot", "shrank", "shut", "sang", "sank", "sat", "slept", "spoke", "spent", "spilt", "spread", "sped", "stood", "stole", "stank", "stung", "swore", "swept", "swam", "swung", "took", "taught", "tore", "told", "thought", "threw", "understood", "woke", "wore", "won", "wrote"] 
-eirregular = ["becom", "bit", "choos", "driv", "forgiv", "freez", "giv", "hav", "hid", "leav", "los", "mak", "rid", "ris", "shak", "shin", "tak", "wak", "writ"]
-determiners = ["a", "an", "the", "this", "that", "these", "those", "my", "your", "his", "her", "its", "our", "their", "whose", "some", "any", "many", "few", "several", "all", "much", "little", "enough", "each", "every", "either", "neither", "no", "neither", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "A", "An", "The", "This", "That", "These", "Those", "My", "Your", "His", "Her", "Its", "Our", "Their", "Whose", "Some", "Any", "Many", "Few", "Several", "All", "Much", "Little", "Enough", "Each", "Every", "Either", "Neither", "No", "Neither", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
-adverbs = ["afterwards", "now", "once", "previously", "then", "today", "tomorrow", "tonight", "usually", "yesterday", "already", "away", "back", "soon"]
-if verb[-1] == "d" and verb[-2] == "e" and wordlist[1] not in irregular:
-    tense = "pastsimple" 
-if wordlist[0] == "I'm" or wordlist[0] == "i'm":
-    wordlist[0] = "I"
-    wordlist.insert(1, "am")
-if wordlist[0] == "You're" or wordlist[0] == "you're":
-    wordlist[0] = "You"
-    wordlist.insert(1, "are")
-if wordlist[0] == "He's" or wordlist[0] == "he's":
-    wordlist[0] = "He"
-    wordlist.insert(1, "is")
-if wordlist[0] == "She's" or wordlist[0] == "she's":
-    wordlist[0] = "She"
-    wordlist.insert(1, "is")
-if wordlist[0] == "It's" or wordlist[0] == "it's":
-    wordlist[0] = "It"
-    wordlist.insert(1, "is")
-if wordlist[0] == "We're" or wordlist[0] == "we're":
-    wordlist[0] = "We"
-    wordlist.insert(1, "are")
-if wordlist[0] == "They're" or wordlist[0] == "they're":
-    wordlist[0] = "They"
-    wordlist.insert(1, "are")
-if wordlist[0] == "I've" or wordlist[0] == "i've":
-    wordlist[0] = "I"
-    wordlist.insert(1, "have")
-if wordlist[0] == "You've" or wordlist[0] == "you've":
-    wordlist[0] = "You"
-    wordlist.insert(1, "have")
-if wordlist[0] == "We've" or wordlist[0] == "we've":
-    wordlist[0] = "We"
-    wordlist.insert(1, "have")
-if wordlist[0] == "They've" or wordlist[0] == "they've":
-    wordlist[0] = "They"
-    wordlist.insert(1, "have")
-if wordlist[0] == "I'll" or wordlist[0] == "i'll":
-    wordlist[0] = "I"
-    wordlist.insert(1, "will")
-if wordlist[0] == "You'll" or wordlist[0] == "you'll":
-    wordlist[0] = "You"
-    wordlist.insert(1, "will")
-if wordlist[0] == "He'll" or wordlist[0] == "he'll":
-    wordlist[0] = "He"
-    wordlist.insert(1, "will")
-if wordlist[0] == "She'll" or wordlist[0] == "she'll":
-    wordlist[0] = "She"
-    wordlist.insert(1, "will")
-if wordlist[0] == "It'll" or wordlist[0] == "it'll":
-    wordlist[0] = "It"
-    wordlist.insert(1, "will")
-if wordlist[0] == "We'll" or wordlist[0] == "we'll":
-    wordlist[0] = "We"
-    wordlist.insert(1, "will")
-if wordlist[0] == "They'll" or wordlist[0] == "they'll":
-    wordlist[0] = "They"
-    wordlist.insert(1, "will")
-if wordlist[0] == "You" or wordlist[0] == "you":
-    if wordlist[1] == "all":
-        wordlist.remove(wordlist[1])
-        wordlist[0] = "you all"
-        verb = [*wordlist[1]]
-    if wordlist[1] == "guys":
-        wordlist.remove(wordlist[1])
-        wordlist[0] = "you guys"
-        verb = [*wordlist[1]]
-if wordlist[-2] == "You" or wordlist[-2] == "you":
-    if wordlist[-1] == "all":
-        wordlist.remove(wordlist[-1])
-        wordlist[-1] = "you all"
-    if wordlist[-1] == "guys":
-        wordlist.remove(wordlist[-1])
-        wordlist[-2] = "you guys"
-for i in range(len(wordlist)):
-    if wordlist[i] == "won't":
-        wordlist[i] = "will"
-        wordlist.insert(i+1, "not")
-    if wordlist[i] == "isn't":
-        wordlist[i] = "is"
-        wordlist.insert(i+1, "not")
-    if wordlist[i] == "aren't":
-        wordlist[i] = "are"
-        wordlist.insert(i+1, "not")
-if wordlist[1] in irregularpast:
-    tense = "pastsimple"
-    if wordlist[1] == "beat":
-        wordlist[1] = "beaten"
-    if wordlist[1] == "became":
-        wordlist[1] = "become"
-    if wordlist[1] == "began":
-        wordlist[1] = "begun"
-    if wordlist[1] == "bit":
-        wordlist[1] = "bitten"        
-    if wordlist[1] == "blew":
-        wordlist[1] = "blown"        
-    if wordlist[1] == "broke":
-        wordlist[1] = "broken"        
-    if wordlist[1] == "chose":
-        wordlist[1] = "chosen"        
-    if wordlist[1] == "came":
-        wordlist[1] = "come"        
-    if wordlist[1] == "did":
-        wordlist[1] = "done"        
-    if wordlist[1] == "drew":
-        wordlist[1] = "drawn"        
-    if wordlist[1] == "drank":
-        wordlist[1] = "drunk"        
-    if wordlist[1] == "drove":
-        wordlist[1] = "driven"        
-    if wordlist[1] == "ate":
-        wordlist[1] = "eaten"        
-    if wordlist[1] == "fell":
-        wordlist[1] = "fallen"        
-    if wordlist[1] == "flew":
-        wordlist[1] = "flown"        
-    if wordlist[1] == "forgot":
-        wordlist[1] = "forgotten"        
-    if wordlist[1] == "forgave":
-        wordlist[1] = "forgiven"        
-    if wordlist[1] == "froze":
-        wordlist[1] = "frozen"
-    if wordlist[1] == "gave":
-        wordlist[1] = "given"        
-    if wordlist[1] == "went":
-        wordlist[1] = "gone"        
-    if wordlist[1] == "grew":
-        wordlist[1] = "grown"        
-    if wordlist[1] == "hid":
-        wordlist[1] = "hidden"        
-    if wordlist[1] == "knew":
-        wordlist[1] = "known"        
-    if wordlist[1] == "rode":
-        wordlist[1] = "ridden"        
-    if wordlist[1] == "rang":
-        wordlist[1] = "rung"        
-    if wordlist[1] == "rose":
-        wordlist[1] = "risen"        
-    if wordlist[1] == "ran":
-        wordlist[1] = "run"        
-    if wordlist[1] == "saw":
-        wordlist[1] = "seen"        
-    if wordlist[1] == "shook":
-        wordlist[1] = "shaken"        
-    if wordlist[1] == "shrank":
-        wordlist[1] = "shrunk"        
-    if wordlist[1] == "sang":
-        wordlist[1] = "sung"        
-    if wordlist[1] == "sank":
-        wordlist[1] = "sunk"        
-    if wordlist[1] == "spoke":
-        wordlist[1] = "spoken"        
-    if wordlist[1] == "stole":
-        wordlist[1] = "stolen"        
-    if wordlist[1] == "stank":
-        wordlist[1] = "stunk"       
-    if wordlist[1] == "swore":
-        wordlist[1] = "sworn"        
-    if wordlist[1] == "swam":
-        wordlist[1] = "swum"        
-    if wordlist[1] == "took":
-        wordlist[1] = "taken"        
-    if wordlist[1] == "tore":
-        wordlist[1] = "torn"        
-    if wordlist[1] == "threw":
-        wordlist[1] = "thrown"        
-    if wordlist[1] == "woke":
-        wordlist[1] = "waken"        
-    if wordlist[1] == "wore":
-        wordlist[1] = "worn"        
-    if wordlist[1] == "wrote":
-        wordlist[1] = "written" 
-count = 0
-for i in range(len(wordlist)):
-    if wordlist[i] in determiners:
-        count += 1
-        dtrmnr = wordlist[-2]
-        if count == 2:
-            wordlist[-1] = wordlist[-2] + " " + wordlist[-1]
-            del wordlist[i]
+word_list = sentence.split()
+modals = ["can", "could", "may", "might", "shall", "should", "will", "would", "must"]
+negative_modals = ["cannot", "can't", "couldn't", "mayn't", "mightn't", "shan't", "shouldn't", "won't", "wouldn't", "mustn't"]
+s_termination_nouns = ["analysis", "atlas", "basis", "bias", "cannabis", "chaos", "cosmos", "diagnosis", "emphasis", "ethos", "focus", "gas", "ibis", "iris", "kudos", "lens", "metropolis", "oasis", "pancreas", "pelvis", "prognosis", "rhinoceros", "synopsis", "tennis", "thesis"]
+determiners = ["A", "An", "The", "This", "That", "These", "Those", "My", "Your", "His", "Her", "Its", "Our", "Their", "Whose", "Some", "Any", "Many", "Few", "Several", "All", "Much", "Little", "Enough", "Each", "Every", "Either", "Neither", "No", "Neither", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
+followed_by_infinitive = ["afford", "agree", "agre", "decide", "decid", "expect", "have", "has", "hope", "hop", "learn", "need", "offer", "ought", "plan", "promise", "promis", "refuse", "refus", "want"]
+adverbs = ["abroad", "ahead", "always", "anytime", "anywhere", "apart", "around", "away", "back", "before", "beforehand", "below", "besides", "better", "beyond", "blindfold", "brisk", "close", "daily", "down", "east", "everywhere", "far", "fast", "forever", "forward", "forth", "hard", "here", "indoors", "just", "later" "less", "long", "maybe", "more", "near", "never", "next", "north", "now", "often", "once", "onstage", "onscreen", "outside", "overboard", "overseas", "partway", "perhaps", "rather", "right", "scarce", "seldom", "short", "sideways", "since", "slow", "sometimes", "soon", "south", "still", "straight", "sure", "then", "there", "thereafter", "therein", "thereof", "thereupon", "thereby", "therewith", "thus", "today", "together", "tomorrow", "tonight", "underneath", "up", "uphill", "upriver", "upstairs", "upstream", "upward", "very", "well", "west", "wherever", "whenever", "wide", "yesterday", "yet", "yonder"]
+prepositions = ["about", "above", "across", "after", "against", "along", "among", "around", "at", "before", "behind", "below", "beneath", "beside", "between", "beyond", "by", "concerning", "despite", "down", "during", "except", "for", "from", "in", "inside", "into", "like", "near", "of", "off", "on", "onto", "out", "outside", "over", "past", "regarding", "round", "since", "through", "throughout", "till", "to", "toward", "under", "underneath", "until", "up", "upon", "with", "within", "without"]
+present_to_participle = {
+    "awake": "awoken",
+    "awak": "awoken",
+    "bear": "borne",
+    "beat": "beaten",
+    "begin": "begun",
+    "bend": "bent",
+    "bet": "bet",
+    "bind": "bound",
+    "bite": "bitten",
+    "bit": "bitten",
+    "blow": "blown",
+    "break": "broken",
+    "breed": "bred",
+    "bring": "brought",
+    "broadcast": "broadcast",
+    "build": "built",
+    "burn": "burnt",
+    "burst": "burst",
+    "buy": "bought",
+    "catch": "caught",
+    "choose": "chosen",
+    "choos": "chosen",
+    "cost": "cost",
+    "cut": "cut",
+    "deal": "dealt",
+    "dig": "dug",
+    "do": "done",
+    "draw": "drawn",
+    "dream": "dreamt",
+    "drink": "drunk",
+    "drive": "driven",
+    "driv": "driven",
+    "eat": "eaten",
+    "feed": "fed",
+    "feel": "felt",
+    "fight": "fought",
+    "find": "found",
+    "flee": "fled",
+    "fly": "flown",
+    "forbid": "forbidden",
+    "forget": "forgotten",
+    "forgive": "forgiven",
+    "forgiv": "forgiven",
+    "freeze": "frozen",
+    "freez": "frozen",
+    "get": "gotten",
+    "give": "given",
+    "giv": "given",
+    "grow": "grown",
+    "hang": "hung",
+    "hear": "heard",
+    "hide": "hidden",
+    "hid": "hidden",
+    "hit": "hit",
+    "hold": "held",
+    "hurt": "hurt",
+    "keep": "kept",
+    "know": "known",
+    "lay": "laid",
+    "lead": "led",
+    "leave": "left",
+    "leav": "left",
+    "lend": "lent",
+    "let": "let",
+    "lose": "lost",
+    "los": "lost",
+    "make": "made",
+    "mak": "made",
+    "mean": "meant",
+    "meet": "met",
+    "pay": "paid",
+    "put": "put",
+    "read": "read",
+    "ride": "ridden",
+    "rid": "ridden",
+    "ring": "rung",
+    "run": "run",
+    "say": "said",
+    "see": "seen",
+    "sell": "sold",
+    "send": "sent",
+    "set": "set",
+    "shake": "shaken",
+    "shak": "shaken",
+    "shine": "shone",
+    "shin": "shone",
+    "shoot": "shot",
+    "show": "shown",
+    "shut": "shut",
+    "sing": "sung",
+    "sink": "sunk",
+    "slide": "slid",
+    "slid": "slid",
+    "speak": "spoken",
+    "spend": "spent",
+    "spin": "spun",
+    "split": "split",
+    "spread": "spread",
+    "stand": "stood",
+    "steal": "stolen",
+    "stick": "stuck",
+    "sting": "stung",
+    "strike": "struck",
+    "strik": "struck",
+    "swear": "sworn",
+    "sweep": "swept",
+    "swim": "swum",
+    "swing": "swung",
+    "take": "taken",
+    "tak": "taken",
+    "teach": "taught",
+    "tear": "torn",
+    "tell": "told",
+    "think": "thought",
+    "throw": "thrown",
+    "understand": "understood",
+    "wake": "woken",
+    "wak": "woken",
+    "wear": "worn",
+    "win": "won",
+    "wind": "wound",
+    "withdraw": "withdrawn",
+    "write": "written",
+    "writ": "written"
+}
+past_to_participle = {
+    "awoke": "awoken",
+    "bore": "borne",
+    "beat": "beaten",
+    "began": "begun",
+    "bent": "bent",
+    "bet": "bet",
+    "bound": "bound",
+    "bit": "bitten",
+    "bled": "bled",
+    "blew": "blown",
+    "broke": "broken",
+    "bred": "bred",
+    "brought": "brought",
+    "broadcast": "broadcast",
+    "built": "built",
+    "burnt": "burnt",
+    "burst": "burst",
+    "bought": "bought",
+    "caught": "caught",
+    "chose": "chosen",
+    "cost": "cost",
+    "cut": "cut",
+    "dealt": "dealt",
+    "dug": "dug",
+    "did": "done",
+    "drew": "drawn",
+    "dreamt": "dreamt",
+    "drank": "drunk",
+    "drove": "driven",
+    "dwelt": "dwelt",
+    "ate": "eaten",
+    "fed": "fed",
+    "felt": "felt",
+    "fought": "fought",
+    "found": "found",
+    "fled": "fled",
+    "flew": "flown",
+    "forbade": "forbidden",
+    "forgot": "forgotten",
+    "forgave": "forgiven",
+    "forsook": "forsaken",
+    "froze": "frozen",
+    "got": "gotten",
+    "gave": "given",
+    "grew": "grown",
+    "hung": "hung",
+    "had": "had",
+    "heard": "heard",
+    "hid": "hidden",
+    "hit": "hit",
+    "held": "held",
+    "hurt": "hurt",
+    "kept": "kept",
+    "knew": "known",
+    "laid": "laid",
+    "led": "led",
+    "left": "left",
+    "lent": "lent",
+    "let": "let",
+    "lit": "lit",
+    "lost": "lost",
+    "made": "made",
+    "meant": "meant",
+    "met": "met",
+    "mistook": "mistaken",
+    "paid": "paid",
+    "put": "put",
+    "quit": "quit",
+    "read": "read",
+    "rode": "ridden",
+    "rang": "rung",
+    "ran": "run",
+    "said": "said",
+    "saw": "seen",
+    "sold": "sold",
+    "sent": "sent",
+    "set": "set",
+    "shook": "shaken",
+    "shone": "shone",
+    "shot": "shot",
+    "showed": "shown",
+    "shut": "shut",
+    "sang": "sung",
+    "sank": "sunk",
+    "slid": "slid",
+    "spoke": "spoken",
+    "spent": "spent",
+    "spun": "spun",
+    "spread": "spread",
+    "stood": "stood",
+    "stole": "stolen",
+    "stuck": "stuck",
+    "stung": "stung",
+    "swore": "sworn",
+    "swept": "swept",
+    "swam": "swum",
+    "took": "taken",
+    "taught": "taught",
+    "tore": "torn",
+    "told": "told",
+    "thought": "thought",
+    "threw": "thrown",
+    "understood": "understood",
+    "woke": "woken",
+    "wore": "worn",
+    "won": "won",
+    "withdrew": "withdrawn",
+    "wrote": "written"
+}
+tense = "Present Simple Affirmative"
+verb = word_list[1]
+aux = None
+phrasal = False
+already = False
+adv = []
+if word_list[0] in determiners or word_list[0] in ["To", "Somebody", "Someone", "Something", "Anybody", "Anyone", "Anything", "Everybody", "Everyone", "Everything", "Nobody", "Nothing"] or ((word_list[0])[-1] == "g" and (word_list[0])[-2] == "n" and (word_list[0])[-3] == "i"):
+    word_list[0] = word_list[0].lower()
+try:
+    for i in range(len(word_list)):
+        if (word_list[i])[-1] == "y" and (word_list[i])[-2] == "l" or word_list[i] in adverbs:
+            adv.append(word_list[i])
+            if word_list[i] == verb:
+                verb = word_list[i + 1]
+        if word_list[i] == "You're":
+            word_list[i] = "You"
+            word_list.insert(1, "are")
+        elif word_list[i] == "He's":
+            word_list[i] = "He"
+            word_list.insert(1, "is")
+        elif word_list[i] == "She's":
+            word_list[i] = "She"
+            word_list.insert(1, "is")
+        elif word_list[i] == "It's":
+            word_list[i] = "It"
+            word_list.insert(1, "is")
+        elif word_list[i] == "We're":
+            word_list[i] = "We"
+            word_list.insert(1, "are")
+        elif word_list[i] == "She's":
+            word_list[i] = "She"
+            word_list.insert(1, "is")
+        elif word_list[i] == "I'll":
+            word_list[i] = "I"
+            word_list.insert(1, "will")
+        elif word_list[i] == "I'd":
+            word_list[i] = "I"
+            word_list.insert(1, "would")
+        elif word_list[i] == "I've":
+            word_list[i] = "I"
+            word_list.insert(1, "have")
+        elif word_list[i] == "You'll":
+            word_list[i] = "You"
+            word_list.insert(1, "will")
+        elif word_list[i] == "You'd":
+            word_list[i] = "You"
+            word_list.insert(1, "would")
+        elif word_list[i] == "You've":
+            word_list[i] = "You"
+            word_list.insert(1, "have")
+        elif word_list[i] == "He'll":
+            word_list[i] = "He"
+            word_list.insert(1, "will")
+        elif word_list[i] == "He'd":
+            word_list[i] = "He"
+            word_list.insert(1, "would")
+        elif word_list[i] == "She'll":
+            word_list[i] = "She"
+            word_list.insert(1, "will")
+        elif word_list[i] == "It'll":
+            word_list[i] = "It"
+            word_list.insert(1, "will")
+        elif word_list[i] == "It'd":
+            word_list[i] = "It"
+            word_list.insert(1, "would")
+        elif word_list[i] == "We'll":
+            word_list[i] = "We"
+            word_list.insert(1, "will")
+        elif word_list[i] == "We'd":
+            word_list[i] = "We"
+            word_list.insert(1, "would")
+        elif word_list[i] == "We've":
+            word_list[i] = "We"
+            word_list.insert(1, "have")
+        elif word_list[i] == "They'll":
+            word_list[i] = "They"
+            word_list.insert(1, "will")
+        elif word_list[i] == "They'd":
+            word_list[i] = "They"
+            word_list.insert(1, "would")
+        elif word_list[i] == "They've":
+            word_list[i] = "They"
+            word_list.insert(1, "have")
+        if word_list[i] == "to":
+            if (word_list[i - 1])[-1] == "s" and word_list[i - 1] != "has":
+                character_list = [*word_list[i - 1]]
+                character_list.pop()
+                word_list[i - 1] = ''.join(character_list)
+                if word_list[i - 1] in followed_by_infinitive:
+                    tense = "Present Followed By Infinitive Affirmative"
+                    verb = word_list[i + 1]
+                    aux = word_list[i - 1]
+            elif (word_list[i - 1])[-1] == "d" and (word_list[i - 1])[-2] == "e":
+                character_list = [*word_list[i - 1]]
+                character_list.pop()
+                character_list.pop()
+                if word_list[i - 1] in followed_by_infinitive:
+                    word_list[i - 1] = ''.join(character_list)
+                    tense = "Past Followed By Infinitive Affirmative"
+                    verb = word_list[i + 1]
+                    aux = word_list[i - 1]
+                    if aux == "agre":
+                        word_list[i - 1] = word_list[i - 1] + "e"
+                        aux = word_list[i - 1]
+            elif word_list[i - 1] == "had":
+                tense = "Past Followed By Infinitive Affirmative"
+                verb = word_list[i + 1]
+                aux = word_list[i - 1]
+            elif word_list[i - 1] in followed_by_infinitive:
+                if word_list[i - 2] == "don't" or word_list[i - 2] == "doesn't":
+                    tense = "Present Followed By Infinitive Negative Contracted"
+                    verb = word_list[i + 1]
+                    aux = word_list[i - 2]
+                elif word_list[i - 2] == "didn't":
+                    tense = "Past Followed By Infinitive Negative Contracted"
+                    verb = word_list[i + 1]
+                    aux = word_list[i - 2]                    
+                elif word_list[i - 2] == "not":
+                    if word_list[i - 3] == "do" or word_list[i - 3] == "does":
+                        tense = "Present Followed By Infinitive Negative Uncontracted"
+                        if word_list[i + 1] == "do":
+                            word_list[i - 3] = "does"
+                    elif word_list[i - 3] == "did":
+                        tense = "Past Followed By Infinitive Negative Uncontracted"
+                    verb = word_list[i + 1]
+                    aux = word_list[i - 3]
+                else:    
+                    tense = "Present Followed By Infinitive Affirmative"
+                    verb = word_list[i + 1]
+                    aux = word_list[i - 1]
+        elif word_list[i] == "am" or word_list[i] == "are" or word_list[i] == "is":
+            if word_list[i + 1] == "not":
+                if word_list[i + 2] == "going" and word_list[i + 3] == "to":
+                    tense = "Simple Future Negative Uncontracted"
+                    verb = word_list[i + 4]
+                else:
+                    tense = "Present Continuous Negative Uncontracted"
+                    verb = word_list[i + 2]
+            elif word_list[i + 1] == "going" and word_list[i + 2] == "to":
+                tense = "Simple Future Affirmative"
+                verb = word_list[i + 3]
+            else:
+                tense = "Present Continuous Affirmative"
+                verb = word_list[i + 1]
+            aux = word_list[i]
+        elif word_list[i] == "I'm" and word_list[i + 1] == "not":
+            if word_list[i + 2] == "going" and word_list[i + 3] == "to":
+                tense = "Simple Future Negative Contracted"
+                verb = word_list[i + 4]
+                aux = word_list[i + 1]
+            else:
+                tense = "Present Continuous Negative Contracted"
+                verb = word_list[i + 2]
+                aux = word_list[i]
+        elif word_list[i] == "aren't" or word_list[i] == "isn't":
+            if word_list[i + 1] == "going" and word_list[i + 2] == "to":
+                tense = "Simple Future Negative Contracted"
+                verb = word_list[i + 3]
+            else:
+                tense = "Present Continuous Negative Contracted"
+                verb = word_list[i + 1]
+            aux = word_list[i]
+        elif word_list[i] == "was" or word_list[i] == "were":
+            if word_list[i + 1] == "not":
+                if word_list[i + 2] == "going" and word_list[i + 3] == "to":
+                    tense = "Past Future Negative Uncontracted"
+                    verb = word_list[i + 4]
+                else:
+                    tense = "Past Continuous Negative Uncontracted"
+                    verb = word_list[i + 2]
+            elif word_list[i + 1] == "going" and word_list[i + 2] == "to":
+                tense = "Past Future Affirmative"
+                verb = word_list[i + 3]
+            else:
+                tense = "Past Continuous Affirmative"
+                verb = word_list[i + 1]
+            aux = word_list[i]
+        elif word_list[i] == "wasn't" or word_list[i] == "weren't":
+            if word_list[i + 1] == "going" and word_list[i + 2] == "to":
+                tense = "Past Future Negative Contracted"
+                verb = word_list[i + 3]
+            else:
+                tense = "Past Continuous Negative Contracted"
+                verb = word_list[i + 1]
+            aux = word_list[i]
+        elif word_list[i] == "have" or word_list[i] == "has":
+            if word_list[i - 1] not in modals and word_list[i - 1] not in negative_modals and word_list[i - 2] not in modals and word_list[i - 2] not in negative_modals:
+                if word_list[i + 1] == "not":
+                    if word_list[i + 2] == "been":
+                        tense = "Present Perfect Continuous Negative Uncontracted"
+                        verb = word_list[i + 3]
+                    else:
+                        tense = "Present Perfect Negative Uncontracted"
+                        verb = word_list[i + 2]
+                elif word_list[i + 1] == "been":
+                    tense = "Present Perfect Continuous Affirmative"
+                    verb = word_list[i + 2]
+                else:
+                    tense = "Present Perfect Affirmative"
+                    verb = word_list[i + 1]
+                aux = word_list[i]
+        elif word_list[i] == "haven't" or word_list[i] == "hasn't":
+            if word_list[i - 1] not in modals:
+                if word_list[i + 1] == "been":
+                    tense = "Present Perfect Continuous Negative Contracted"
+                    verb = word_list[i + 2]
+                else:
+                    tense = "Present Perfect Negative Contracted"
+                    verb = word_list[i + 1]
+                aux = word_list[i]
+        elif word_list[i] == "had":
+            if word_list[i + 1] == "not":
+                if word_list[i + 2] == "been":
+                    tense = "Past Perfect Continuous Negative Uncontracted"
+                    verb = word_list[i + 3]
+                else:
+                    tense = "Past Perfect Negative Uncontracted"
+                    verb = word_list[i + 2]
+            elif word_list[i + 1] == "been":
+                tense = "Past Perfect Continuous Affirmative"
+                verb = word_list[i + 2]
+            else:
+                tense = "Past Perfect Affirmative"
+                verb = word_list[i + 1]
+            aux = word_list[i]
+        elif word_list[i] == "hadn't":
+            if word_list[i + 1] == "been":
+                tense = "Past Perfect Continuous Negative Contracted"
+                verb = word_list[i + 2]
+            else:
+                tense = "Past Perfect Negative Contracted"
+                verb = word_list[i + 1]
+            aux = word_list[i]
+        elif word_list[i] in modals:
+            if word_list[i + 1] == "not":
+                if word_list[i + 2] == "have":
+                    if word_list[i + 3] == "been":
+                        tense = "Modal Perfect Continuous Negative Uncontracted"
+                        verb = word_list[i + 4]
+                    else:
+                        tense = "Modal Perfect Negative Uncontracted"
+                        verb = word_list[i + 3]
+                elif word_list[i + 2] == "be":
+                    tense = "Modal Continuous Negative Uncontracted"
+                    verb = word_list[i + 3]
+                else:
+                    tense = "Modal Negative Uncontracted"
+                    verb = word_list[i + 2]
+            elif word_list[i + 1] == "have":
+                if word_list[i + 2] == "been":
+                    tense = "Modal Perfect Continuous Affirmative"
+                    verb = word_list[i + 3]
+                else:
+                    tense = "Modal Perfect Affirmative"
+                    verb = word_list[i + 2]
+            elif word_list[i + 1] == "be":
+                tense = "Modal Continuous Affirmative"
+                verb = word_list[i + 2]
+            else:
+                tense = "Modal Affirmative"
+                verb = word_list[i + 1]
+            aux = word_list[i]
+        elif word_list[i] in negative_modals:
+            if word_list[i + 1] == "have":
+                if word_list[i + 2] == "been":
+                    tense = "Modal Perfect Continuous Negative Contracted"
+                    verb = word_list[i + 3]
+                else:
+                    tense = "Modal Perfect Negative Contracted"
+                    verb = word_list[i + 2]
+            elif word_list[i + 1] == "be":
+                tense = "Modal Continuous Negative Contracted"
+                verb = word_list[i + 2]
+            else:
+                tense = "Modal Negative Contracted"
+                verb = word_list[i + 1]
+            aux = word_list[i]
+        elif word_list[i] == "do" or word_list[i] == "does":
+            if word_list[i + 1] == "not":
+                tense = "Present Simple Negative Uncontracted"
+                verb = word_list[i + 2]
+                aux = word_list[i]
+        elif word_list[i] == "don't" or word_list[i] == "doesn't":
+            tense = "Present Simple Negative Contracted"
+            verb = word_list[i + 1]
+            aux = word_list[i]
+        elif word_list[i] == "did" and word_list[i + 1] == "not":
+                tense = "Past Simple Negative Uncontracted"
+                verb = word_list[i + 2]
+                aux = word_list[i]
+        elif word_list[i] == "didn't":
+            tense = "Past Simple Negative Contracted"
+            verb = word_list[i + 1]
+            aux = word_list[i]
+        elif word_list[i] in past_to_participle:
+            tense = "Past Simple Affirmative Irregular"
+            verb = word_list[i]
+        elif i != 0 and (word_list[i])[-1] == "d" and (word_list[i])[-2] == "e" and tense == "Present Simple Affirmative":
+            tense = "Past Simple Affirmative Regular"
+            verb = word_list[i]
+        elif word_list[i] in present_to_participle and tense == "Present Simple Affirmative":
+            verb = word_list[i]
+        elif (word_list[i])[-1] == "s" and word_list[i] not in s_termination_nouns and word_list[i] not in adverbs and word_list[i] != "us" and tense == "Present Simple Affirmative" and verb not in present_to_participle and already != True:
+            verb = word_list[i]
+            already = True
+except IndexError():
+    pass
+for i in range(len(word_list) - 1, -1, -1):
+    if word_list[i] in adv:
+        if word_list[i] in prepositions and i == len(word_list) - 1:
+            del word_list[i]
+        elif word_list[i] in prepositions and i != len(word_list) - 1:
             break
-    if wordlist[i] in adverbs:
-        possibleadverb = wordlist[i]
-        wordlist.remove(wordlist[i])
-        existingadverb = True
-        verb = [*wordlist[1]]
-    else:
-        existingadverb = False
-for i in range(len(wordlist) - 1):
-    if "l" in wordlist[i] and "y" in wordlist[i]:
-        advdor = [*wordlist[i]]
-        if advdor[-2] == "l" and advdor[-1] == "y":
-            possibleadverb = wordlist[i]
-            wordlist.remove(wordlist[i])
-            existingadverb = True
-            verb = [*wordlist[1]]
-            if verb[-1] == "d" and verb[-2] == "e" and wordlist[1] not in irregular:
-                tense = "pastsimple" 
         else:
-            existingadverb = False
-if wordlist[0] in determiners:
-    wordlist[0] = wordlist[0] + " " + wordlist[1]
-    wordlist.remove(wordlist[1])
-    verb = [*wordlist[1]]
-    if verb[-1] == "d" and verb[-2] == "e" and wordlist[1] not in irregular:
-        tense = "pastsimple"
-if wordlist[-2] in determiners:
-    if verb[-1] == "d" and verb[-2] == "e" and wordlist[1] not in irregular:
-    wordlist[-2] = wordlist[-2] + " " + wordlist[-1]
-        tense = "pastsimple"
-    wordlist.remove(wordlist[-1])
-    verb = [*wordlist[1]]
-if wordlist[-1] in adverbs or possibleadverb[-2] == "l" and possibleadverb[-1] == "y":
-    wordlist.remove(wordlist[-1])
-    existingadverb = True
-else:
-    existingadverb = False
-if verb[-1] == "s" and wordlist[0] != "I" and wordlist[0] != "i" and wordlist[0] != "You" and wordlist[0] != "you" and wordlist[0] != "We" and wordlist[0] != "we" and wordlist[0] != "They" and wordlist[0] != "they" and wordlist[1] not in irregular and wordlist[1] not in irregularpast:
-    verb.pop()
-    wordlist[1] = ''.join(verb)
-if verb[-1] == "e" and wordlist[1] not in irregular and wordlist[1] not in irregularpast:
-    wordlist[1] = wordlist[1] + "d"
-elif wordlist[1] not in irregular and wordlist[1] not in irregularpast and tense == "presentsimple":
-    wordlist[1] = wordlist[1] + "ed"
-if wordlist[1] == "beat" or wordlist[1] == "eat" or wordlist[1] == "fall":
-    wordlist[1] = wordlist[1] + "en"
-def participle():
-    if wordlist[1] == "begin":
-        wordlist[1] = "begun"
-    if wordlist[1] == "bend":
-        wordlist[1] = "bent"
-    if wordlist[1] == "bite":
-        wordlist[1] = "bitten"
-    if wordlist[1] == "bleed":
-        wordlist[1] = "bled"
-    if wordlist[1] == "blow":
-        wordlist[1] = "blown"
-    if wordlist[1] == "break":
-        wordlist[1] = "broken"
-    if wordlist[1] == "breed":
-        wordlist[1] = "bred"
-    if wordlist[1] == "bring":
-        wordlist[1] = "brought"
-    if wordlist[1] == "build":
-        wordlist[1] = "built"
-    if wordlist[1] == "burn":
-        wordlist[1] = "burnt"
-    if wordlist[1] == "buy":
-        wordlist[1] = "bought"
-    if wordlist[1] == "catch":
-        wordlist[1] = "caught"
-    if wordlist[1] == "choose":
-        wordlist[1] = "chosen"
-    if wordlist[1] == "do":
-        wordlist[1] = "done"
-    if wordlist[1] == "dig":
-        wordlist[1] = "dug"
-    if wordlist[1] == "draw":
-        wordlist[1] = "drawn"
-    if wordlist[1] == "dream":
-        wordlist[1] = "dreamt"
-    if wordlist[1] == "drink":
-        wordlist[1] = "drunk"
-    if wordlist[1] == "drive":
-        wordlist[1] = "driven"
-    if wordlist[1] == "eat":
-        wordlist[1] = "eaten"
-    if wordlist[1] == "breed":
-        wordlist[1] = "bred"
-    if wordlist[1] == "feed":
-        wordlist[1] = "fed"
-    if wordlist[1] == "feel":
-        wordlist[1] = "felt"
-    if wordlist[1] == "fight":
-        wordlist[1] = "fought"
-    if wordlist[1] == "find":
-        wordlist[1] = "found"
-    if wordlist[1] == "fly":
-        wordlist[1] = "flown"
-    if wordlist[1] == "forgive":
-        wordlist[1] = "forgiven"
-    if wordlist[1] == "freeze":
-        wordlist[1] = "frozen"
-    if wordlist[1] == "get":
-        wordlist[1] = "got"
-    if wordlist[1] == "give":
-        wordlist[1] = "given"
-    if wordlist[1] == "go":
-        wordlist[1] = "gone"
-    if wordlist[1] == "grow":
-        wordlist[1] = "grown"
-    if wordlist[1] == "hear":
-        wordlist[1] = "heard"
-    if wordlist[1] == "hold":
-        wordlist[1] = "held"
-    if wordlist[1] == "keep":
-        wordlist[1] = "kept"
-    if wordlist[1] == "know":
-        wordlist[1] = "known"
-    if wordlist[1] == "lay":
-        wordlist[1] = "laid"
-    if wordlist[1] == "lead":
-        wordlist[1] = "led"
-    if wordlist[1] == "lean":
-        wordlist[1] = "leant"
-    if wordlist[1] == "leave":
-        wordlist[1] = "left"
-    if wordlist[1] == "lend":
-        wordlist[1] = "lent"
-    if wordlist[1] == "lose":
-        wordlist[1] = "lost"
-    if wordlist[1] == "make":
-        wordlist[1] = "made"
-    if wordlist[1] == "mean":
-        wordlist[1] = "meant"
-    if wordlist[1] == "meet":
-        wordlist[1] = "met"
-    if wordlist[1] == "pay":
-        wordlist[1] = "paid"
-    if wordlist[1] == "ring":
-        wordlist[1] = "rung"
-    if wordlist[1] == "rise":
-        wordlist[1] = "risen"
-    if wordlist[1] == "say":
-        wordlist[1] = "said"
-    if wordlist[1] == "see":
-        wordlist[1] = "seen"
-    if wordlist[1] == "sell":
-        wordlist[1] = "sold"
-    if wordlist[1] == "send":
-        wordlist[1] = "sent"
-    if wordlist[1] == "shake":
-        wordlist[1] = "shaken"
-    if wordlist[1] == "shine":
-        wordlist[1] = "shone"
-    if wordlist[1] == "shoe":
-        wordlist[1] = "shod"
-    if wordlist[1] == "shoot":
-        wordlist[1] = "shot"
-    if wordlist[1] == "show":
-        wordlist[1] = "shown"
-    if wordlist[1] == "shrink":
-        wordlist[1] = "shrunk"
-    if wordlist[1] == "sing":
-        wordlist[1] = "sung"
-    if wordlist[1] == "sink":
-        wordlist[1] = "sunk"
-    if wordlist[1] == "sit":
-        wordlist[1] = "sat"
-    if wordlist[1] == "sleep":
-        wordlist[1] = "slept"
-    if wordlist[1] == "speak":
-        wordlist[1] = "spoken"
-    if wordlist[1] == "spend":
-        wordlist[1] = "spent"
-    if wordlist[1] == "spill":
-        wordlist[1] = "spilt"
-    if wordlist[1] == "speed":
-        wordlist[1] = "sped"
-    if wordlist[1] == "stand":
-        wordlist[1] = "stood"
-    if wordlist[1] == "stick":
-        wordlist[1] = "stuck"
-    if wordlist[1] == "sting":
-        wordlist[1] = "stung"
-    if wordlist[1] == "stink":
-        wordlist[1] = "stunk"
-    if wordlist[1] == "swear":
-        wordlist[1] = "sworn"
-    if wordlist[1] == "sweep":
-        wordlist[1] = "swept"
-    if wordlist[1] == "swim":
-        wordlist[1] = "swum"
-    if wordlist[1] == "swing":
-        wordlist[1] = "swung"
-    if wordlist[1] == "take":
-        wordlist[1] = "taken"
-    if wordlist[1] == "teach":
-        wordlist[1] = "taught"
-    if wordlist[1] == "tear":
-        wordlist[1] = "torn"
-    if wordlist[1] == "tell":
-        wordlist[1] = "told"
-    if wordlist[1] == "think":
-        wordlist[1] = "thought"
-    if wordlist[1] == "throw":
-        wordlist[1] = "thrown"
-    if wordlist[1] == "understand":
-        wordlist[1] = "understood"
-    if wordlist[1] == "wake":
-        wordlist[1] = "woken"
-    if wordlist[1] == "wear":
-        wordlist[1] = "worn"
-    if wordlist[1] == "win":
-        wordlist[1] = "won"
-    if wordlist[1] == "fall":
-        wordlist[1] = "fallen"
-    if wordlist[1] == "forget":
-        wordlist[1] = "forgotten"
-    if wordlist[1] == "hide":
-        wordlist[1] = "hidden"
-    if wordlist[1] == "ride":
-        wordlist[1] = "ridden"
-    if wordlist[1] == "steal":
-        wordlist[1] = "stolen"
-    if wordlist[1] == "write":
-        wordlist[1] = "written"
-participle()
-def gerundtoparticiple():
-    gerund = [*wordlist[2]]
-    if gerund[-3] == "i" and gerund[-2] == "n" and gerund[-1] == "g":
-        gerund.remove(gerund[-3])
-        gerund.remove(gerund[-2])     
-        gerund.remove(gerund[-1])
-        wordlist[2] = ''.join(gerund)
-        if wordlist[2] not in irregular and wordlist[2] not in eirregular:
-            wordlist[2] = wordlist[2] + "ed"
-        if wordlist[2] in irregular:
-            wordlist[1], wordlist[2] = wordlist[2], wordlist[1]
-            participle()
-            wordlist[1], wordlist[2] = wordlist[2], wordlist[1]
-        if wordlist[2] in eirregular:
-            if wordlist[2] == "becom":
-                wordlist[2] = "become"
-            if wordlist[2] == "bit":
-                wordlist[2] = "bitten" 
-            if wordlist[2] == "choos":
-                wordlist[2] = "choosen"                
-            if wordlist[2] == "driv":
-                wordlist[2] = "driven"                
-            if wordlist[2] == "forgiv":
-                wordlist[2] = "forgiven"                
-            if wordlist[2] == "freez":
-                wordlist[2] = "frozen"                
-            if wordlist[2] == "giv":
-                wordlist[2] = "given"                
-            if wordlist[2] == "hav":
-                wordlist[2] = "had"                
-            if wordlist[2] == "hid":
-                wordlist[2] = "hidden"                
-            if wordlist[2] == "leav":
-                wordlist[2] = "left"               
-            if wordlist[2] == "los":
-                wordlist[2] = "lost"               
-            if wordlist[2] == "mak":
-                wordlist[2] = "made"
-            if wordlist[2] == "rid":
-                wordlist[2] = "ridden"                
-            if wordlist[2] == "ris":
-                wordlist[2] = "risen"                
-            if wordlist[2] == "shak":
-                wordlist[2] = "shaken"                
-            if wordlist[2] == "shin":
-                wordlist[2] = "shone"                
-            if wordlist[2] == "tak":
-                wordlist[2] = "taken"               
-            if wordlist[2] == "wak":
-                wordlist[2] = "waken"                
-            if wordlist[2] == "writ":
-                wordlist[2] = "written"
-if wordlist[1] == "am" or wordlist[1] == "is" or wordlist[1] == "are" or wordlist[1] == "was" or wordlist[1] == "were":
-    if wordlist[1] == "am" or wordlist[1] == "is" or wordlist[1] == "are":
-        tense = "presentcontinuous"
-    if wordlist[1] == "was" or wordlist[1] == "were":
-        tense = "pastcontinuous"
-    if wordlist[2] == "not":
-        wordlist[2], wordlist[3] = wordlist[3], wordlist[2]
-        gerundtoparticiple()
-        wordlist[2], wordlist[3] = wordlist[3], wordlist[2]
-    gerundtoparticiple()
-    wordlist[1] = "being"
-    if wordlist[2] == "not":
-        wordlist[1], wordlist[2] = wordlist[2], wordlist[1]
-if wordlist[1] == "will":
-    tense = "futuresimple"
-    verb = [*wordlist[2]]
-    if wordlist[2] not in irregular and verb[-1] != "e" and wordlist[2] != "not":
-        wordlist[2] = wordlist[2] + "ed"
-    if wordlist[2] not in irregular and verb[-1] == "e":
-        wordlist[2] = wordlist[2] + "d"
-    if wordlist[2] in irregular:
-        wordlist[1], wordlist[2] = wordlist[2], wordlist[1]
-        participle()
-        wordlist[1], wordlist[2] = wordlist[2], wordlist[1]
-    if wordlist[2] == "not":
-        verb = [*wordlist[3]]
-        wordlist[2], wordlist[3] = wordlist[3], wordlist[2]
-        if wordlist[2] not in irregular and verb[-1] != "e":
-            wordlist[2] = wordlist[2] + "ed"
-        if wordlist[2] not in irregular and verb[-1] == "e":
-            wordlist[2] = wordlist[2] + "d"
-        if wordlist[2] in irregular:
-            wordlist[1], wordlist[2] = wordlist[2], wordlist[1]
-            participle()
-            wordlist[1], wordlist[2] = wordlist[2], wordlist[1]
-        wordlist[2], wordlist[3] = wordlist[3], wordlist[2]
-    if wordlist[2] == "have":
-        tense = "futureperfect"
-    if wordlist[3] == "have":
-        tense = "futureperfect"
-if wordlist[1] == "have" or wordlist[1] == "has":
-    tense = "presentperfect"
-    obj = [*wordlist[-1]]
-    if wordlist[-1] != "me" and wordlist[-1] != "you" and wordlist[-1] != "us" and wordlist[-1] != "them":
-        wordlist[1] = "has" 
+            del word_list[i]
+for i in range(len(word_list) - 1, -1, -1):
+    if word_list[i] in prepositions and word_list[i - 1] == verb:
+        del word_list[i]
+        phrasal = True
+clause = [] 
+prep_found = False
+i = 0
+while i < len(word_list):
+    if word_list[i] in prepositions and word_list[i - 1] not in followed_by_infinitive and word_list[i - 1] != "going":
+        clause.append(word_list[i])
+        del word_list[i]
+        prep_found = True
+    elif prep_found == True:
+        clause.append(word_list[i])
+        del word_list[i]
     else:
-        wordlist[1] = "have"
-    if wordlist[2] == "been":
-        tense = "presentperfectcontinuous"
-        wordlist.remove("been")
-        gerundtoparticiple()
-    if wordlist[2] == "not" and wordlist[3] == "been":
-        tense = "presentperfectcontinuous"
-        wordlist.remove("been")
-        wordlist[2], wordlist[3] = wordlist[3], wordlist[2]
-        gerundtoparticiple()
-        wordlist[2], wordlist[3] = wordlist[3], wordlist[2]
-if tense == "presentsimple" and wordlist[1] == "don't" or wordlist[1] == "doesn't":
-    wordlist[1] = "not"
-    verb = [*wordlist[2]]
-    if wordlist[2] not in irregular and verb[-1] != "e":
-        wordlist[2] = wordlist[2] + "ed"
-    if wordlist[2] not in irregular and verb[-1] == "e":
-        wordlist[2] = wordlist[2] + "d"
-    if wordlist[2] in irregular:
-        wordlist[1], wordlist[2] = wordlist[2], wordlist[1]
-        participle()
-        wordlist[1], wordlist[2] = wordlist[2], wordlist[1]
-if wordlist[1] == "didn't":
-    tense = "pastsimple"
-    wordlist[1] = "not"
-    verb = [*wordlist[2]]
-    if wordlist[2] not in irregular and verb[-1] != "e":
-        wordlist[2] = wordlist[2] + "ed"
-    if wordlist[2] not in irregular and verb[-1] == "e":
-        wordlist[2] = wordlist[2] + "d"
-    if wordlist[2] in irregular:
-        wordlist[1], wordlist[2] = wordlist[2], wordlist[1]
-        participle()
-        wordlist[1], wordlist[2] = wordlist[2], wordlist[1]
-if wordlist[1] == "had":
-    tense = "pastperfect"
-if wordlist[1] == "can" or wordlist[1] == "can't" or wordlist[1] == "could" or wordlist[1] == "couldn't" or wordlist[1] == "may" or wordlist[1] == "mayn't" or wordlist[1] == "might" or wordlist[1] == "mightn't" or wordlist[1] == "must" or wordlist[1] == "mustn't" or wordlist[1] == "shall" or wordlist[1] == "shan't" or wordlist[1] == "should" or wordlist[1] == "shouldn't" or wordlist[1] == "would" or wordlist[1] == "wouldn't":
-    tense = "modal"
-    if wordlist[2] == "not":
-        wordlist.insert(3, "be")
+        i += 1
+result = []
+subj = []
+i = 0
+while i < len(word_list):
+    if word_list[i] == aux or word_list[i] == verb:
+        result.append(' '.join(subj))
+        while i < len(word_list):
+            result.append(word_list[i])
+            i += 1
     else:
-        wordlist.insert(2, "be")
-    verb = [*wordlist[3]]
-    if wordlist[3] == "have" and wordlist[2] != "not":
-        wordlist[2], wordlist[3] = wordlist[3], wordlist[2]
-        wordlist[3] = "been"
-    if wordlist[3] not in irregular and verb[-1] != "e" and wordlist[2] != "not":
-        wordlist[3] = wordlist[3] + "ed"
-    if wordlist[3] not in irregular and verb[-1] == "e" and wordlist[3] != "been" and wordlist[2] != "not":
-        wordlist[3] = wordlist[3] + "d"
-    if wordlist[3] in irregular and wordlist[2] != "not":
-        wordlist[1], wordlist[3] = wordlist[3], wordlist[1]
-        participle()
-        wordlist[1], wordlist[3] = wordlist[3], wordlist[1]
-    if wordlist[2] == "not":
-        verb = [*wordlist[4]]
-        if wordlist[4] == "have":
-            wordlist[4], wordlist[5] = wordlist[5], wordlist[4]
-            wordlist[4] = "been"
-        if wordlist[4] not in irregular and verb[-1] != "e":
-            wordlist[4] = wordlist[4] + "ed"
-        if wordlist[4] not in irregular and verb[-1] == "e" and wordlist[3] != "been":
-            wordlist[4] = wordlist[4] + "d"
-        if wordlist[4] in irregular:
-            wordlist[1], wordlist[4] = wordlist[4], wordlist[1]
-            participle()
-            wordlist[1], wordlist[4] = wordlist[4], wordlist[1]
-if wordlist[0] == "I" or wordlist[0] == "i":
-    wordlist[0] = "me"
-if wordlist[0] == "You":
-    wordlist[0] = "you"
-if wordlist[0] == "He" or wordlist[0] == "he":
-    wordlist[0] = "him"
-if wordlist[0] == "She" or wordlist[0] == "she":
-    wordlist[0] = "her"
-if wordlist[0] == "It":
-    wordlist[0] = "it"
-if wordlist[0] == "We" or wordlist[0] == "we":
-    wordlist[0] = "us"
-if wordlist[0] == "They" or wordlist[0] == "they":
-    wordlist[0] = "them"
-if wordlist[-1] == "me":
-    wordlist[-1] = "I"
-if wordlist[-1] == "you":
-    wordlist[-1] = "You"
-if wordlist[-1] == "him":
-    wordlist[-1] = "He"
-if wordlist[-1] == "her":
-    wordlist[-1] = "She"
-if wordlist[-1] == "it":
-    wordlist[-1] = "It"
-if wordlist[-1] == "us":
-    wordlist[-1] = "We"
-if wordlist[-1] == "them":
-    wordlist[-1] = "They"
-noun = [*wordlist[0]]
-wordlist[0], wordlist[-1] = wordlist[-1], wordlist[0]
-if tense == "presentsimple" or tense == "presentcontinuous":
-    if wordlist[0] == "I":
-        wordlist.insert(1, "am")
-    if noun[-1] == "s" or wordlist[0] == "You" or wordlist[0] == "We" or wordlist[0] == "They" or wordlist[0] == "you all":
-        wordlist.insert(1, "are")
-    if wordlist[0] != "I" and wordlist[0] != "You" and wordlist[0] != "We" and wordlist[0] != "They" and wordlist[0] != "you all" and noun[-1] != "s":
-        wordlist.insert(1, "is")
-if tense == "pastsimple" or tense == "pastcontinuous":
-    if wordlist[0] != "You" and wordlist[0] != "We" and wordlist[0] != "They":
-        wordlist.insert(1, "was")
-    if wordlist[0] == "You" or wordlist[0] == "We" or wordlist[0] == "They":
-        wordlist.insert(1, "were")
-if tense == "futuresimple":
-    if wordlist[2] == "not":
-        wordlist.insert(3, "be")
+        subj.append(word_list[i])
+        i += 1
+word_list = result
+result = []
+obj = []
+i = 0
+verb_found = False
+while i < len(word_list):
+    if word_list[i] == verb:
+        verb_found = True
+        result.append(word_list[i])
+        i += 1
+    elif verb_found == True:
+        while i < len(word_list):
+            obj.append(word_list[i])
+            i += 1
+        result.append(' '.join(obj))
     else:
-        wordlist.insert(2, "be")
-if tense == "futureperfect":
-    if wordlist[2] == "not":
-        wordlist.insert(4, "been")
+        result.append(word_list[i])
+        i += 1
+subj = ' '.join(subj)
+obj = ' '.join(obj)
+word_list = result
+character_list = [*verb]
+if tense == "Present Followed By Infinitive Affirmative":
+    if aux == "have" or aux == "has":
+        if obj == "me" or obj == "you" or obj == "us" or obj == "them":
+            word_list[1] = "have"
+        elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+            word_list[1] = "have"
+        else:
+            word_list[1] = "has"
+        if word_list[3] in present_to_participle:
+            word_list[3] = present_to_participle[word_list[3]]
+        elif (word_list[3])[-1] != "e":
+            word_list[3] = verb + "ed"
+        else:
+            word_list[3] = verb + "d"
+        word_list.insert(3, "be")
+    elif aux == "ought":
+        if word_list[3] in present_to_participle:
+            word_list[3] = present_to_participle[word_list[3]]
+        elif (word_list[3])[-1] != "e":
+            word_list[3] = verb + "ed"
+        else:
+            word_list[3] = verb + "d"
+        word_list.insert(3, "be")
     else:
-        wordlist.insert(3, "been")
-if tense == "presentperfect" or tense == "pastperfect" or tense == "presentperfectcontinuous":
-    if wordlist[2] == "not":
-        wordlist.insert(3, "been")
+        if obj == "me":
+            word_list.insert(1, "am")
+        elif obj == "you" or obj == "us" or obj == "them":
+            word_list.insert(1, "are")
+        elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+            word_list.insert(1, "are")
+        else:
+            word_list.insert(1, "is")
+        if word_list[2] in present_to_participle:
+            word_list[2] = present_to_participle[word_list[2]]
+        elif (word_list[2])[-1] != "e":
+            word_list[2] = aux + "ed"
+        else:
+            word_list[2] = aux + "d"
+        word_list.insert(4, "be")
+        if word_list[5] in present_to_participle:
+            word_list[5] = present_to_participle[word_list[5]]
+        elif (word_list[5])[-1] != "e":
+            word_list[5] = verb + "ed"
+        else:
+            word_list[5] = verb + "d"
+elif tense == "Past Followed By Infinitive Affirmative":
+    if aux == "had":
+        if word_list[3] in present_to_participle:
+            word_list[3] = present_to_participle[word_list[3]]
+        elif (word_list[3])[-1] != "e":
+            word_list[3] = verb + "ed"
+        else:
+            word_list[3] = verb + "d"
+        word_list.insert(3, "be")
     else:
-        wordlist.insert(2, "been")
-if tense == "presentperfectcontinuous":
-    if wordlist[2] == "not":
-        wordlist.insert(4, "being")
+        if obj == "you" or obj == "us" or obj == "them":
+            word_list.insert(1, "were")
+        elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+            word_list.insert(1, "were")
+        else:
+            word_list.insert(1, "was")
+        if word_list[2] in present_to_participle:
+            word_list[2] = present_to_participle[word_list[2]]
+        elif (word_list[2])[-1] != "e":
+            word_list[2] = aux + "ed"
+        else:
+            word_list[2] = aux + "d"
+        word_list.insert(4, "be")
+        if word_list[5] in present_to_participle:
+            word_list[5] = present_to_participle[word_list[5]]
+        elif (word_list[5])[-1] != "e":
+            word_list[5] = verb + "ed"
+        else:
+            word_list[5] = verb + "d"
+elif tense == "Present Simple Affirmative":
+    if verb[-1] == "s" and verb[-2] != "s":
+        if verb[-2] == "e":
+            character_list.pop()
+            character_list.pop()
+            verb = ''.join(character_list)
+        else:
+            character_list.pop()
+            verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[1] = present_to_participle[verb]
+    elif (word_list[1])[-1] != "e":
+        word_list[1] = verb + "ed"
     else:
-        wordlist.insert(3, "being")
-if wordlist[-2] in determiners:
-    wordlist.insert(-2, "by")
-else:
-    wordlist.insert(-1, "by")
-if existingadverb == True:
-    possibleadverb = ''.join(possibleadverb)
-    wordlist.append(possibleadverb)
-print("Passive voice translation: " + ' '.join(wordlist))
+        word_list[1] = verb + "d"
+    if obj == "me":
+        word_list.insert(1, "am")
+    elif obj == "you" or obj == "us" or obj == "them":
+        word_list.insert(1, "are")
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list.insert(1, "are")
+    else:
+        word_list.insert(1, "is")
+elif tense == "Past Simple Affirmative Regular":
+    if obj == "you" or obj == "us" or obj == "them":
+        word_list.insert(1, "were")
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list.insert(1, "were")
+    else:
+        word_list.insert(1, "was")
+elif tense == "Past Simple Affirmative Irregular":
+    if word_list[1] in past_to_participle:
+        word_list[1] = past_to_participle[word_list[1]]
+    if obj == "you" or obj == "us" or obj == "them":
+        word_list.insert(1, "were")
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list.insert(1, "were")
+    else:
+        word_list.insert(1, "was")
+elif tense == "Present Continuous Affirmative":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[2] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[2] = verb + "ed"
+    else:
+        word_list[2] = verb + "d"
+    if obj == "me":
+        word_list.insert(1, "am")
+    elif obj == "you" or obj == "us" or obj == "them":
+        word_list.insert(1, "are")
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list.insert(1, "are")
+    else:
+        word_list.insert(1, "is")
+    word_list[2] = "being"
+elif tense == "Present Perfect Affirmative":
+    word_list.insert(2, "been")
+    if obj == "me" or obj == "you" or obj == "us" or obj == "them":
+        word_list[1] = "have"
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list[1] = "have"
+    else:
+        word_list[1] = "has"
+elif tense == "Modal Affirmative":
+    if verb in present_to_participle:
+        word_list[2] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[2] = verb + "ed"
+    else:
+        word_list[2] = verb + "d"
+    word_list.insert(2, "be")
+elif tense == "Modal Perfect Affirmative":
+    word_list.insert(3, "been")
+elif tense == "Past Continuous Affirmative":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[2] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[2] = verb + "ed"
+    else:
+        word_list[2] = verb + "d"
+    if obj == "you" or obj == "us" or obj == "them":
+        word_list.insert(1, "were")
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list.insert(1, "were")
+    else:
+        word_list.insert(1, "was")
+    word_list[2] = "being"
+elif tense == "Past Perfect Affirmative":
+    word_list.insert(2, "been")
+elif tense == "Modal Continuous Affirmative":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[3] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[3] = verb + "ed"
+    else:
+        word_list[3] = verb + "d"
+    word_list.insert(3, "being")
+elif tense == "Present Perfect Continuous Affirmative":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[3] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[3] = verb + "ed"
+    else:
+        word_list[3] = verb + "d"
+    word_list.insert(3, "being")
+    if obj == "me" or obj == "you" or obj == "us" or obj == "them":
+        word_list[1] = "have"
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list[1] = "have"
+    else:
+        word_list[1] = "has"
+elif tense == "Past Perfect Continuous Affirmative":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[3] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[3] = verb + "ed"
+    else:
+        word_list[3] = verb + "d"
+    word_list.insert(3, "being")
+elif tense == "Modal Perfect Continuous Affirmative":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[4] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[4] = verb + "ed"
+    else:
+        word_list[4] = verb + "d"
+    word_list.insert(4, "being")
+elif tense == "Simple Future Affirmative":
+    if verb in present_to_participle:
+        word_list[4] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[4] = verb + "ed"
+    else:
+        word_list[4] = verb + "d"
+    if obj == "me":
+        word_list[1] = "am"
+    elif obj == "you" or obj == "us" or obj == "them":
+        word_list[1] =  "are"
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list[1] = "are"
+    else:
+        word_list[1] = "is"
+    word_list.insert(4, "be")
+elif tense == "Past Future Affirmative":
+    if verb in present_to_participle:
+        word_list[4] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[4] = verb + "ed"
+    else:
+        word_list[4] = verb + "d"
+    if obj == "you" or obj == "us" or obj == "them":
+        word_list[1] = "were"
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list[1] = "were"
+    else:
+        word_list[1] = "was"
+    word_list.insert(4, "be")
+elif tense == "Present Followed By Infinitive Negative Uncontracted":
+    if word_list[3] == "have":
+        if obj == "you" or obj == "us" or obj == "them":
+            word_list[1] = "do"
+        elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+            word_list[1] = "do"
+        else:
+            word_list[1] = "does"
+        if verb in present_to_participle:
+            word_list[5] = present_to_participle[verb]
+        elif verb[-1] != "e":
+            word_list[5] = verb + "ed"
+        else:
+            word_list[5] = verb + "d"
+        word_list.insert(5, "be")
+    else:
+        if obj == "me":
+            word_list[1] = "am"
+        elif obj == "you" or obj == "us" or obj == "them":
+            word_list[1] = "are"
+        elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+            word_list[1] = "are"
+        else:
+            word_list[1] = "is"
+        if word_list[3] in present_to_participle:
+            word_list[3] = present_to_participle[word_list[3]]
+        elif (word_list[3])[-1] != "e":
+            word_list[3] = word_list[3] + "ed"
+        else:
+            word_list[3] = word_list[3] + "d"
+        word_list.insert(5, "be")
+        if word_list[6] in present_to_participle:
+            word_list[6] = present_to_participle[word_list[6]]
+        elif (word_list[6])[-1] != "e":
+            word_list[6] = verb + "ed"
+        else:
+            word_list[6] = verb + "d"
+elif tense == "Past Followed By Infinitive Negative Uncontracted":
+    if word_list[3] == "have":
+        if verb in present_to_participle:
+            word_list[5] = present_to_participle[verb]
+        elif verb[-1] != "e":
+            word_list[5] = verb + "ed"
+        else:
+            word_list[5] = verb + "d"
+        word_list.insert(5, "be")
+    else:
+        if obj == "you" or obj == "us" or obj == "them":
+            word_list[1] = "were"
+        elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+            word_list[1] = "were"
+        else:
+            word_list[1] = "was"
+        if word_list[3] in present_to_participle:
+            word_list[3] = present_to_participle[word_list[3]]
+        elif (word_list[3])[-1] != "e":
+            word_list[3] = word_list[3] + "ed"
+        else:
+            word_list[3] = word_list[3] + "d"
+        word_list.insert(5, "be")
+        if word_list[6] in present_to_participle:
+            word_list[6] = present_to_participle[word_list[6]]
+        elif (word_list[6])[-1] != "e":
+            word_list[6] = verb + "ed"
+        else:
+            word_list[6] = verb + "d"
+elif tense == "Present Simple Negative Uncontracted":
+    if verb[-1] == "s" and verb[-2] != "s":
+        if verb[-2] == "e":
+            character_list.pop()
+            character_list.pop()
+            word_list[3] = ''.join(character_list)
+        else:
+            character_list.pop()
+            word_list[3] = ''.join(character_list)
+    if word_list[3] in present_to_participle:
+        word_list[3] = present_to_participle[word_list[3]]
+    elif (word_list[3])[-1] != "e":
+        word_list[3] = verb + "ed"
+    else:
+        word_list[3] = verb + "d"
+    if obj == "me":
+        word_list.insert(1, "am")
+    elif obj == "you" or obj == "us" or obj == "them":
+        word_list.insert(1, "are")
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list.insert(1, "are")
+    else:
+        word_list.insert(1, "is")
+    word_list.remove(word_list[2])
+elif tense == "Past Simple Negative Uncontracted":
+    if word_list[3] in present_to_participle:
+        word_list[3] = present_to_participle[word_list[3]]
+    elif (word_list[3])[-1] != "e":
+        word_list[3] = verb + "ed"
+    else:
+        word_list[3] = verb + "d"
+    if obj == "you" or obj == "us" or obj == "them":
+        word_list.insert(1, "were")
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list.insert(1, "were")
+    else:
+        word_list.insert(1, "was")
+    word_list.remove(word_list[2])
+elif tense == "Present Continuous Negative Uncontracted":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[3] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[3] = verb + "ed"
+    else:
+        word_list[3] = verb + "d"
+    if obj == "me":
+        word_list.insert(1, "am")
+    elif obj == "you" or obj == "us" or obj == "them":
+        word_list.insert(1, "are")
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list.insert(1, "are")
+    else:
+        word_list.insert(1, "is")
+    word_list.remove(word_list[2])
+    word_list.insert(3, "being")
+elif tense == "Present Perfect Negative Uncontracted":
+    word_list.insert(3, "been")
+    if obj == "me" or obj == "you" or obj == "us" or obj == "them":
+        word_list[1] = "have"
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list[1] = "have"
+    else:
+        word_list[1] = "has"
+elif tense == "Modal Negative Uncontracted":
+    if verb in present_to_participle:
+        word_list[3] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[3] = verb + "ed"
+    else:
+        word_list[3] = verb + "d"
+    word_list.insert(3, "be")
+elif tense == "Modal Perfect Negative Uncontracted":
+    word_list.insert(4, "been")
+elif tense == "Past Continuous Negative Uncontracted":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[3] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[3] = verb + "ed"
+    else:
+        word_list[3] = verb + "d"
+    if obj == "you" or obj == "us" or obj == "them":
+        word_list[1] = "were"
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list[1] = "were"
+    else:
+        word_list[1] = "was"
+    word_list.insert(3, "being")
+elif tense == "Past Perfect Negative Uncontracted":
+    word_list.insert(3, "been")
+elif tense == "Modal Continuous Negative Uncontracted":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[4] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[4] = verb + "ed"
+    else:
+        word_list[4] = verb + "d"
+    word_list.insert(4, "being")
+elif tense == "Present Perfect Continuous Negative Uncontracted":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[4] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[4] = verb + "ed"
+    else:
+        word_list[4] = verb + "d"
+    word_list.insert(4, "being")
+    if obj == "me" or obj == "you" or obj == "us" or obj == "them":
+        word_list[1] = "have"
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list[1] = "have"
+    else:
+        word_list[1] = "has"
+elif tense == "Past Perfect Continuous Negative Uncontracted":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[4] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[4] = verb + "ed"
+    else:
+        word_list[4] = verb + "d"
+    word_list.insert(4, "being")
+elif tense == "Modal Perfect Continuous Negative Uncontracted":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[5] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[5] = verb + "ed"
+    else:
+        word_list[5] = verb + "d"
+    word_list.insert(5, "being")
+elif tense == "Simple Future Negative Uncontracted":
+    if verb in present_to_participle:
+        word_list[5] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[5] = verb + "ed"
+    else:
+        word_list[5] = verb + "d"
+    if obj == "me":
+        word_list[1] = "am"
+    elif obj == "you" or obj == "us" or obj == "them":
+        word_list[1] =  "are"
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list[1] = "are"
+    else:
+        word_list[1] = "is"
+    word_list.insert(5, "be")
+elif tense == "Past Future Negative Uncontracted":
+    if verb in present_to_participle:
+        word_list[5] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[5] = verb + "ed"
+    else:
+        word_list[5] = verb + "d"
+    if obj == "you" or obj == "us" or obj == "them":
+        word_list[1] = "were"
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list[1] = "were"
+    else:
+        word_list[1] = "was"
+    word_list.insert(5, "be")
+elif tense == "Present Followed By Infinitive Negative Contracted":
+    if word_list[2] == "have":
+        if obj == "you" or obj == "us" or obj == "them":
+            word_list[1] = "don't"
+        elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+            word_list[1] = "don't"
+        else:
+            word_list[1] = "doesn't"
+        if verb in present_to_participle:
+            word_list[4] = present_to_participle[verb]
+        elif verb[-1] != "e":
+            word_list[4] = verb + "ed"
+        else:
+            word_list[4] = verb + "d"
+        word_list.insert(4, "be")
+    else:
+        if obj == "me":
+            word_list[0] = "I'm"
+            word_list[1] = "not"
+        elif obj == "you" or obj == "us" or obj == "them":
+            word_list[1] = "aren't"
+        elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+            word_list[1] = "aren't"
+        else:
+            word_list[1] = "isn't"
+        if word_list[2] in present_to_participle:
+            word_list[2] = present_to_participle[word_list[2]]
+        elif (word_list[2])[-1] != "e":
+            word_list[2] = word_list[2] + "ed"
+        else:
+            word_list[2] = word_list[2] + "d"
+        word_list.insert(4, "be")
+        if word_list[5] in present_to_participle:
+            word_list[5] = present_to_participle[word_list[5]]
+        elif (word_list[5])[-1] != "e":
+            word_list[5] = verb + "ed"
+        else:
+            word_list[5] = verb + "d"
+elif tense == "Past Followed By Infinitive Negative Contracted":
+    if word_list[2] == "have":
+        if verb in present_to_participle:
+            word_list[4] = present_to_participle[verb]
+        elif verb[-1] != "e":
+            word_list[4] = verb + "ed"
+        else:
+            word_list[4] = verb + "d"
+        word_list.insert(4, "be")
+    else:
+        if obj == "you" or obj == "us" or obj == "them":
+            word_list[1] = "weren't"
+        elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+            word_list[1] = "weren't"
+        else:
+            word_list[1] = "wasn't"
+        if word_list[2] in present_to_participle:
+            word_list[2] = present_to_participle[word_list[2]]
+        elif (word_list[2])[-1] != "e":
+            word_list[2] = word_list[2] + "ed"
+        else:
+            word_list[2] = word_list[2] + "d"
+        word_list.insert(4, "be")
+        if word_list[5] in present_to_participle:
+            word_list[5] = present_to_participle[word_list[5]]
+        elif (word_list[5])[-1] != "e":
+            word_list[5] = verb + "ed"
+        else:
+            word_list[5] = verb + "d"
+elif tense == "Present Simple Negative Contracted":
+    if verb[-1] == "s" and verb[-2] != "s":
+        if verb[-2] == "e":
+            character_list.pop()
+            character_list.pop()
+            word_list[2] = ''.join(character_list)
+        else:
+            character_list.pop()
+            word_list[2] = ''.join(character_list)
+    if word_list[2] in present_to_participle:
+        word_list[2] = present_to_participle[word_list[2]]
+    elif (word_list[2])[-1] != "e":
+        word_list[2] = verb + "ed"
+    else:
+        word_list[2] = verb + "d"
+    if obj == "me":
+        obj = "I'm"
+        word_list[-1] = obj
+        word_list.insert(1, "not")
+    elif obj == "you" or obj == "us" or obj == "them":
+        word_list.insert(1, "aren't")
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list.insert(1, "aren't")
+    else:
+        word_list.insert(1, "isn't")
+    word_list.remove(word_list[2])
+elif tense == "Past Simple Negative Contracted":
+    if word_list[2] in present_to_participle:
+        word_list[2] = present_to_participle[word_list[2]]
+    elif (word_list[2])[-1] != "e":
+        word_list[2] = verb + "ed"
+    else:
+        word_list[2] = verb + "d"
+    if obj == "you" or obj == "us" or obj == "them":
+        word_list.insert(1, "weren't")
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list.insert(1, "weren't")
+    else:
+        word_list.insert(1, "wasn't")
+    word_list.remove(word_list[2])
+elif tense == "Present Continuous Negative Contracted":
+    if word_list[1] != "I'm":
+        character_list.pop()
+        character_list.pop()
+        character_list.pop()
+        verb = ''.join(character_list)
+        if verb in present_to_participle:
+            word_list[2] = present_to_participle[verb]
+        elif verb[-1] != "e":
+            word_list[2] = verb + "ed"
+        else:
+            word_list[2] = verb + "d"
+        if obj == "me":
+            obj = "I'm"
+            word_list[-1] = obj
+            word_list.insert(1, "not")
+        elif obj == "you" or obj == "us" or obj == "them":
+            word_list.insert(1, "aren't")
+        elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+            word_list.insert(1, "aren't")
+        else:
+            word_list.insert(1, "isn't")
+        word_list.remove(word_list[2])
+        word_list.insert(2, "being")
+    else:
+        word_list.remove(word_list[0])
+        word_list[0] = "me"
+        character_list.pop()
+        character_list.pop()
+        character_list.pop()
+        verb = ''.join(character_list)
+        if verb in present_to_participle:
+            word_list[2] = present_to_participle[verb]
+        elif verb[-1] != "e":
+            word_list[2] = verb + "ed"
+        else:
+            word_list[2] = verb + "d"
+        if obj == "you" or obj == "us" or obj == "them":
+            word_list.insert(2, "aren't")
+        elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+            word_list.insert(1, "aren't")
+        else:
+            word_list.insert(1, "isn't")        
+        word_list.insert(2, "being")
+        word_list.remove(word_list[3])
+elif tense == "Present Perfect Negative Contracted":
+    word_list.insert(2, "been")
+    if obj == "me" or obj == "you" or obj == "us" or obj == "them":
+        word_list[1] = "haven't"
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list[1] = "haven't"
+    else:
+        word_list[1] = "hasn't"
+elif tense == "Modal Negative Contracted":
+    if verb in present_to_participle:
+        word_list[2] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[2] = verb + "ed"
+    else:
+        word_list[2] = verb + "d"
+    word_list.insert(2, "be")
+elif tense == "Modal Perfect Negative Contracted":
+    word_list.insert(3, "been")
+elif tense == "Past Continuous Negative Contracted":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[2] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[2] = verb + "ed"
+    else:
+        word_list[2] = verb + "d"
+    if obj == "you" or obj == "us" or obj == "them":
+        word_list.insert(1, "weren't")
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list.insert(1, "weren't")
+    else:
+        word_list.insert(1, "wasn't")
+    word_list[2] = "being"
+elif tense == "Past Perfect Negative Contracted":
+    word_list.insert(2, "been")
+elif tense == "Modal Continuous Negative Contracted":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[3] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[3] = verb + "ed"
+    else:
+        word_list[3] = verb + "d"
+    word_list.insert(3, "being")
+elif tense == "Present Perfect Continuous Negative Contracted":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[3] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[3] = verb + "ed"
+    else:
+        word_list[3] = verb + "d"
+    word_list.insert(3, "being")
+    if obj == "me" or obj == "you" or obj == "us" or obj == "them":
+        word_list[1] = "haven't"
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list[1] = "haven't"
+    else:
+        word_list[1] = "hasn't"
+elif tense == "Past Perfect Continuous Negative Contracted":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[3] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[3] = verb + "ed"
+    else:
+        word_list[3] = verb + "d"
+    word_list.insert(3, "being")
+elif tense == "Modal Perfect Continuous Negative Contracted":
+    character_list.pop()
+    character_list.pop()
+    character_list.pop()
+    verb = ''.join(character_list)
+    if verb in present_to_participle:
+        word_list[4] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[4] = verb + "ed"
+    else:
+        word_list[4] = verb + "d"
+    word_list.insert(4, "being")
+elif tense == "Simple Future Negative Contracted":
+    if word_list[0] != "I'm":
+        if verb in present_to_participle:
+            word_list[4] = present_to_participle[verb]
+        elif verb[-1] != "e":
+            word_list[4] = verb + "ed"
+        else:
+            word_list[4] = verb + "d"
+        if obj == "me":
+            obj = "I'm"
+            word_list[-1] = obj
+            word_list[1] = "not"
+        elif obj == "you" or obj == "us" or obj == "them":
+            word_list[1] =  "aren't"
+        elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+            word_list[1] = "aren't"
+        else:
+            word_list[1] = "isn't"
+        word_list.insert(4, "be")
+    else:
+        word_list[0] = "me"
+        if verb in present_to_participle:
+            word_list[4] = present_to_participle[verb]
+        elif verb[-1] != "e":
+            word_list[4] = verb + "ed"
+        else:
+            word_list[4] = verb + "d"
+        if obj == "you" or obj == "us" or obj == "them":
+            word_list[1] =  "aren't"
+        elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+            word_list[1] = "aren't"
+        else:
+            word_list[1] = "isn't"
+        word_list.insert(4, "be")
+elif tense == "Past Future Negative Contracted":
+    if verb in present_to_participle:
+        word_list[4] = present_to_participle[verb]
+    elif verb[-1] != "e":
+        word_list[4] = verb + "ed"
+    else:
+        word_list[4] = verb + "d"
+    if obj == "you" or obj == "us" or obj == "them":
+        word_list[1] = "weren't"
+    elif obj[-1] == "s" and obj[-2] != "s" and obj[-2] != "u" and obj not in s_termination_nouns:
+        word_list[1] = "weren't"
+    else:
+        word_list[1] = "wasn't"
+    word_list.insert(4, "be")
+if subj == "I":
+    word_list[0] = "me"
+elif subj == "You":
+    word_list[0] = "you"
+elif subj == "He" or subj == "he":
+    word_list[0] = "him"
+elif subj == "She" or subj == "she":
+    word_list[0] = "her"
+elif subj == "It":
+    word_list[0] = "it"
+elif subj == "We" or subj == "we":
+    word_list[0] = "us"
+elif subj == "They" or subj == "they":
+    word_list[0] = "them"
+if obj == "me":
+    word_list[-1] = "I"
+elif obj == "you":
+    word_list[-1] = "You"
+elif obj == "him":
+    word_list[-1] = "He"
+elif obj == "her":
+    word_list[-1] = "She"
+elif obj == "it":
+    word_list[-1] = "It"
+elif obj == "us":
+    word_list[-1] = "We"
+elif obj == "them":
+    word_list[-1] = "They"
+word_list[0], word_list[-1] = word_list[-1], word_list[0]
+word_list.insert(-1, "by")
+word_list[0] = word_list[0].capitalize()
+if adv != []:
+    for i in range(len(adv)):
+        if adv[i] in ["always", "usually", "generally", "frequently", "often", "sometimes", "occasionally", "seldom", "rarely", "never"]:
+            word_list.insert(2, adv[i])
+        elif phrasal == True:
+            word_list.insert(-2, adv[i])
+        else:
+            word_list.append(adv[i])
+if clause != []:
+    word_list.insert(-2, ' '.join(clause))
+print("Passive voice translation: " + " ".join(word_list))
         </script>
     </body>
 </html>
