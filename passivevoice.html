@@ -1450,7 +1450,7 @@ elif obj == "them":
     word_list[-1] = "They"
 word_list[0], word_list[-1] = word_list[-1], word_list[0]
 word_list.insert(-1, "by")
-word_list[0] = str(word_list[0]).capitalize()
+word_list[0] = word_list[0].upper() + (word_list[0])[1:] if word_list[0] else ""
 if adv != []:
     for i in range(len(adv)):
         if adv[i] in ["always", "usually", "generally", "frequently", "often", "sometimes", "occasionally", "seldom", "rarely", "never"]:
