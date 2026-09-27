@@ -345,7 +345,7 @@ try:
             word_list.insert(1, "have")
         if word_list[i] == "to":
             if (word_list[i - 1])[-1] == "s" and word_list[i - 1] != "has":
-                character_list = [*word_list[i - 1]]
+                character_list = list(word_list[i - 1])
                 character_list.pop()
                 word_list[i - 1] = ''.join(character_list)
                 if word_list[i - 1] in followed_by_infinitive:
@@ -353,7 +353,7 @@ try:
                     verb = word_list[i + 1]
                     aux = word_list[i - 1]
             elif (word_list[i - 1])[-1] == "d" and (word_list[i - 1])[-2] == "e":
-                character_list = [*word_list[i - 1]]
+                character_list = list(word_list[i - 1])
                 character_list.pop()
                 character_list.pop()
                 if word_list[i - 1] in followed_by_infinitive:
@@ -625,7 +625,7 @@ while i < len(word_list):
 subj = ' '.join(subj)
 obj = ' '.join(obj)
 word_list = result
-character_list = [*verb]
+character_list = list(verb)
 if tense == "Present Followed By Infinitive Affirmative":
     if aux == "have" or aux == "has":
         if obj == "me" or obj == "you" or obj == "us" or obj == "them":
