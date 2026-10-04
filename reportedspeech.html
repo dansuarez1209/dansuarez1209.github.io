@@ -14,230 +14,334 @@
     </head>
     <body>
         <script type="mpy" terminal>
-print("Direct speech to Reported speech translator v.1.0.1")
-sentence = input("enter sentence: ")
-wordlist = sentence.split()
-firstword = [*wordlist[0]]
-lastword = [*wordlist[-3]]
-verb = [*wordlist[1]]
-wordlist.insert(0, "They")
-wordlist.insert(1, "said")
-tense = "present"
-irregular = ["am", "is", "are", "was", "were", "beat", "become", "begin", "bend", "bet", "bite", "bleed", "blow", "break", "breed", "bring", "build", "burn", "buy", "catch", "choose", "come", "cost", "cut", "do", "don't", "didn't", "doesn't", "dig", "draw", "dream", "drink", "drive", "eat", "fall", "feed", "feel", "fight", "find", "fly", "forget", "forgive", "freeze", "get", "give", "go", "grow", "have", "has", "had", "hear", "hide", "hit", "hold", "hurt", "keep", "know", "lay", "lead", "lean", "leave", "lend", "let", "lose", "make", "mean", "meet", "pay", "put", "quit", "read", "ride", "ring", "rise", "run", "say", "see", "sell", "send", "set", "shake", "shine", "shoe", "shoot", "shrink", "shut", "sing", "sink", "sit", "sleep", "speak", "spend", "spill", "spread", "speed", "stand", "steal", "stick", "sting", "stink", "swear", "sweep", "swim", "swing", "take", "teach", "tear", "tell", "think", "throw", "understand", "wake", "wear", "win", "write"]
-irregularpast = ["beat", "became", "began", "bent", "bet", "bit", "bled", "blew", "broke", "bred", "brought", "built", "burnt", "bought", "caught", "chose", "came", "cost", "cut", "did", "dug", "drew", "dreamt", "drank", "drove", "ate", "fell", "fed", "felt", "fought", "found", "flew", "forgot", "forgave", "froze", "gave", "got", "went", "grew", "had", "heard", "hid", "hit", "held", "hurt", "kept", "knew", "laid", "led", "leant", "left", "lent", "let", "lost", "made", "meant", "met", "paid", "put", "quit", "read", "rode", "rang", "rose", "ran", "said", "saw", "sold", "sent", "set", "shook", "shone", "shod", "shot", "shrank", "shut", "sang", "sank", "sat", "show", "slept", "spoke", "spent", "spilt", "spread", "sped", "stood", "stole", "stank", "stung", "swore", "swept", "swam", "swung", "took", "taught", "tore", "told", "thought", "threw", "understood", "woke", "wore", "won", "wrote"]
-determiners = ["a", "an", "the", "this", "that", "these", "those", "my", "your", "his", "her", "its", "our", "their", "whose", "some", "any", "many", "few", "several", "all", "much", "little", "enough", "each", "every", "either", "neither", "no", "neither", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "A", "An", "The", "This", "That", "These", "Those", "My", "Your", "His", "Her", "Its", "Our", "Their", "Whose", "Some", "Any", "Many", "Few", "Several", "All", "Much", "Little", "Enough", "Each", "Every", "Either", "Neither", "No", "Neither", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
-if len(verb) > 3:
-    if verb[-3] == "i" and verb[-2] == "n" and verb[-1] == "g":
-        tense = "continuous"
-if verb[-2] == "e" and verb[-1] == "d" or wordlist[3] in irregularpast:
-    tense = "past"
-    participles = {
-        "beat": "beaten",
-        "became": "become",
-        "began": "begun",
-        "bit": "bitten",
-        "blew": "blown",
-        "broke": "broken",
-        "chose": "chosen",
-        "came": "come",
-        "did": "done",
-        "drew": "drawn",
-        "drank": "drunk",
-        "drove": "driven",
-        "ate": "eaten",
-        "fell": "fallen",
-        "flew": "flown",
-        "forgot": "forgotten",
-        "forgave": "forgiven",
-        "froze": "frozen",
-        "gave": "given",
-        "went": "gone",
-        "grew": "grown",
-        "hid": "hidden",
-        "knew": "known",
-        "rode": "ridden",
-        "rang": "rung",
-        "rose": "risen",
-        "ran": "run",
-        "saw": "seen",
-        "shook": "shaken",
-        "showed": "shown",
-        "shrank": "shrunk",
-        "sang": "sung",
-        "sank": "sunk",
-        "spoke": "spoken",
-        "stole": "stolen",
-        "stank": "stunk",
-        "swore": "sworn",
-        "swam": "swum",
-        "took": "taken",
-        "tore": "torn",
-        "threw": "thrown",
-        "woke": "waken",
-        "wore": "worn",
-        "wrote": "written",
-    }
-    if wordlist[3] in participles:
-        wordlist[3] = participles[wordlist[3]]
-    if wordlist[3] == "hadn't":
-        if wordlist[4] in participles:
-            wordlist[4] = participles[wordlist[4]]
-for i in range(len(wordlist) - 1):
-    if wordlist[i] == "was" or wordlist[i] == "were":
-        tense = "pastcontinuous"
-        if wordlist[i + 1] == "not":
-            wordlist[i] = "was not" if wordlist[i] == "was" else "were not"
-            del wordlist[i + 1]
-    if wordlist[i] == "won't":
-        wordlist[i] = "will"
-        wordlist.insert(i + 1, "not")
-    if wordlist[i] == "can't":
-        wordlist[i] = "can"
-        wordlist.insert(i + 1, "not")
-    if wordlist[i] == "couldn't":
-        wordlist[i] = "could"
-        wordlist.insert(i + 1, "not")
-    if wordlist[i] == "haven't":
-        wordlist[i] = "have"
-        wordlist.insert(i + 1, "not")
-    if wordlist[i] == "wasn't":
-        wordlist[i] = "was not"
-        tense = "pastcontinuous"
-    if wordlist[i] == "weren't":
-        wordlist[i] = "were not"
-        tense = "pastcontinuous"
-    if wordlist[i] == "isn't":
-        wordlist[i] = "is"
-        wordlist.insert(i + 1, "not")
-    if wordlist[i] == "aren't":
-        wordlist[i] = "are"
-        wordlist.insert(i + 1, "not")
-    if wordlist[i] == "mustn't":
-        wordlist[i] = "must"
-        wordlist.insert(i + 1, "not")
-    if wordlist[i] == "I'm":
-        wordlist[i] = "I"
-        wordlist.insert(i + 1, "am")
-    if wordlist[i] == "You're":
-        wordlist[i] = "You"
-        wordlist.insert(i + 1, "are")
-    if wordlist[i] == "He's":
-        wordlist[i] = "He"
-        wordlist.insert(i + 1, "is")
-    if wordlist[i] == "She's":
-        wordlist[i] = "She"
-        wordlist.insert(i + 1, "is")
-    if wordlist[i] == "It's":
-        wordlist[i] = "It"
-        wordlist.insert(i + 1, "is")
-    if wordlist[i] == "We're":
-        wordlist[i] = "We"
-        wordlist.insert(i + 1, "are")
-    if wordlist[i] == "They're":
-        wordlist[i] = "They"
-        wordlist.insert(i + 1, "are")
-    if wordlist[i] == "my" or wordlist[i] == "My" or wordlist[i] == "our" or wordlist[i] == "Our":
-        wordlist[i] = "their"
-    if wordlist[i] == "your" or wordlist[i] == "Your":
-        wordlist[i] = "my"
-if "had" in wordlist:
-    wordlist.remove("had")
-if "will" in wordlist:
-    tense = "future"
-if "can" in wordlist or "could" in wordlist or "may" in wordlist or "might" in wordlist or "must" in wordlist or "had to" in wordlist or "would" in wordlist:
-    tense = "modals"
-for i in range(len(wordlist) - 1):
-    if wordlist[i] in determiners:
-        wordlist[i] = wordlist[i] + ' ' + wordlist[i + 1]
-        wordlist.remove(wordlist[i + 1])
-        lastword = [*wordlist[-3]]
-    if wordlist[i] == "didn't" or wordlist[i] == "did" and wordlist[i + 1] == "not":
-        wordlist[i] = "hadn't"
-        verb = [*wordlist[4]]
-if firstword[0] == "'":
-    firstword.remove(firstword[0])
-    wordlist[2] = ''.join(firstword)
-    subject = wordlist[-2]
-if lastword[-1] == ",":
-    lastword.remove(lastword[-1])
-    lastword.remove(lastword[-1])
-    wordlist[-3] = ''.join(lastword)
-    wordlist.remove(wordlist[-2])
-    count = 0
-    for i in range(len(wordlist)):
-        if wordlist[i] == "said":
-            count += 1
-            if count == 2:
-                del wordlist[i]
-                break
-    wordlist[0] = subject
-if wordlist[2] == "You" or wordlist[2] == "you":
-    if wordlist[3] == "all":
-        wordlist[2] = "You all"
-        wordlist.remove(wordlist[3])
-if wordlist[-2] == "You" or wordlist[-2] == "you" and wordlist[-1] == "all":
-    wordlist[-2] = "you all"
-    wordlist.remove(wordlist[-1])
-if wordlist[2] == "I" or wordlist[2] == "i" or wordlist[2] == "They" or wordlist[2] =="they" or wordlist[2] == "We" or wordlist[2] == "we":
-    wordlist[2] = "they"
-    if wordlist[0] == "my sister" or wordlist[0] == "your sister" or wordlist[0] == "his sister" or wordlist[0] == "her sister" or wordlist[0] == "its sister" or wordlist[0] == "our sister" or wordlist[0] == "their sister" or wordlist[0] == "Mum" or wordlist[0] == "Mom" or wordlist[0] == "mum" or wordlist[0] == "mom":
-        wordlist[2] = "she"
-    if wordlist[0] == "my brother" or wordlist[0] == "your brother" or wordlist[0] == "his brother" or wordlist[0] == "her brother" or wordlist[0] == "its brother" or wordlist[0] == "our brother" or wordlist[0] == "their brother" or wordlist[0] == "Dad" or wordlist[0] == "dad":
-        wordlist[2] = "he"    
-    if wordlist[3] == "am" or wordlist[3] == "are":
-        wordlist[3] = "were"
-if wordlist[2] == "You" or wordlist[2] == "you":
-    wordlist[2] = "I"
-    if wordlist[3] == "are":
-        wordlist[3] = "was"
-if wordlist[2] == "You all":
-    wordlist[2] = "we"
-    if wordlist[2] == "are":
-        wordlist[2] = "were"
-if wordlist[2] != "I" and wordlist[2] and "i" and wordlist[2] != "You" and wordlist[2] != "you" and wordlist[2] != "We" and wordlist[2] != "we" and wordlist[2] != "You all" and wordlist[2] != "They" and wordlist[2] != "they":
-    if wordlist[3] == "is":
-        wordlist[3] = "was"
-if wordlist[3] != "hadn't":
-    if wordlist[3] not in irregular and wordlist[3] not in irregularpast and tense == "present":
-        if verb[-1] == "s" and wordlist[2] != "I" and wordlist[2] != "i" and wordlist[2] != "You" and wordlist[2] != "you" and wordlist[2] != "We" and wordlist[2] != "we" and wordlist[2] != "They" and wordlist[2] != "they" and wordlist[2] != "you all":
-            verb.pop()
-            wordlist[3] = ''.join(verb)
-        if verb[-1] != "e":
-            wordlist[3] = wordlist[3] + "ed"
-        else:
-            wordlist[3] = wordlist[3] + "d"
-else:
-    if wordlist[4] not in irregular and wordlist[4] not in irregularpast and tense == "present":
-        if verb[-1] != "e":
-            wordlist[4] = wordlist[4] + "ed"
-        else:
-            wordlist[4] = wordlist[4] + "d"
-if wordlist[-1] == "me" or wordlist[-1] == "we":
-    wordlist[-1] = "them"
-if wordlist[-1] == "you":
-    wordlist[-1] = "me"
-if wordlist[-1] == "you all":
-    wordlist[-1] = "us"
-if wordlist[3] == "were":
-    if wordlist[2] == "he" or wordlist[2] == "she":
-        wordlist[3] = "was"
+print("Direct speech to Reported speech translator v.1.0.3")
+sentence = input("Enter sentence: ")
+word_list = sentence.split()
+determiners = ["A", "An", "The", "This", "That", "These", "Those", "My", "Your", "His", "Her", "Its", "Our", "Their", "Whose", "Some", "Any", "Many", "Few", "Several", "All", "Much", "Little", "Enough", "Each", "Every", "Either", "Neither", "No", "Neither", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"]
+prepositions = ["about", "above", "across", "after", "against", "along", "among", "around", "at", "before", "behind", "below", "beneath", "beside", "between", "beyond", "by", "concerning", "despite", "down", "during", "except", "for", "from", "in", "inside", "into", "like", "near", "of", "off", "on", "onto", "out", "outside", "over", "past", "regarding", "round", "since", "through", "throughout", "till", "to", "toward", "under", "underneath", "until", "up", "upon", "with", "within", "without"]
+adverbs = ["abroad", "ahead", "always", "anytime", "anywhere", "apart", "around", "away", "back", "before", "beforehand", "below", "besides", "better", "beyond", "blindfold", "brisk", "close", "daily", "down", "east", "everywhere", "far", "fast", "forever", "forward", "forth", "hard", "here", "indoors", "just", "later" "less", "long", "maybe", "more", "near", "never", "next", "north", "now", "often", "once", "onstage", "onscreen", "outside", "overboard", "overseas", "partway", "perhaps", "rather", "right", "scarce", "seldom", "short", "sideways", "since", "slow", "sometimes", "soon", "south", "still", "straight", "sure", "then", "there", "thereafter", "therein", "thereof", "thereupon", "thereby", "therewith", "thus", "today", "together", "tomorrow", "tonight", "underneath", "up", "uphill", "upriver", "upstairs", "upstream", "upward", "very", "well", "west", "wherever", "whenever", "wide", "yesterday", "yet", "yonder"]
+s_termination_nouns = ["analysis", "atlas", "basis", "bias", "cannabis", "chaos", "cosmos", "diagnosis", "emphasis", "ethos", "focus", "gas", "ibis", "iris", "kudos", "lens", "metropolis", "oasis", "pancreas", "pelvis", "prognosis", "rhinoceros", "synopsis", "tennis", "thesis"]
+present_to_participle = {
+    "arise": "arisen",
+    "awake": "awoken",
+    "bear": "borne",
+    "beat": "beaten",
+    "become": "become",
+    "begin": "begun",
+    "bend": "bent",
+    "bet": "bet",
+    "bind": "bound",
+    "bid": "bid",
+    "bite": "bitten",
+    "bleed": "bled",
+    "blow": "blown",
+    "break": "broken",
+    "breed": "bred",
+    "bring": "brought",
+    "broadcast": "broadcast",
+    "build": "built",
+    "burn": "burnt",
+    "burst": "burst",
+    "buy": "bought",
+    "cast": "cast",
+    "catch": "caught",
+    "choose": "chosen",
+    "cling": "clung",
+    "come": "come",
+    "creep": "crept",
+    "cost": "cost",
+    "cut": "cut",
+    "deal": "dealt",
+    "dig": "dug",
+    "do": "done",
+    "draw": "drawn",
+    "dream": "dreamt",
+    "drink": "drunk",
+    "drive": "driven",
+    "dwell": "dwelt",
+    "eat": "eaten",
+    "fall": "fallen",
+    "feed": "fed",
+    "feel": "felt",
+    "fight": "fought",
+    "find": "found",
+    "flee": "fled",
+    "fly": "flown",
+    "forbid": "forbidden",
+    "forget": "forgotten",
+    "forgive": "forgiven",
+    "forsake": "forsaken",
+    "freeze": "frozen",
+    "get": "gotten",
+    "give": "given",
+    "go": "gone",
+    "grow": "grown",
+    "grind": "ground",
+    "hang": "hung",
+    "have": "had",
+    "hear": "heard",
+    "hide": "hidden",
+    "hit": "hit",
+    "hold": "held",
+    "hurt": "hurt",
+    "keep": "kept",
+    "know": "known",
+    "kneel": "knelt",
+    "knit": "knit",
+    "lay": "laid",
+    "lead": "led",
+    "lean": "leant",
+    "leap": "lept",
+    "learn": "learnt",
+    "leave": "left",
+    "lend": "lent",
+    "let": "let",
+    "lie": "lain",
+    "light": "lit",
+    "lose": "lost",
+    "make": "made",
+    "mean": "meant",
+    "meet": "met",
+    "mistake": "mistaken",
+    "overcome": "overcome",
+    "pay": "paid",
+    "put": "put",
+    "quit": "quit",
+    "read": "read",
+    "ride": "ridden",
+    "ring": "rung",
+    "rise": "risen",
+    "run": "run",
+    "say": "said",
+    "see": "seen",
+    "seek": "sought",
+    "sell": "sold",
+    "send": "sent",
+    "set": "set",
+    "sew": "sewn",
+    "shake": "shaken",
+    "shear": "shorn",
+    "shine": "shone",
+    "shoot": "shot",
+    "show": "shown",
+    "shrink": "shrunk",
+    "shut": "shut",
+    "sing": "sung",
+    "sink": "sunk",
+    "sit": "sat",
+    "sleep": "slept",
+    "slide": "slid",
+    "smell": "smelt",
+    "sow": "sown",
+    "speak": "spoken",
+    "speed": "sped",
+    "spell": "spelt",
+    "spend": "spent",
+    "spill": "spilt",
+    "spin": "spun",
+    "spit": "spat",
+    "split": "split",
+    "spoil": "spoilt",
+    "spread": "spread",
+    "spring": "sprung",
+    "stand": "stood",
+    "steal": "stolen",
+    "stick": "stuck",
+    "sting": "stung",
+    "stink": "stunk",
+    "stride": "stridden",
+    "strike": "struck",
+    "swear": "sworn",
+    "sweat": "sweat",
+    "sweep": "swept",
+    "swell": "swollen",
+    "swim": "swum",
+    "swing": "swung",
+    "take": "taken",
+    "teach": "taught",
+    "tear": "torn",
+    "tell": "told",
+    "think": "thought",
+    "throw": "thrown",
+    "thrust": "thrust",
+    "tread": "trodden",
+    "understand": "understood",
+    "undergo": "undergone",
+    "undertake": "undertaken",
+    "wake": "woken",
+    "wear": "worn",
+    "weave": "woven",
+    "weep": "wept",
+    "wet": "wet",
+    "win": "won",
+    "wind": "wound",
+    "withdraw": "withdrawn",
+    "wring": "wrung",
+    "write": "written",
+}
+past_to_participle = {
+    "arose": "arisen",
+    "awoke": "awoken",
+    "bore": "borne",
+    "beat": "beaten",
+    "began": "begun",
+    "bent": "bent",
+    "bound": "bound",
+    "bit": "bitten",
+    "bled": "bled",
+    "blew": "blown",
+    "broke": "broken",
+    "bred": "bred",
+    "brought": "brought",
+    "built": "built",
+    "burnt": "burnt",
+    "bought": "bought",
+    "caught": "caught",
+    "came": "come",
+    "chose": "chosen",
+    "clung": "clung",
+    "crept": "crept",
+    "dealt": "dealt",
+    "dug": "dug",
+    "did": "done",
+    "drew": "drawn",
+    "dreamt": "dreamt",
+    "drank": "drunk",
+    "drove": "driven",
+    "dwelt": "dwelt",
+    "ate": "eaten",
+    "fell": "fallen",
+    "fed": "fed",
+    "felt": "felt",
+    "fought": "fought",
+    "found": "found",
+    "fled": "fled",
+    "flew": "flown",
+    "forbade": "forbidden",
+    "forgot": "forgotten",
+    "forgave": "forgiven",
+    "forsook": "forsaken",
+    "froze": "frozen",
+    "got": "gotten",
+    "gave": "given",
+    "went": "gone",
+    "grew": "grown",
+    "ground": "ground",
+    "hung": "hung",
+    "had": "had",
+    "heard": "heard",
+    "hid": "hidden",
+    "held": "held",
+    "kept": "kept",
+    "knew": "known",
+    "knelt": "knelt",
+    "laid": "laid",
+    "led": "led",
+    "leant": "leant",
+    "leapt": "leapt",
+    "learnt": "learnt",
+    "left": "left",
+    "lent": "lent",
+    "lay": "lain",
+    "lit": "lit",
+    "lost": "lost",
+    "made": "made",
+    "meant": "meant",
+    "met": "met",
+    "mistook": "mistaken",
+    "overcame": "overcome",
+    "paid": "paid",
+    "rode": "ridden",
+    "rang": "rung",
+    "rose": "risen",
+    "ran": "run",
+    "said": "said",
+    "saw": "seen",
+    "sought": "sought",
+    "sold": "sold",
+    "sent": "sent",
+    "set": "set",
+    "sewed": "sewn",
+    "shook": "shaken",
+    "shore": "shorn",
+    "shone": "shone",
+    "shot": "shot",
+    "showed": "shown",
+    "shrank": "shrunk",
+    "sang": "sung",
+    "sank": "sunk",
+    "sat": "sat",
+    "slept": "slept",
+    "slid": "slid",
+    "smelt": "smelt",
+    "sowed": "sown",
+    "spoke": "spoken",
+    "sped": "sped",
+    "spelt": "spelt",
+    "spent": "spent",
+    "spilt": "spilt",
+    "spun": "spun",
+    "spat": "spat",
+    "spoilt": "spoilt",
+    "sprang": "sprung",
+    "stood": "stood",
+    "stole": "stolen",
+    "stuck": "stuck",
+    "stung": "stung",
+    "stank": "stunk",
+    "strode": "stridden",
+    "struck": "struck",
+    "swore": "sworn",
+    "swept": "swept",
+    "swelled": "swollen",
+    "swam": "swum",
+    "swung": "swung",
+    "took": "taken",
+    "taught": "taught",
+    "tore": "torn",
+    "told": "told",
+    "thought": "thought",
+    "threw": "thrown",
+    "trod": "trodden",
+    "understood": "understood",
+    "underwent": "undergone",
+    "undertook": "undertaken",
+    "woke": "woken",
+    "wore": "worn",
+    "wove": "woven",
+    "wept": "wept",
+    "won": "won",
+    "wound": "wound",
+    "withdrew": "withdrawn",
+    "wrung": "wrung",
+    "wrote": "written"
+}
 irregular_past = {
+    "arise": "arose",
+    "awake": "awoke",
+    "bear": "bore",
     "become": "became",
     "begin": "began",
     "bend": "bent",
+    "bet": "bet",
+    "bind": "bound",
+    "bid": "bid",
     "bite": "bit",
     "bleed": "bled",
     "blow": "blew",
     "break": "broke",
     "breed": "bred",
     "bring": "brought",
+    "broadcast": "broadcast",
     "build": "built",
     "burn": "burnt",
+    "burst": "burst",
     "buy": "bought",
     "catch": "caught",
     "choose": "chose",
+    "cling": "clung",
     "come": "came",
-    "do": "did",
+    "creep": "crept",
     "dig": "dug",
     "draw": "drew",
     "dream": "dreamt",
@@ -249,7 +353,9 @@ irregular_past = {
     "feel": "felt",
     "fight": "fought",
     "find": "found",
+    "flee": "fled",
     "fly": "flew",
+    "forbid": "forbade",
     "forget": "forgot",
     "forgive": "forgave",
     "freeze": "froze",
@@ -257,49 +363,77 @@ irregular_past = {
     "give": "gave",
     "go": "went",
     "grow": "grew",
-    "have": "had",
+    "grind": "ground",
+    "hang": "hung",
     "hear": "heard",
     "hide": "hid",
+    "hit": "hit",
     "hold": "held",
+    "hurt": "hurt",
     "keep": "kept",
     "know": "knew",
+    "kneel": "knelt",
+    "knit": "knit",
     "lay": "laid",
     "lead": "led",
     "lean": "leant",
+    "leap": "leapt",
+    "learn": "learnt",
     "leave": "left",
     "lend": "lent",
+    "let": "let",
+    "lie": "lay",
+    "light": "lit",
     "lose": "lost",
     "make": "made",
     "mean": "meant",
     "meet": "met",
+    "mistake": "mistook",
+    "overcome": "overcame",
     "pay": "paid",
+    "put": "put",
     "ride": "rode",
     "ring": "rang",
     "rise": "rose",
     "run": "ran",
     "say": "said",
     "see": "saw",
+    "seek": "sought",
     "sell": "sold",
     "send": "sent",
+    "set": "set",
     "shake": "shook",
+    "shear": "shore",
     "shine": "shone",
-    "shoe": "shod",
     "shoot": "shot",
     "shrink": "shrank",
+    "shut": "shut",
     "sing": "sang",
     "sink": "sank",
     "sit": "sat",
     "sleep": "slept",
+    "slide": "slid",
+    "smell": "smelt",
     "speak": "spoke",
+    "speed": "sped",
+    "spell": "spelt",
     "spend": "spent",
     "spill": "spilt",
-    "speed": "sped",
+    "spin": "spun",
+    "spit": "spat",
+    "split": "split",
+    "spoil": "spoilt",
+    "spread": "spread",
+    "spring": "sprang",
     "stand": "stood",
     "steal": "stole",
     "stick": "stuck",
     "sting": "stung",
     "stink": "stank",
+    "stride": "strode",
+    "strike": "struck",
     "swear": "swore",
+    "sweat": "sweat",
     "sweep": "swept",
     "swim": "swam",
     "swing": "swung",
@@ -309,63 +443,857 @@ irregular_past = {
     "tell": "told",
     "think": "thought",
     "throw": "threw",
+    "thrust": "thrust",
+    "tread": "trod",
     "understand": "understood",
+    "undergo": "underwent",
+    "undertake": "undertook",
     "wake": "woke",
     "wear": "wore",
+    "weave": "wove",
+    "weep": "wept",
+    "wet": "wet",
     "win": "won",
+    "wind": "wound",
+    "withdraw": "withdrew",
+    "wring": "wrung",
     "write": "wrote"
 }
-if wordlist[3] in irregular_past:
-    wordlist[3] = irregular_past[wordlist[3]]
-if wordlist[3] == "hadn´t":
-    if wordlist[4] in irregular_past:
-        wordlist[4] = irregular_past[wordlist[4]]
-for i in range(len(wordlist)):
-    if wordlist[i] == "you":
-        wordlist[i] = "me"
-    if wordlist[i] == "this":
-        wordlist[i] = "that"
-    if wordlist[i] == "these":
-        wordlist[i] = "those"
-    if wordlist[i] == "here":
-        wordlist[i] = "there"
-    if wordlist[i] == "today":
-        wordlist[i] = "that day"
-    if wordlist[i] == "now":
-        wordlist[i] = "at the moment"
-    if wordlist[i] == "yesterday":
-        wordlist[i] = "the day before"
-    if wordlist[i] == "ago":
-        wordlist[i] = "then"
-    if wordlist[i] == "tomorrow":
-        wordlist[i] = "the next day"
-    if wordlist[i] == "tonight":
-        wordlist[i] = "that night"
-    if wordlist[i] == "next":
-        wordlist[i] = "the following"
-    if wordlist[i] == "last":
-        wordlist[i] = "the"
-        wordlist.append("before")
-    if wordlist[i] == "will":
-        wordlist[i] = "would"
-    if wordlist[i] == "can":
-        wordlist[i] = "could"
-    if wordlist[i] == "may":
-        wordlist[i] = "might"
-    if wordlist[i] == "must":
-        wordlist[i] = "had to"
-    if wordlist[i] == "don't" or wordlist[i] == "doesn't" or wordlist[i] == "do" and wordlist[i+1] == "not" :
-        wordlist[i] = "didn't"
-    if tense == "pastcontinuous":
-        if wordlist[i] == "was" or wordlist[i] == "were":
-            wordlist[i] = "had been"
-        if wordlist[i] == "was not" or wordlist[i] == "were not":
-            wordlist[i] = "had not been"
-    if wordlist[i] == "have" and tense != "modals" and tense != "future":
-        wordlist[i] = "had"
-if tense == "past":
-    wordlist.insert(3, "had")
-print("Reported Speech translation: " + ' '.join(wordlist))
+speaker_clause = []
+tense = "Present Simple"
+backshift = True
+imperative = False
+speaker = "They"
+listener = "me"
+plural_speaker = False
+for i in range(len(word_list)):
+    try:
+        if (word_list[i])[0] == "'" or (word_list[i])[0] == '"':
+            character_list = list(word_list[i])
+            del character_list[0]
+            word_list[i] = ''.join(character_list)
+        if ((word_list[i])[-2] == "'" or (word_list[i])[-2] == '"') and (word_list[i])[-1] == ",":
+            character_list = list(word_list[i])
+            character_list.pop()
+            character_list.pop()
+            word_list[i] = ''.join(character_list)
+            i += 1
+            while i < len(word_list):
+                speaker_clause.append(word_list[i])
+                del word_list[i]
+    except IndexError:
+        continue
+for i in range(len(word_list)):
+    if (word_list[i])[-1] == "!":
+        character_list = list(word_list[i])
+        character_list.pop()
+        word_list[i] = ''.join(character_list)
+    if word_list[i] == "I'm":
+        word_list[i] = "I"
+        word_list.insert(i + 1, "am")
+    if word_list[i] == "You're":
+        word_list[i] = "You"
+        word_list.insert(i + 1, "are")
+    if word_list[i] == "He's":
+        word_list[i] = "He"
+        word_list.insert(i + 1, "is")
+    if word_list[i] == "She's":
+        word_list[i] = "She"
+        word_list.insert(i + 1, "is")
+    if word_list[i] == "It's":
+        word_list[i] = "It"
+        word_list.insert(i + 1, "is")
+    if word_list[i] == "We're":
+        word_list[i] = "We"
+        word_list.insert(i + 1, "are")
+    if word_list[i] == "They're":
+        word_list[i] = "They"
+        word_list.insert(i + 1, "are")
+    if word_list[i] == "I've":
+        word_list[i] = "I"
+        word_list.insert(i + 1, "have")
+    if word_list[i] == "You've":
+        word_list[i] = "You"
+        word_list.insert(i + 1, "have")
+    if word_list[i] == "We've":
+        word_list[i] = "We"
+        word_list.insert(i + 1, "have")
+    if word_list[i] == "They've":
+        word_list[i] = "They"
+        word_list.insert(i + 1, "have")
+    if word_list[i] == "I'll":
+        word_list[i] = "I"
+        word_list.insert(i + 1, "will")
+    if word_list[i] == "You'll":
+        word_list[i] = "You"
+        word_list.insert(i + 1, "will")
+    if word_list[i] == "He'll":
+        word_list[i] = "He"
+        word_list.insert(i + 1, "will")
+    if word_list[i] == "She'll":
+        word_list[i] = "She"
+        word_list.insert(i + 1, "will")
+    if word_list[i] == "It'll":
+        word_list[i] = "It"
+        word_list.insert(i + 1, "will")
+    if word_list[i] == "We'll":
+        word_list[i] = "We"
+        word_list.insert(i + 1, "will")
+    if word_list[i] == "They'll":
+        word_list[i] = "They"
+        word_list.insert(i + 1, "will")
+    if word_list[i] == "I'd":
+        word_list[i] = "I"
+        word_list.insert(i + 1, "will")
+    if word_list[i] == "You'd":
+        word_list[i] = "You"
+        word_list.insert(i + 1, "will")
+    if word_list[i] == "He'd":
+        word_list[i] = "He"
+        word_list.insert(i + 1, "will")
+    if word_list[i] == "She'd":
+        word_list[i] = "She"
+        word_list.insert(i + 1, "would")
+    if word_list[i] == "It'd":
+        word_list[i] = "It"
+        word_list.insert(i + 1, "would")
+    if word_list[i] == "We'd":
+        word_list[i] = "We"
+        word_list.insert(i + 1, "would")
+    if word_list[i] == "They'd":
+        word_list[i] = "They"
+        word_list.insert(i + 1, "would")
+for i in range(len(speaker_clause)):
+    if speaker_clause[i] == "say" or speaker_clause[i] == "says" or speaker_clause[i] == "tell" or speaker_clause[i] == "tells":
+        backshift = False
+if len(word_list) == 1 or (len(word_list) == 2 and (word_list[1] in prepositions or word_list[1] in ["me", "you", "him", "her", "it", "us", "them"])):
+    imperative = True
+def detect_speaker_and_listener():
+    global speaker_clause
+    global speaker
+    global listener
+    global plural_speaker
+    result = []
+    speaker = []
+    i = 0
+    while i < len(speaker_clause):
+        if speaker_clause[i] == "say" or speaker_clause[i] == "says" or speaker_clause[i] == "tell" or speaker_clause[i] == "tells" or speaker_clause[i] == "said" or speaker_clause[i] == "told":
+            result.append(' '.join(speaker))
+            while i < len(speaker_clause):
+                result.append(speaker_clause[i])
+                i += 1
+        elif (speaker_clause[i])[-1] == "s" and speaker_clause[i] not in s_termination_nouns:
+            plural_speaker = True
+            speaker.append(speaker_clause[i])
+            i += 1
+        else:
+            speaker.append(speaker_clause[i])
+            i += 1
+    speaker_clause = result
+    result = []
+    listener = []
+    i = 0
+    verb_found = False
+    while i < len(speaker_clause):
+        if speaker_clause[i] == "tell" or speaker_clause[i] == "tells" or speaker_clause[i] == "told" or speaker_clause[i] == "to":
+            verb_found = True
+            result.append(speaker_clause[i])
+            i += 1
+        elif verb_found == True:
+            while i < len(speaker_clause):
+                listener.append(speaker_clause[i])
+                i += 1
+            result.append(' '.join(listener))
+        else:
+            result.append(speaker_clause[i])
+            i += 1
+    speaker = ' '.join(speaker)
+    listener = ' '.join(listener)
+    speaker_clause = result
+    if listener == "":
+        listener = "me"
+def verb_and_adverb_change():
+    if backshift == True:
+        for i in range(len(word_list)):
+            global tense
+            if word_list[i] == "am" or word_list[i] == "are":
+                tense = "Past Continuous"
+            if listener == "me" or listener == "us":
+                if word_list[i] == "am":
+                    if speaker == "I" or speaker == "he" or speaker == "she" or speaker == "it" or speaker == "we":
+                        word_list[i] = "was"
+                    else:
+                        word_list[i] = "were"
+                elif word_list[i] == "are":
+                    if word_list[i - 1] == "You" and speaker != "I" and speaker != "we":
+                        word_list[i] = "was"
+                    else:
+                        word_list[i] = "were"
+            elif listener == "you":
+                if speaker == "I" or speaker == "we":
+                    if word_list[i] == "am":
+                        word_list[i] = "was"
+                    elif word_list[i] == "are":
+                        word_list[i] = "were"
+                elif speaker == "he" or speaker == "she" or speaker == "it":
+                    if word_list[i] == "am":
+                        word_list[i] = "was"
+                    elif word_list[i] == "are":
+                        word_list[i] = "were"
+                else:
+                    if word_list[i] == "am":
+                        word_list[i] = "were"
+                    elif word_list[i] == "are":
+                        word_list[i] = "were"
+            elif listener == "him" or listener == "her" or listener == "it":
+                if speaker == "I" or speaker == "we":
+                    if word_list[i] == "am":
+                        word_list[i] = "was"
+                    elif word_list[i] == "are":
+                        if word_list[i - 1] == "You":
+                            word_list[i] = "was"
+                        else:
+                            word_list[i] = "were"
+                elif speaker == "you":
+                    if word_list[i] == "am":
+                        word_list[i] = "were"
+                    elif word_list[i] == "are":
+                        if word_list[i - 1] == "You":
+                            word_list[i] = "was"
+                        else:
+                            word_list[i] = "were"
+                elif speaker == "he" or speaker == "she" or speaker == "it":
+                    if word_list[i] == "am":
+                        word_list[i] = "was"
+                    elif word_list[i] == "are":
+                        if word_list[i - 1] == "You":
+                            word_list[i] = "was"
+                        else:
+                            word_list[i] = "were"
+                else:
+                    if word_list[i] == "am":
+                        word_list[i] = "were"
+                    elif word_list[i] == "are":
+                        if word_list[i - 1] == "You":
+                            word_list[i] = "was"
+                        else:
+                            word_list[i] = "were"
+            else:
+                if speaker == "I" or speaker == "we":
+                    if word_list[i] == "am":
+                        word_list[i] = "was"
+                    elif word_list[i] == "are":
+                        word_list[i] = "were"
+                elif speaker == "you":
+                    if word_list[i] == "am":
+                        word_list[i] = "were"
+                    elif word_list[i] == "are":
+                        word_list[i] = "were"
+                elif speaker == "he" or speaker == "she" or speaker == "it":
+                    if word_list[i] == "am":
+                        word_list[i] = "was"
+                    elif word_list[i] == "are":
+                        word_list[i] = "were"
+                else:
+                    if word_list[i] == "am":
+                        word_list[i] = "were"
+                    elif word_list[i] == "are":
+                        word_list[i] = "were"
+            if word_list[i] == "is":
+                word_list[i] = "was"
+                tense = "Past Continuous"
+            elif word_list[i] == "aren't":
+                if word_list[i - 1] == "You":
+                    if speaker == "I" or speaker == "we":
+                        word_list[i] = "weren't"
+                    else:
+                        word_list[i] = "wasn't"
+                else:
+                    word_list[i] = "weren't"
+                tense = "Past Continuous Negative"
+            elif word_list[i] == "isn't":
+                word_list[i] = "wasn't"
+                tense = "Past Continuous Negative"
+            elif word_list[i] == "had":
+                tense = "Past Perfect"
+            elif word_list[i] == "have" or word_list[i] == "has":
+                if word_list[i - 1] not in ["could", "might", "should", "would", "must", "not", "couldn't", "mightn't", "shouldn't", "wouldn't", "mustn't"]:
+                    word_list[i] = "had"
+                    tense = "Past Perfect"
+            elif word_list[i] == "haven't" or word_list[i] == "hasn't":
+                word_list[i] = "hadn't"
+                tense = "Past Perfect Negative"
+            elif word_list[i] in ["could", "might", "should", "would", "had to"]:
+                tense = "Modal"
+            elif word_list[i] in ["couldn't", "mightn't", "shouldn't", "wouldn't", "didn't have to"]:
+                tense = "Modal Negative"
+            elif word_list[i] == "can":
+                word_list[i] = "could"
+                tense = "Modal"
+            elif word_list[i] == "may":
+                word_list[i] = "might"
+                tense = "Modal"
+            elif word_list[i] == "shall":
+                word_list[i] = "should"
+                tense = "Modal"
+            elif word_list[i] == "will":
+                word_list[i] = "would"
+                tense = "Modal"
+            elif word_list[i] == "must":
+                if word_list[i + 2] != "have":
+                    if word_list[i + 1] == "not":
+                        word_list[i] = "did"
+                        word_list[i + 1] = "not have to"
+                    elif word_list[i + 1] != "have":
+                        word_list[i] = "had to"
+                tense = "Modal"
+            elif word_list[i] == "can't":
+                word_list[i] = "couldn't"
+                tense = "Modal Negative"
+            elif word_list[i] == "mayn't":
+                word_list[i] = "mightn't"
+                tense = "Modal Negative"
+            elif word_list[i] == "shan't":
+                word_list[i] = "shouldn't"
+                tense = "Modal Negative"
+            elif word_list[i] == "won't":
+                word_list[i] = "wouldn't"
+                tense = "Modal Negative"
+            elif word_list[i] == "mustn't" and word_list[i + 1] != "have":
+                word_list[i] = "didn't have to"
+                tense = "Modal Negative"
+            elif word_list[i] == "cannot":
+                word_list[i] = "could not"
+                tense = "Modal Negative"
+            elif word_list[i] == "was" or word_list[i] == "were":
+                if tense == "Present Simple":
+                    if word_list[i + 1] == "not":
+                        word_list[i] = "had"
+                        word_list[i + 1] = "not been"
+                    else:
+                        word_list[i] = "had been"
+                    tense = "Past Perfect Continuous"
+            elif word_list[i] == "wasn't" or word_list[i] == "weren't":
+                if tense == "Present Simple":
+                    word_list[i] = "hadn't been"
+                    tense = "Past Perfect Continuous Negative"
+            elif word_list[i] == "do" or word_list[i] == "does":
+                if tense == "Present Simple":
+                    word_list[i] = "did"
+                    tense = "Past Simple Negative"
+            elif word_list[i] == "did" and word_list[i + 1] == "not":
+                word_list[i] = "had"
+                if word_list[i + 2] in present_to_participle:
+                    word_list[i + 2] = present_to_participle[word_list[i + 2]]
+                else:
+                    if (word_list[i + 2])[-1] == "e":
+                        word_list[i + 2] = word_list[i + 2] + "d"
+                    else:
+                        word_list[i + 2] = word_list[i + 2] + "ed"
+                tense = "Past Perfect Negative"
+            elif word_list[i] == "don't" or word_list[i] == "doesn't":
+                word_list[i] = "didn't"
+                tense = "Past Simple Negative"
+            elif word_list[i] == "didn't":
+                word_list[i] = "hadn't"
+                if word_list[i + 1] in present_to_participle:
+                    word_list[i + 1] = present_to_participle[word_list[i + 1]]
+                else:
+                    if (word_list[i + 1])[-1] == "e":
+                        word_list[i + 1] = word_list[i + 1] + "d"
+                    else:
+                        word_list[i + 1] = word_list[i + 1] + "ed"
+                tense = "Past Perfect Negative"
+            elif word_list[i] in past_to_participle and word_list[i - 1] not in determiners and tense == "Present Simple":
+                word_list[i] = "had " + past_to_participle[word_list[i]]
+                tense = "Past Perfect"
+            elif i != 1 and (word_list[i])[-1] == "d" and (word_list[i])[-2] == "e" and word_list[i - 1] not in determiners and tense == "Present Simple":
+                word_list[i] = "had " + word_list[i]
+                tense = "Past Perfect"
+            elif word_list[i] in irregular_past and tense == "Present Simple" and imperative == False:
+                word_list[i] = irregular_past[word_list[i]]
+                tense = "Past Simple"
+            elif i != 0 and i != 1 and i != len(word_list) - 1 and (word_list[i])[-1] == "s" and (word_list[i])[-2] != "s" and word_list[i - 1] not in determiners and word_list[i + 1] not in ["do", "did", "have", "had", "are", "can", "may", "shall", "will", "could", "might", "should", "would", "must", "don't", "didn't", "haven't", "hadn't", "aren't","" "cannot", "can't", "mayn't", "shan't", "won't", "couldn't", "mightn't", "shouldn't", "wouldn't", "mustn't"] and word_list[i] not in s_termination_nouns and word_list[i] not in adverbs and word_list[i] != "us" and tense == "Present Simple":
+                character_list = list(word_list[i])
+                if (word_list[i])[-2] == "e":
+                    character_list.pop()
+                    word_list[i] = ''.join(character_list)
+                    if word_list[i] in irregular_past:
+                        word_list[i] = irregular_past[word_list[i]]
+                    else:
+                        character_list.append("d")
+                        word_list[i] = ''.join(character_list)
+                else:
+                    character_list.pop()
+                    word_list[i] = ''.join(character_list)
+                    if word_list[i] in irregular_past:
+                        word_list[i] = irregular_past[word_list[i]]
+                    else:
+                        character_list.append("ed")
+                        word_list[i] = ''.join(character_list)
+                tense = "Past Simple"
+            elif word_list[i] == "here":
+                word_list[i] = "there"
+            elif word_list[i] == "this":
+                word_list[i] = "that"
+            elif word_list[i] == "these":
+                word_list[i] = "those"
+            elif word_list[i] == "now":
+                word_list[i] = "then"
+            elif word_list[i] == "today":
+                word_list[i] = "that day"
+            elif word_list[i] == "tomorrow":
+                word_list[i] = "the next day"
+            elif word_list[i] == "yesterday":
+                word_list[i] = "the day before"
+            elif word_list[i] == "tonight":
+                word_list[i] = "that night"
+            elif word_list[i] == "ago":
+                word_list[i] = "before"
+            elif word_list[i] == "last":
+                word_list[i] = "the"
+                word_list.insert(i + 2, "before")
+            elif word_list[i] == "next":
+                word_list[i] = "the following" 
+            elif word_list[i] == "hence":
+                word_list[i] = "thence"
+            elif word_list[i] == "thus":
+                word_list[i] = "so"
+    else:
+        for i in range(len(word_list)):
+            if word_list[i] == "do" or word_list[i] == "go":
+                if (speaker == "he" or speaker == "she" or speaker == "it") and word_list[i - 1] == "I":
+                    word_list[i] = word_list[i] + "es"
+                elif (listener == "him" or listener == "her" or listener == "it") and word_list[i - 1] == "You":
+                    word_list[i] = word_list[i] + "es"
+            elif word_list[i] == "don't":
+                if (speaker == "he" or speaker == "she" or speaker == "it") and word_list[i - 1] == "I":
+                    word_list[i] = "doesn't"
+                elif (listener == "him" or listener == "her" or listener == "it") and word_list[i - 1] == "You":
+                    word_list[i] = "doesn't"
+            elif word_list[i] == "have":
+                if (speaker == "he" or speaker == "she" or speaker == "it") and word_list[i - 1] == "I":
+                    word_list[i] = "has"
+                elif (listener == "him" or listener == "her" or listener == "it") and word_list[i - 1] == "You":
+                    word_list[i] = "has"
+            elif word_list[i] == "haven't":
+                if (speaker == "he" or speaker == "she" or speaker == "it") and word_list[i - 1] == "I":
+                    word_list[i] = "hasn't"
+                elif (listener == "him" or listener == "her" or listener == "it") and word_list[i - 1] == "You":
+                    word_list[i] = "hasn't"
+            if listener == "me" or listener == "us":
+                if word_list[i] == "am":
+                    if speaker == "he" or speaker == "she" or speaker == "it":
+                        word_list[i] = "is"
+                    elif speaker != "I" and speaker != "we":
+                        word_list[i] = "are"
+                elif word_list[i] == "are" and word_list[i - 1] == "You" and speaker != "I" and speaker != "we":
+                    word_list[i] = "am"
+                elif word_list[i] == "aren't" and word_list[i - 1] == "You" and speaker != "I" and speaker != "we":
+                    word_list[i - 1] = "I'm"
+                    word_list[i] = "not"
+                elif word_list[i] == "was" and speaker != "I" and speaker != "he" and speaker != "she" and speaker != "it" and speaker != "we":
+                    word_list[i] = "were"
+                elif word_list[i] == "wasn't" and speaker != "I" and speaker != "he" and speaker != "she" and speaker != "it" and speaker != "we":
+                    word_list[i] = "weren't"
+                elif word_list[i] == "were" and word_list[i - 1] == "You" and speaker != "I" and speaker != "we":
+                    word_list[i] = "was"
+                elif word_list[i] == "weren't" and word_list[i - 1] == "You" and speaker != "I" and speaker != "we":
+                    word_list[i] = "wasn't"
+            elif listener == "him" or listener == "her" or listener == "it":
+                if word_list[i] == "am":
+                    if speaker == "he" or speaker == "she" or speaker == "it":
+                        word_list[i] = "is"
+                    elif speaker != "I" and speaker != "we":
+                        word_list[i] = "are"
+                elif word_list[i] == "are" and word_list[i - 1] == "You" and speaker != "I" and speaker != "we":
+                    word_list[i] = "is"
+                elif word_list[i] == "aren't" and word_list[i - 1] == "You" and speaker != "I" and speaker != "we":
+                    word_list[i] = "isn't"
+                elif word_list[i] == "was" and speaker != "I" and speaker != "he" and speaker != "she" and speaker != "it" and speaker != "we":
+                    word_list[i] = "were"
+                elif word_list[i] == "wasn't" and speaker != "I" and speaker != "he" and speaker != "she" and speaker != "it" and speaker != "we":
+                    word_list[i] = "weren't"
+                elif word_list[i] == "were" and word_list[i - 1] == "You" and speaker != "I" and speaker != "we":
+                    word_list[i] = "was"
+                elif word_list[i] == "weren't" and word_list[i - 1] == "You" and speaker != "I" and speaker != "we":
+                    word_list[i] = "wasn't"
+            else:
+                if word_list[i] == "am":
+                    if speaker == "he" or speaker == "she" or speaker == "it":
+                        word_list[i] = "is"
+                    elif speaker != "I" and speaker != "we":
+                        word_list[i] = "are"
+def pronoun_change():
+    for i in range(len(word_list)):
+        if listener == "me":
+            if speaker == "you":
+                if word_list[i] == "I" or word_list[i] == "me" or word_list[i] == "We" or word_list[i] == "us":
+                    word_list[i] = "you"
+                elif word_list[i] == "my" or word_list[i] == "My" or word_list[i] == "our" or word_list[i] == "Our":
+                    word_list[i] = "your"
+                elif word_list[i] == "mine" or word_list[i] == "Mine" or word_list[i] == "ours" or word_list[i] == "Ours":
+                    word_list[i] = "yours"
+                elif word_list[i] == "You":
+                    word_list[i] = "I"
+                elif word_list[i] == "you":
+                    word_list[i] = "me"
+                elif word_list[i] == "your" or word_list[i] == "Your":
+                    word_list[i] = "my"
+                elif word_list[i] == "yours" or word_list[i] == "Yours":
+                    word_list[i] = "mine"
+            elif speaker == "he" or speaker == "she" or speaker == "it":
+                if word_list[i] == "I":
+                    word_list[i] = speaker
+                elif word_list[i] == "me":
+                    if speaker == "he":
+                        word_list[i] = "him"
+                    elif speaker == "she":
+                        word_list[i] = "her"
+                    elif speaker == "it":
+                        word_list[i] = speaker
+                elif word_list[i] == "my" or word_list[i] == "My":
+                    if speaker == "he":
+                        word_list[i] = "his"
+                    elif speaker == "she":
+                        word_list[i] = "her"
+                    elif speaker == "it":
+                        word_list[i] = "its"
+                elif word_list[i] == "mine" or word_list[i] == "Mine":
+                    if speaker == "he":
+                        word_list[i] = "his"
+                    elif speaker == "she":
+                        word_list[i] = "hers"
+                    elif speaker == "it":
+                        word_list[i] = "its"
+                elif word_list[i] == "We":
+                    word_list[i] = "they"
+                elif word_list[i] == "us":
+                    word_list[i] = "them"
+                elif word_list[i] == "our" or word_list[i] == "Our":
+                    word_list[i] = "their"
+                elif word_list[i] == "ours" or word_list[i] == "Ours":
+                    word_list[i] = "theirs"
+                elif word_list[i] == "You":
+                    word_list[i] = "I"
+                elif word_list[i] == "you":
+                    word_list[i] = "me"
+                elif word_list[i] == "your" or word_list[i] == "Your":
+                    word_list[i] = "my"
+                elif word_list[i] == "yours" or word_list[i] == "Yours":
+                    word_list[i] = "mine"
+            elif speaker != "I" and speaker != "we":
+                if word_list[i] == "I" or word_list[i] == "We":
+                    word_list[i] = "they"
+                elif word_list[i] == "me" or word_list[i] == "us":
+                    word_list[i] = "them"
+                elif word_list[i] == "my" or word_list[i] == "My" or word_list[i] == "our" or word_list[i] == "Our":
+                    word_list[i] = "their"
+                elif word_list[i] == "mine" or word_list[i] == "Mine" or word_list[i] == "ours" or word_list[i] == "Ours":
+                    word_list[i] = "theirs"
+                elif word_list[i] == "You":
+                    word_list[i] = "I"
+                elif word_list[i] == "you":
+                    word_list[i] = "me"
+                elif word_list[i] == "your" or word_list[i] == "Your":
+                    word_list[i] = "my"
+                elif word_list[i] == "yours" or word_list[i] == "Yours":
+                    word_list[i] = "mine"
+        elif listener == "you":
+            if speaker == "he" or speaker == "she" or speaker == "it":
+                if word_list[i] == "I":
+                    word_list[i] = speaker
+                elif word_list[i] == "me":
+                    if speaker == "he":
+                        word_list[i] = "him"
+                    elif speaker == "she":
+                        word_list[i] = "her"
+                    elif speaker == "it":
+                        word_list[i] = speaker
+                elif word_list[i] == "my" or word_list[i] == "My":
+                    if speaker == "he":
+                        word_list[i] = "his"
+                    elif speaker == "she":
+                        word_list[i] = "her"
+                    elif speaker == "it":
+                        word_list[i] = "its"
+                elif word_list[i] == "mine" or word_list[i] == "Mine":
+                    if speaker == "he":
+                        word_list[i] = "his"
+                    elif speaker == "she":
+                        word_list[i] = "hers"
+                    elif speaker == "it":
+                        word_list[i] = "its"
+                elif word_list[i] == "We":
+                    word_list[i] = "they"
+                elif word_list[i] == "us":
+                    word_list[i] = "them"
+                elif word_list[i] == "our" or word_list[i] == "Our":
+                    word_list[i] = "their"
+                elif word_list[i] == "ours" or word_list[i] == "Ours":
+                    word_list[i] = "theirs"
+            elif speaker != "I" and speaker != "we":
+                if word_list[i] == "I" or word_list[i] == "We":
+                    word_list[i] = "they"
+                elif word_list[i] == "me" or word_list[i] == "us":
+                    word_list[i] = "them"
+                elif word_list[i] == "my" or word_list[i] == "My" or word_list[i] == "our" or word_list[i] == "Our":
+                    word_list[i] = "their"
+                elif word_list[i] == "mine" or word_list[i] == "Mine" or word_list[i] == "ours" or word_list[i] == "Ours":
+                    word_list[i] = "theirs"
+        elif listener == "him" or listener == "her" or listener == "it":
+            if speaker == "I" or speaker == "we":
+                if word_list[i] == "You":
+                    if listener == "him":
+                        word_list[i] = "he"
+                    elif listener == "her":
+                        word_list[i] = "she"
+                    elif listener == "it":
+                        word_list[i] = listener
+                elif word_list[i] == "you":
+                    word_list[i] = listener
+                elif word_list[i] == "your" or word_list[i] == "Your":
+                    if listener == "him":
+                        word_list[i] = "his"
+                    elif listener == "her":
+                        word_list[i] = listener
+                    elif listener == "it":
+                        word_list[i] = "its"
+                elif word_list[i] == "yours" or word_list[i] == "Yours":
+                    if listener == "him":
+                        word_list[i] = "his"
+                    elif listener == "her":
+                        word_list[i] = "hers"
+                    elif listener == "it":
+                        word_list[i] = "its"
+            elif speaker == "you":
+                if word_list[i] == "I" or word_list[i] == "me" or word_list[i] == "We" or word_list[i] == "us":
+                    word_list[i] = "you"
+                elif word_list[i] == "my" or word_list[i] == "My" or word_list[i] == "our" or word_list[i] == "Our":
+                    word_list[i] = "your"
+                elif word_list[i] == "mine" or word_list[i] == "Mine" or word_list[i] == "ours" or word_list[i] == "Ours":
+                    word_list[i] = "yours"
+                elif word_list[i] == "You":
+                    if listener == "him":
+                        word_list[i] = "he"
+                    elif listener == "her":
+                        word_list[i] = "she"
+                    elif listener == "it":
+                        word_list[i] = listener
+                elif word_list[i] == "you":
+                    word_list[i] = listener
+                elif word_list[i] == "your" or word_list[i] == "Your":
+                    if listener == "him":
+                        word_list[i] = "his"
+                    elif listener == "her":
+                        word_list[i] = listener
+                    elif listener == "it":
+                        word_list[i] = "its"
+                elif word_list[i] == "yours" or word_list[i] == "Yours":
+                    if listener == "him":
+                        word_list[i] = "his"
+                    elif listener == "her":
+                        word_list[i] = "hers"
+                    elif listener == "it":
+                        word_list[i] = "its"
+            elif speaker == "he" or speaker == "she" or speaker == "it":
+                if word_list[i] == "I":
+                    word_list[i] = speaker
+                elif word_list[i] == "me":
+                    if speaker == "he":
+                        word_list[i] = "him"
+                    elif speaker == "she":
+                        word_list[i] = "her"
+                    elif speaker == "it":
+                        word_list[i] = speaker
+                elif word_list[i] == "my" or word_list[i] == "My":
+                    if speaker == "he":
+                        word_list[i] = "his"
+                    elif speaker == "she":
+                        word_list[i] = "her"
+                    elif speaker == "it":
+                        word_list[i] = "its"
+                elif word_list[i] == "mine" or word_list[i] == "Mine":
+                    if speaker == "he":
+                        word_list[i] = "his"
+                    elif speaker == "she":
+                        word_list[i] = "hers"
+                    elif speaker == "it":
+                        word_list[i] = "its"
+                elif word_list[i] == "We":
+                    word_list[i] = "they"
+                elif word_list[i] == "us":
+                    word_list[i] = "them"
+                elif word_list[i] == "our" or word_list[i] == "Our":
+                    word_list[i] = "their"
+                elif word_list[i] == "ours" or word_list[i] == "Ours":
+                    word_list[i] = "theirs"
+                elif word_list[i] == "You":
+                    if listener == "him":
+                        word_list[i] = "he"
+                    elif listener == "her":
+                        word_list[i] = "she"
+                    elif listener == "it":
+                        word_list[i] = listener
+                elif word_list[i] == "you":
+                    word_list[i] = listener
+                elif word_list[i] == "your" or word_list[i] == "Your":
+                    if listener == "him":
+                        word_list[i] = "his"
+                    elif listener == "her":
+                        word_list[i] = listener
+                    elif listener == "it":
+                        word_list[i] = "its"
+                elif word_list[i] == "yours" or word_list[i] == "Yours":
+                    if listener == "him":
+                        word_list[i] = "his"
+                    elif listener == "her":
+                        word_list[i] = "hers"
+                    elif listener == "it":
+                        word_list[i] = "its"
+            else:
+                if word_list[i] == "I" or word_list[i] == "We":
+                    word_list[i] = "they"
+                elif word_list[i] == "me" or word_list[i] == "us":
+                    word_list[i] = "them"
+                elif word_list[i] == "my" or word_list[i] == "My" or word_list[i] == "our" or word_list[i] == "Our":
+                    word_list[i] = "their"
+                elif word_list[i] == "mine" or word_list[i] == "Mine" or word_list[i] == "ours" or word_list[i] == "Ours":
+                    word_list[i] = "theirs"
+                elif word_list[i] == "You":
+                    if listener == "him":
+                        word_list[i] = "he"
+                    elif listener == "her":
+                        word_list[i] = "she"
+                    elif listener == "it":
+                        word_list[i] = listener
+                elif word_list[i] == "you":
+                    word_list[i] = listener
+                elif word_list[i] == "your" or word_list[i] == "Your":
+                    if listener == "him":
+                        word_list[i] = "his"
+                    elif listener == "her":
+                        word_list[i] = listener
+                    elif listener == "it":
+                        word_list[i] = "its"
+                elif word_list[i] == "yours" or word_list[i] == "Yours":
+                    if listener == "him":
+                        word_list[i] = "his"
+                    elif listener == "her":
+                        word_list[i] = "hers"
+                    elif listener == "it":
+                        word_list[i] = "its"
+        else:
+            if speaker == "I" or speaker == "we":
+                if word_list[i] == "You":
+                    word_list[i] = "they"
+                elif word_list[i] == "you":
+                    word_list[i] = "them"
+                elif word_list[i] == "your" or word_list[i] == "Your":
+                    word_list[i] = "their"
+                elif word_list[i] == "yours" or word_list[i] == "Yours":
+                    word_list[i] = "theirs"
+            elif speaker == "you":
+                if word_list[i] == "I" or word_list[i] == "me" or word_list[i] == "We" or word_list[i] == "us":
+                    word_list[i] = "you"
+                elif word_list[i] == "my" or word_list[i] == "My" or word_list[i] == "our" or word_list[i] == "Our":
+                    word_list[i] = "your"
+                elif word_list[i] == "mine" or word_list[i] == "Mine" or word_list[i] == "ours" or word_list[i] == "Ours":
+                    word_list[i] = "yours"
+            elif speaker == "he" or speaker == "she" or speaker == "it":
+                if word_list[i] == "I":
+                    word_list[i] = speaker
+                elif word_list[i] == "me":
+                    if speaker == "he":
+                        word_list[i] = "him"
+                    elif speaker == "she":
+                        word_list[i] = "her"
+                    elif speaker == "it":
+                        word_list[i] = speaker
+                elif word_list[i] == "my" or word_list[i] == "My":
+                    if speaker == "he":
+                        word_list[i] = "his"
+                    elif speaker == "she":
+                        word_list[i] = "her"
+                    elif speaker == "it":
+                        word_list[i] = "its"
+                elif word_list[i] == "mine" or word_list[i] == "Mine":
+                    if speaker == "he":
+                        word_list[i] = "his"
+                    elif speaker == "she":
+                        word_list[i] = "hers"
+                    elif speaker == "it":
+                        word_list[i] = "its"
+                elif word_list[i] == "We":
+                    word_list[i] = "they"
+                elif word_list[i] == "us":
+                    word_list[i] = "them"
+                elif word_list[i] == "our" or word_list[i] == "Our":
+                    word_list[i] = "their"
+                elif word_list[i] == "ours" or word_list[i] == "Ours":
+                    word_list[i] = "theirs"
+                elif word_list[i] == "You":
+                    word_list[i] = "they"
+                elif word_list[i] == "you":
+                    word_list[i] = "them"
+                elif word_list[i] == "your" or word_list[i] == "Your":
+                    word_list[i] = "their"
+                elif word_list[i] == "yours" or word_list[i] == "Yours":
+                    word_list[i] = "theirs"
+            else:
+                if word_list[i] == "I" or word_list[i] == "We" or word_list[i] == "You":
+                    word_list[i] = "they"
+                elif word_list[i] == "me" or word_list[i] == "us" or word_list[i] == "you":
+                    word_list[i] = "them"
+                elif word_list[i] == "my" or word_list[i] == "My" or word_list[i] == "our" or word_list[i] == "Our" or word_list[i] == "your" or word_list[i] == "Your":
+                    word_list[i] = "their"
+                elif word_list[i] == "mine" or word_list[i] == "Mine" or word_list[i] == "ours" or word_list[i] == "Ours" or word_list[i] == "yours" or word_list[i] == "Yours":
+                    word_list[i] = "theirs"
+if speaker_clause == []:
+    if imperative == True:
+        word_list[0] = word_list[0].lower()
+        word_list.insert(0, speaker + " told " + listener + " to")
+    else:
+        word_list.insert(0, speaker + " said")
+else:
+    if imperative == True:
+        if backshift == True:
+            word_list[0] = word_list[0].lower()
+            detect_speaker_and_listener()
+            word_list.insert(0, speaker + " told " + listener + " to")
+        else:
+            word_list[0] = word_list[0].lower()
+            detect_speaker_and_listener()
+            if speaker == "you" or speaker == "we" or speaker == "they" or plural_speaker == True:
+                speaker = speaker + " tell "
+            else:
+                speaker = speaker + " tells "
+            word_list.insert(0, speaker + listener + " to")
+    else:
+        if backshift == True:
+            detect_speaker_and_listener()
+            if listener == "me":
+                word_list.insert(0, speaker + " said")
+            else:
+                word_list.insert(0, speaker + " told " + listener)
+        else:
+            detect_speaker_and_listener()
+            if listener == "me":
+                if speaker == "I" or speaker == "you" or speaker == "we" or speaker == "they" or plural_speaker == True:
+                    word_list.insert(0, speaker + " say")
+                else:
+                    word_list.insert(0, speaker + " says")
+            else:
+                if speaker == "I" or speaker == "you" or speaker == "we" or speaker == "they" or plural_speaker == True:
+                    word_list.insert(0, speaker + " tell " + listener)
+                else:
+                    word_list.insert(0, speaker + " tells " + listener)
+verb_and_adverb_change()
+pronoun_change()
+word_list[0] = (word_list[0])[0].upper() + (word_list[0])[1:]
+if word_list[1] in determiners or word_list[1] in ["You", "He", "She", "It", "We", "They"]:
+    word_list[1] = (word_list[1])[0].lower() + (word_list[1])[1:]
+print("Reported Speech translation: " + ' '.join(word_list))
         </script>
     </body>
 </html>
